@@ -5,12 +5,37 @@ import { login, logout, getCurrentUser } from './utils/auth.js';
 
 const root = document.getElementById('site-gestao');
 
-let tecnicosData = [
-  { id: 1, nome: 'João Silva', email: 'joao@empresa.com' },
-  { id: 2, nome: 'Maria Santos', email: 'maria@empresa.com' }
-];
+// Função para buscar técnicos do backend
+async function fetchTecnicos() {
+  try {
+    const res = await fetch('/backend/tecnicos.php', { method: 'GET' });
+    if (!res.ok) throw new Error('Erro ao buscar técnicos');
+    const data = await res.json();
+    return data.tecnicos || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
 
-function render(page, data) {
+// Função para adicionar técnico via backend
+async function addTecnico(nome, email) {
+  try {
+    const res = await fetch('/backend/tecnicos.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, email })
+    });
+    if (!res.ok) throw new Error('Erro ao adicionar técnico');
+    const data = await res.json();
+    return data.success;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function render(page) {
   const user = getCurrentUser();
   root.innerHTML = Menu(user);
 
@@ -32,13 +57,18 @@ function render(page, data) {
     case 'login':
       content = LoginPage();
       break;
+
     case 'tecnicos':
       if(!user) return render('login');
+      // Buscar técnicos via backend
+      const tecnicosData = await fetchTecnicos();
       content = TecnicosPage(tecnicosData);
       break;
+
     case 'home':
       content = `<h1>Bem vindo ao Sistema</h1>`;
       break;
+
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
@@ -63,13 +93,17 @@ function render(page, data) {
 
   if(page === 'tecnicos') {
     const form = root.querySelector('#add-tecnico-form');
-    form.onsubmit = e => {
+    form.onsubmit = async e => {
       e.preventDefault();
       const nome = form.nome.value.trim();
       const email = form.email.value.trim();
       if(nome && email) {
-        tecnicosData.push({ id: Date.now(), nome, email });
-        render('tecnicos');
+        const sucesso = await addTecnico(nome, email);
+        if(sucesso) {
+          render('tecnicos'); // Re-renderiza com dados atualizados
+        } else {
+          alert('Erro ao adicionar técnico. Tente novamente.');
+        }
       }
     }
   }
