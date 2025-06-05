@@ -3,7 +3,8 @@ import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
 import { login, logout, getCurrentUser } from './utils/auth.js';
 
-const root = document.getElementById('site-gestao');
+const menuContainer = document.getElementById('menu');
+const conteudoContainer = document.getElementById('conteudo');
 
 // Função para buscar técnicos do backend
 async function fetchTecnicos() {
@@ -37,78 +38,82 @@ async function addTecnico(nome, email) {
 
 async function render(page) {
   const user = getCurrentUser();
-  root.innerHTML = Menu(user);
 
-  // Monta conteúdo conforme página
-  const nav = root.querySelector('nav');
+  // Renderiza o menu
+  menuContainer.innerHTML = Menu(user);
+
+  // Adiciona eventos de navegação
+  const nav = menuContainer.querySelector('nav');
   nav.addEventListener('click', e => {
-    if(e.target.tagName === 'BUTTON' && e.target.dataset.page) {
+    if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
       render(e.target.dataset.page);
     }
-    if(e.target.id === 'logout-btn') {
+    if (e.target.id === 'logout-btn') {
       logout();
       render('login');
     }
   });
 
+  // Conteúdo principal
   let content = '';
 
-  switch(page) {
+  switch (page) {
     case 'login':
       content = LoginPage();
       break;
 
     case 'tecnicos':
-      if(!user) return render('login');
-      // Buscar técnicos via backend
+      if (!user) return render('login');
       const tecnicosData = await fetchTecnicos();
       content = TecnicosPage(tecnicosData);
       break;
 
     case 'home':
-      content = `<h1>Bem vindo ao Sistema</h1>`;
+      content = `<h1>Bem-vindo ao Sistema</h1>`;
       break;
 
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
 
+  // Renderiza o conteúdo
+  conteudoContainer.innerHTML = '';
   const divContent = document.createElement('div');
   divContent.innerHTML = content;
-  root.appendChild(divContent);
+  conteudoContainer.appendChild(divContent);
 
   // Eventos pós-render
-  if(page === 'login') {
-    const form = root.querySelector('#login-form');
-    const errDiv = root.querySelector('#login-error');
+  if (page === 'login') {
+    const form = conteudoContainer.querySelector('#login-form');
+    const errDiv = conteudoContainer.querySelector('#login-error');
     form.onsubmit = e => {
       e.preventDefault();
       const email = form.email.value;
       const senha = form.senha.value;
       const u = login(email, senha);
-      if(u) render('home');
+      if (u) render('home');
       else errDiv.textContent = 'Credenciais inválidas';
-    }
+    };
   }
 
-  if(page === 'tecnicos') {
-    const form = root.querySelector('#add-tecnico-form');
+  if (page === 'tecnicos') {
+    const form = conteudoContainer.querySelector('#add-tecnico-form');
     form.onsubmit = async e => {
       e.preventDefault();
       const nome = form.nome.value.trim();
       const email = form.email.value.trim();
-      if(nome && email) {
+      if (nome && email) {
         const sucesso = await addTecnico(nome, email);
-        if(sucesso) {
-          render('tecnicos'); // Re-renderiza com dados atualizados
+        if (sucesso) {
+          render('tecnicos');
         } else {
           alert('Erro ao adicionar técnico. Tente novamente.');
         }
       }
-    }
+    };
   }
 }
 
-// Começa no login ou home se estiver logado
-if(getCurrentUser()) render('home');
+// Inicialização
+if (getCurrentUser()) render('home');
 else render('login');
