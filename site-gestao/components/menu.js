@@ -1,3 +1,4 @@
+// Barra superior de menu
 export function Menu(user) {
   // user = { nome, perfil }
   return `

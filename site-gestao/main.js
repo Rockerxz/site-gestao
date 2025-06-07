@@ -117,3 +117,7 @@ async function render(page) {
 // Inicialização
 if (getCurrentUser()) render('home');
 else render('login');
+
+function dobrar(numero) {
+  return numero * 2;
+}
