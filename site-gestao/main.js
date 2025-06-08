@@ -86,11 +86,11 @@ async function render(page) {
   if (page === 'login') {
     const form = conteudoContainer.querySelector('#login-form');
     const errDiv = conteudoContainer.querySelector('#login-error');
-    form.onsubmit = e => {
+    form.onsubmit = async e => {
       e.preventDefault();
       const email = form.email.value;
       const senha = form.senha.value;
-      const u = login(email, senha);
+      const u = await login(email, senha);
       if (u) render('home');
       else errDiv.textContent = 'Credenciais inválidas';
     };

@@ -1,19 +1,20 @@
-const USERS = [
-  { id:1, nome:'Admin', email:'admin@empresa.com', senha:'1234', perfil:'superuser' },
-  { id:2, nome:'Técnico 1', email:'tecnico1@empresa.com', senha:'abcd', perfil:'tecnico' }
-];
-
-// Salva usuário no localStorage para simular sessão
-export function login(email, senha) {
-  const user = USERS.find(u => u.email === email && u.senha === senha);
-  if(user) {
-    localStorage.setItem('user', JSON.stringify(user));
-    return user;
+export async function login(email, senha) {
+  const res = await fetch('/backend/login.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, senha })
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (data.success) {
+    localStorage.setItem('user', JSON.stringify(data.user));
+    return data.user;
   }
   return null;
 }
 
 export function logout() {
+  fetch('/backend/logout.php', { method: 'POST' });
   localStorage.removeItem('user');
 }
 
