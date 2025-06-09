@@ -1,6 +1,7 @@
 import { Menu } from './components/menu.js';
 import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
+import { DashboardPage } from './pages/dashboard.js';
 import { login, logout, getCurrentUser } from './utils/auth.js';
 
 const menuContainer = document.getElementById('menu');
@@ -39,6 +40,16 @@ async function addTecnico(nome, email) {
 async function render(page) {
   const user = getCurrentUser();
 
+  // Se não estiver autenticado e não estiver na página de login, redireciona para login
+  if (!user && page !== 'login') {
+    page = 'login';
+  }
+
+  // Se estiver autenticado e tentar ir para login, redireciona para dashboard
+  if (user && page === 'login') {
+    page = 'dashboard';
+  }
+
   // Renderiza o menu
   menuContainer.innerHTML = Menu(user);
 
@@ -60,6 +71,10 @@ async function render(page) {
   switch (page) {
     case 'login':
       content = LoginPage();
+      break;
+
+    case 'dashboard':
+      content = DashboardPage(user);
       break;
 
     case 'tecnicos':
@@ -91,7 +106,7 @@ async function render(page) {
       const email = form.email.value;
       const senha = form.senha.value;
       const u = await login(email, senha);
-      if (u) render('home');
+      if (u) render('dashboard');
       else errDiv.textContent = 'Credenciais inválidas';
     };
   }
@@ -115,5 +130,5 @@ async function render(page) {
 }
 
 // Inicialização
-if (getCurrentUser()) render('home');
+if (getCurrentUser()) render('dashboard');
 else render('login');
