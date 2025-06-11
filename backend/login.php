@@ -21,9 +21,9 @@ foreach ($utilizadores as $u) {
             'id' => $u['id'],
             'nome' => $u['nome'],
             'email' => $u['email'],
-            'perfil' => $u['perfil'],
-            'ultimoAcesso' => date('Y-m-d H:i:s')
+            'perfil' => $u['perfil']
         ];
+        $_SESSION['ultimoAcesso'] = time(); // Regista o tempo do login
         echo json_encode(['success' => true, 'user' => $_SESSION['user']]);
         exit;
     }
