@@ -3,7 +3,7 @@ export function Menu(user) {
   // user = { nome, perfil }
   return `
   <nav>
-    <button data-page="home">Início</button>
+    <button data-page="dashboard">Dashboard</button>
     ${user ? `
       <button data-page="tecnicos">Gestão Técnicos</button>
       <button data-page="equipamentos">Gestão Equipamentos</button>

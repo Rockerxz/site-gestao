@@ -149,10 +149,6 @@ async function render(page) {
       content = TecnicosPage(tecnicosData);
       break;
 
-    case 'home':
-      content = `<h1>Bem-vindo ao Sistema</h1>`;
-      break;
-
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
