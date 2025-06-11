@@ -2,15 +2,57 @@ import { Menu } from './components/menu.js';
 import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
 import { DashboardPage } from './pages/dashboard.js';
-import { login, logout, getCurrentUser } from './utils/auth.js';
+import { login, logout, checkSession } from './utils/auth.js';
 
 const menuContainer = document.getElementById('menu');
 const conteudoContainer = document.getElementById('conteudo');
 
-// Função para buscar técnicos do backend
+let currentUser = null;
+let inactivityTimeout = null;
+const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
+const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutos
+
+// Função para resetar o temporizador de inatividade
+function resetInactivityTimer() {
+  if (inactivityTimeout) clearTimeout(inactivityTimeout);
+  inactivityTimeout = setTimeout(() => {
+    alert('Sessão expirada por inatividade.');
+    logout();
+    currentUser = null;
+    render('login');
+  }, INACTIVITY_LIMIT);
+}
+
+// Função para monitorar atividade do utilizador e renovar sessão
+function setupActivityListeners() {
+  ['click', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      resetInactivityTimer();
+      renewSession();
+    });
+  });
+}
+
+// Renova sessão no backend (chamada para manter sessão viva)
+let renewSessionTimeout = null;
+async function renewSession() {
+  if (renewSessionTimeout) return; // evita chamadas muito frequentes
+  renewSessionTimeout = setTimeout(async () => {
+    renewSessionTimeout = null;
+    const user = await checkSession();
+    if (!user) {
+      alert('Sessão expirada.');
+      currentUser = null;
+      render('login');
+    } else {
+      currentUser = user;
+    }
+  }, 1000);
+}
+
 async function fetchTecnicos() {
   try {
-    const res = await fetch('/backend/tecnicos.php', { method: 'GET' });
+    const res = await fetch('/backend/tecnicos.php', { method: 'GET', credentials: 'include' });
     if (!res.ok) throw new Error('Erro ao buscar técnicos');
     const data = await res.json();
     return data.tecnicos || [];
@@ -20,12 +62,12 @@ async function fetchTecnicos() {
   }
 }
 
-// Função para adicionar técnico via backend
 async function addTecnico(nome, email) {
   try {
     const res = await fetch('/backend/tecnicos.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ nome, email })
     });
     if (!res.ok) throw new Error('Erro ao adicionar técnico');
@@ -38,20 +80,23 @@ async function addTecnico(nome, email) {
 }
 
 async function render(page) {
-  const user = getCurrentUser();
+  // Se currentUser não definido, verifica sessão no backend
+  if (currentUser === null) {
+    currentUser = await checkSession();
+  }
 
   // Se não estiver autenticado e não estiver na página de login, redireciona para login
-  if (!user && page !== 'login') {
+  if (!currentUser && page !== 'login') {
     page = 'login';
   }
 
   // Se estiver autenticado e tentar ir para login, redireciona para dashboard
-  if (user && page === 'login') {
+  if (currentUser && page === 'login') {
     page = 'dashboard';
   }
 
   // Renderiza o menu
-  menuContainer.innerHTML = Menu(user);
+  menuContainer.innerHTML = Menu(currentUser);
 
   // Adiciona eventos de navegação
   const nav = menuContainer.querySelector('nav');
@@ -61,6 +106,7 @@ async function render(page) {
     }
     if (e.target.id === 'logout-btn') {
       logout();
+      currentUser = null;
       render('login');
     }
   });
@@ -74,11 +120,11 @@ async function render(page) {
       break;
 
     case 'dashboard':
-      content = DashboardPage(user);
+      content = DashboardPage(currentUser);
       break;
 
     case 'tecnicos':
-      if (!user) return render('login');
+      if (!currentUser) return render('login');
       const tecnicosData = await fetchTecnicos();
       content = TecnicosPage(tecnicosData);
       break;
@@ -106,8 +152,14 @@ async function render(page) {
       const email = form.email.value;
       const senha = form.senha.value;
       const u = await login(email, senha);
-      if (u) render('dashboard');
-      else errDiv.textContent = 'Credenciais inválidas';
+      if (u) {
+        currentUser = u;
+        resetInactivityTimer();
+        setupActivityListeners();
+        render('dashboard');
+      } else {
+        errDiv.textContent = 'Credenciais inválidas';
+      }
     };
   }
 
@@ -130,5 +182,4 @@ async function render(page) {
 }
 
 // Inicialização
-if (getCurrentUser()) render('dashboard');
-else render('login');
+render('login');

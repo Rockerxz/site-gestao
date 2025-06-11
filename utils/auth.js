@@ -1,24 +1,47 @@
-export async function login(email, senha) {
-  const res = await fetch('/backend/login.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, senha })
-  });
-  if (!res.ok) return null;
-  const data = await res.json();
-  if (data.success) {
-    localStorage.setItem('user', JSON.stringify(data.user));
-    return data.user;
+// auth.js - sem localStorage, usa sessões PHP com cookies
+
+// Verifica se a sessão está ativa no backend
+export async function checkSession() {
+  try {
+    const res = await fetch('/backend/auth_check.php', {
+      method: 'GET',
+      credentials: 'include' // envia cookies de sessão
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.authenticated) {
+      return data.user; // retorna dados do utilizador
+    }
+    return null;
+  } catch {
+    return null;
   }
-  return null;
 }
 
-export function logout() {
-  fetch('/backend/logout.php', { method: 'POST' });
-  localStorage.removeItem('user');
+export async function login(email, senha) {
+  try {
+    const res = await fetch('/backend/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // para receber cookie de sessão
+      body: JSON.stringify({ email, senha })
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (data.success) {
+      return data.user;
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }
 
-export function getCurrentUser() {
-  const u = localStorage.getItem('user');
-  return u ? JSON.parse(u) : null;
+export async function logout() {
+  try {
+    await fetch('/backend/logout.php', {
+      method: 'POST',
+      credentials: 'include'
+    });
+  } catch {}
 }
