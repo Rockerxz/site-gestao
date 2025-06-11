@@ -9,41 +9,51 @@ const conteudoContainer = document.getElementById('conteudo');
 
 let currentUser = null;
 let inactivityTimeout = null;
-const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
-const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutos
+let sessionCheckInterval = null;
+const SESSION_CHECK_INTERVAL = 1 * 20 * 1000; // 5 minutos
+const INACTIVITY_LIMIT = 1 * 60 * 1000; // 15 minutos
 
 // Função para resetar o temporizador de inatividade
 function resetInactivityTimer() {
+  if (!currentUser) return; // só funciona se autenticado
   if (inactivityTimeout) clearTimeout(inactivityTimeout);
   inactivityTimeout = setTimeout(() => {
     alert('Sessão expirada por inatividade.');
-    logout();
-    currentUser = null;
-    render('login');
+    doLogout();
   }, INACTIVITY_LIMIT);
 }
 
 // Função para monitorar atividade do utilizador e renovar sessão
 function setupActivityListeners() {
+  if (!currentUser) return; // só funciona se autenticado
   ['click', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
-    window.addEventListener(evt, () => {
-      resetInactivityTimer();
-      renewSession();
-    });
+    window.addEventListener(evt, activityHandler);
   });
+}
+
+// Remove listeners de atividade
+function removeActivityListeners() {
+  ['click', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
+    window.removeEventListener(evt, activityHandler);
+  });
+}
+
+function activityHandler() {
+  resetInactivityTimer();
+  renewSession();
 }
 
 // Renova sessão no backend (chamada para manter sessão viva)
 let renewSessionTimeout = null;
 async function renewSession() {
+  if (!currentUser) return; // só funciona se autenticado
   if (renewSessionTimeout) return; // evita chamadas muito frequentes
   renewSessionTimeout = setTimeout(async () => {
     renewSessionTimeout = null;
     const user = await checkSession();
     if (!user) {
       alert('Sessão expirada.');
-      currentUser = null;
-      render('login');
+      doLogout();
     } else {
       currentUser = user;
     }
@@ -79,6 +89,18 @@ async function addTecnico(nome, email) {
   }
 }
 
+async function doLogout() {
+  removeActivityListeners();
+  if (inactivityTimeout) clearTimeout(inactivityTimeout);
+  if (sessionCheckInterval) {
+    clearInterval(sessionCheckInterval);
+    sessionCheckInterval = null;
+  }
+  await logout();
+  currentUser = null;
+  render('login');
+}
+
 async function render(page) {
   // Se currentUser não definido, verifica sessão no backend
   if (currentUser === null) {
@@ -105,9 +127,7 @@ async function render(page) {
       render(e.target.dataset.page);
     }
     if (e.target.id === 'logout-btn') {
-      logout();
-      currentUser = null;
-      render('login');
+      doLogout();
     }
   });
 
@@ -145,6 +165,14 @@ async function render(page) {
 
   // Eventos pós-render
   if (page === 'login') {
+    // Limpa timers e listeners para login
+    removeActivityListeners();
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    if (sessionCheckInterval) {
+      clearInterval(sessionCheckInterval);
+      sessionCheckInterval = null;
+    }
+
     const form = conteudoContainer.querySelector('#login-form');
     const errDiv = conteudoContainer.querySelector('#login-error');
     form.onsubmit = async e => {
@@ -156,6 +184,18 @@ async function render(page) {
         currentUser = u;
         resetInactivityTimer();
         setupActivityListeners();
+        // Inicia verificação periódica da sessão
+        if (!sessionCheckInterval) {
+          sessionCheckInterval = setInterval(async () => {
+            const user = await checkSession();
+            if (!user) {
+              alert('Sessão expirada.');
+              doLogout();
+            } else {
+              currentUser = user;
+            }
+          }, SESSION_CHECK_INTERVAL);
+        }
         render('dashboard');
       } else {
         errDiv.textContent = 'Credenciais inválidas';
