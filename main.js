@@ -1,4 +1,5 @@
 import { Menu } from './components/menu.js';
+import { MenuLateral } from './components/menu-lateral.js';
 import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
 import { DashboardPage } from './pages/dashboard.js';
@@ -10,8 +11,8 @@ const conteudoContainer = document.getElementById('conteudo');
 let currentUser = null;
 let inactivityTimeout = null;
 let sessionCheckInterval = null;
-const SESSION_CHECK_INTERVAL = 1 * 20 * 1000; // 5 minutos
-const INACTIVITY_LIMIT = 1 * 60 * 1000; // 15 minutos  alterar
+const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
+const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutos
 
 // Função para resetar o temporizador de inatividade
 function resetInactivityTimer() {
@@ -122,10 +123,28 @@ async function render(page) {
   // Renderiza o menu, passando a página atual para ocultar menu na página login
   menuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : Menu(currentUser, page);
 
+  // Renderiza o menu lateral
+  const lateralMenuContainer = document.getElementById('menu-lateral');
+  if (lateralMenuContainer) {
+    lateralMenuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : MenuLateral(currentUser, page);
+  }
+
   // Adiciona eventos de navegação
   const nav = menuContainer.querySelector('nav');
   if (nav) {
     nav.addEventListener('click', e => {
+      if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
+        render(e.target.dataset.page);
+      }
+      if (e.target.id === 'logout-btn') {
+        doLogout();
+      }
+    });
+  }
+
+  // Adiciona eventos de navegação e logout no menu lateral
+  if (lateralMenuContainer) {
+    lateralMenuContainer.addEventListener('click', e => {
       if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
         render(e.target.dataset.page);
       }

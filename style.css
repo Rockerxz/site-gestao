@@ -11,10 +11,53 @@ body {
   margin: 20px;
 }
 
+/* Estilo para o menu lateral */
+.menu-lateral {
+  background: #333;
+  color: #fff;
+  padding: 10px;
+  width: 200px;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-lateral button {
+  background: transparent;
+  border: none;
+  color: white;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.menu-lateral button:hover {
+  background-color: #555;
+}
+
+body:not(.pagina-login) #conteudo {
+  margin-left: 220px; /* aplica apenas fora da página de login */
+  padding: 20px;
+}
+
+body.pagina-login #conteudo {
+  margin: 0; /* sem deslocamento na página de login */
+  padding: 0;
+}
+
 nav {
   background: #333;
   color: #fff;
   padding: 10px;
+  margin-left: 220px;
 }
 
 nav button {

@@ -9,7 +9,7 @@ export function LoginPage() {
         <form id="login-form">
           <h2 class="login-heading">Inicie sessão</h2>
           
-          <input type="email" id="email" name="email" placeholder="Email" required>
+          <input type="text" id="email" name="email" placeholder="Email / Nome de utilizador" required>
           <input type="password" id="senha" name="senha" placeholder="Palavra-passe" required>
           
           <button type="submit">Entrar</button>

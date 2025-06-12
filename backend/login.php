@@ -4,7 +4,7 @@ session_start();
 header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents('php://input'), true);
-$email = $data['email'] ?? '';
+$loginInput = $data['email'] ?? ''; // pode ser email ou nome
 $senha = $data['senha'] ?? '';
 
 $utilizadoresPath = __DIR__ . '/../data/utilizadores.json';
@@ -16,7 +16,7 @@ if (!file_exists($utilizadoresPath)) {
 $utilizadores = json_decode(file_get_contents($utilizadoresPath), true);
 
 foreach ($utilizadores as $u) {
-    if ($u['email'] === $email && $u['senha'] === $senha) {
+    if (($u['email'] === $loginInput || $u['nome'] === $loginInput) && $u['senha'] === $senha) {
         $_SESSION['user'] = [
             'id' => $u['id'],
             'nome' => $u['nome'],

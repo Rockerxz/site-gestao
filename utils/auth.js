@@ -18,13 +18,13 @@ export async function checkSession() {
   }
 }
 
-export async function login(email, senha) {
+export async function login(emailOrNome, senha) {
   try {
     const res = await fetch('/backend/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // para receber cookie de sessão
-      body: JSON.stringify({ email, senha })
+      body: JSON.stringify({ email: emailOrNome, senha })
     });
     if (!res.ok) return null;
     const data = await res.json();

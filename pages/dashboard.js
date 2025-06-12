@@ -73,7 +73,7 @@ export function DashboardPage(user) {
     <section>
       <header style="display:flex; justify-content: space-between; align-items:center; margin-bottom: 1rem;">
         <div>
-          <h1>Dashboard</h1>
+          <h1>Painel Geral</h1>
           <p>Bem-vindo, <strong>${user.nome}</strong> (<em>${user.perfil}</em>)</p>
           <p>Último acesso: ${user.ultimoAcesso || '-'}</p>
         </div>
