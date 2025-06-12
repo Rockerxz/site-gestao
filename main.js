@@ -11,7 +11,7 @@ let currentUser = null;
 let inactivityTimeout = null;
 let sessionCheckInterval = null;
 const SESSION_CHECK_INTERVAL = 1 * 20 * 1000; // 5 minutos
-const INACTIVITY_LIMIT = 1 * 60 * 1000; // 15 minutos
+const INACTIVITY_LIMIT = 1 * 60 * 1000; // 15 minutos  alterar
 
 // Função para resetar o temporizador de inatividade
 function resetInactivityTimer() {
@@ -117,19 +117,21 @@ async function render(page) {
     page = 'dashboard';
   }
 
-  // Renderiza o menu
-  menuContainer.innerHTML = Menu(currentUser);
+  // Renderiza o menu, passando a página atual para ocultar menu na página login
+  menuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : Menu(currentUser, page);
 
   // Adiciona eventos de navegação
   const nav = menuContainer.querySelector('nav');
-  nav.addEventListener('click', e => {
-    if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
-      render(e.target.dataset.page);
-    }
-    if (e.target.id === 'logout-btn') {
-      doLogout();
-    }
-  });
+  if (nav) {
+    nav.addEventListener('click', e => {
+      if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
+        render(e.target.dataset.page);
+      }
+      if (e.target.id === 'logout-btn') {
+        doLogout();
+      }
+    });
+  }
 
   // Conteúdo principal
   let content = '';

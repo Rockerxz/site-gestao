@@ -26,3 +26,75 @@ input, button {
   padding: 5px;
   margin: 5px 0;
 }
+
+/* Estilos específicos para a página de login */
+.login-page-wrapper {
+  height: 100vh;
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+  margin: 0;
+}
+
+h1.site-title {
+  font-size: 3rem;
+  margin: 40px 0 20px 0;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  width: 100%;
+}
+
+section.login-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px 40px;
+  border-radius: 8px;
+  width: 320px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+}
+
+section.login-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  text-align: left;
+  color: #ddd;
+}
+
+section.login-container input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+section.login-container button {
+  width: 100%;
+  background-color: #007BFF; /* azul */
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+section.login-container button:hover {
+  background-color: #0056b3;
+}
+
+#login-error {
+  margin-top: 10px;
+  color: #ff6b6b;
+  font-weight: bold;
+}

@@ -2,7 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
-$INACTIVITY_LIMIT = 20; // 1 minuto (em segundos)
+$INACTIVITY_LIMIT = 20; // 1 minuto (em segundos)  alterar valores!!
 $currentTime = time();
 
 if (isset($_SESSION['user'])) {
