@@ -1,19 +1,23 @@
 export function LoginPage() {
   return `
     <div class="login-page-wrapper">
-      <h1 class="site-title">Site Gestão</h1>
+      <h1 class="site-title">
+        <span class="main-title">Telemonteredondo</span>
+        <span class="sub-title">Sistema de Gestão</span>
+      </h1>
       <section class="login-container">
         <form id="login-form">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required />
+          <h2 class="login-heading">Inicie sessão</h2>
           
-          <label for="senha">Senha:</label>
-          <input type="password" id="senha" name="senha" required />
+          <input type="email" id="email" name="email" placeholder="Email" required>
+          <input type="password" id="senha" name="senha" placeholder="Palavra-passe" required>
           
           <button type="submit">Entrar</button>
+          <div id="login-error"></div>
         </form>
-        <div id="login-error"></div>
       </section>
     </div>
   `;
 }
+
+

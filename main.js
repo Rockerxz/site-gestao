@@ -117,6 +117,8 @@ async function render(page) {
     page = 'dashboard';
   }
 
+  document.body.className = `pagina-${page}`;
+
   // Renderiza o menu, passando a página atual para ocultar menu na página login
   menuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : Menu(currentUser, page);
 

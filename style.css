@@ -1,12 +1,22 @@
-body {
+/* Reset básico para html e body para remover margens/paddings */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
+}
+
+/* Estilo global */
+body {
   margin: 20px;
 }
+
 nav {
   background: #333;
   color: #fff;
   padding: 10px;
 }
+
 nav button {
   background: transparent;
   border: none;
@@ -15,85 +25,118 @@ nav button {
   cursor: pointer;
   font-size: 16px;
 }
+
 nav button:hover {
   text-decoration: underline;
 }
+
 section {
   margin-top: 20px;
 }
+
 input, button {
   font-size: 14px;
   padding: 5px;
   margin: 5px 0;
 }
 
-/* Estilos específicos para a página de login */
-.login-page-wrapper {
-  height: 100vh;
-  background: url('background.jpg') no-repeat center center fixed;
-  background-size: cover;
+/* Estilo específico para a página de login */
+body.pagina-login {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  color: #fff;
-  margin: 0;
+  background: url(images/backgroundv2.jpg) no-repeat center center fixed;
+  background-size: cover;
 }
 
-h1.site-title {
-  font-size: 3rem;
-  margin: 40px 0 20px 0;
-  text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+body.pagina-login .login-page-wrapper {
+  flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  padding-top: 40px;
 }
 
-section.login-container {
+body.pagina-login .site-title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 80px; /* aumentado espaço inferior */
+}
+
+body.pagina-login .site-title .main-title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  display: block;
+  margin-bottom: 10px;
+}
+
+body.pagina-login .site-title .sub-title {
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  display: block;
+}
+
+body.pagina-login section.login-container {
   background: rgba(0, 0, 0, 0.6);
-  padding: 30px 40px;
+  padding: 30px 50px;
   border-radius: 8px;
-  width: 320px;
+  width: 400px; /* Aumentado de 320px para 400px */
   box-sizing: border-box;
   text-align: center;
   margin: 0 auto;
 }
 
-section.login-container label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  text-align: left;
-  color: #ddd;
+/* Novo título acima dos inputs */
+body.pagina-login .login-container .login-heading {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
 }
 
-section.login-container input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 4px;
-  margin-bottom: 15px;
+/* Remover os labels antigos */
+body.pagina-login section.login-container label {
+  display: none;
+}
+
+body.pagina-login section.login-container input {
+   width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  margin-bottom: 18px;
   border: none;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1.05rem;
   box-sizing: border-box;
 }
 
-section.login-container button {
+body.pagina-login section.login-container button {
   width: 100%;
-  background-color: #007BFF; /* azul */
+  background-color: #007BFF;
   border: none;
   color: white;
-  padding: 10px;
-  font-size: 1.1rem;
+  padding: 12px;
+  font-size: 1.15rem;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-section.login-container button:hover {
+body.pagina-login section.login-container button:hover {
   background-color: #0056b3;
 }
 
-#login-error {
+body.pagina-login #login-error {
   margin-top: 10px;
   color: #ff6b6b;
   font-weight: bold;
