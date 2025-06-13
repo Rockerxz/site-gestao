@@ -1,4 +1,3 @@
-// Menu lateral de navegação
 export function MenuLateral(user, currentPage) {
   // user = { nome, perfil }
   // currentPage = string com o nome da página atual
@@ -7,7 +6,7 @@ export function MenuLateral(user, currentPage) {
       ${
         user && currentPage !== 'login'
           ? `
-            <button data-page="dashboard">Dashboard</button>
+            <button data-page="dashboard">Painel Geral</button>
             <button data-page="tecnicos">Gestão Técnicos</button>
             <button data-page="equipamentos">Gestão Equipamentos</button>
             <button data-page="reparacoes">Gestão Reparações</button>

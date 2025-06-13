@@ -1,21 +1,18 @@
-// Barra superior de menu
+// Barra superior de menu atualizada
 export function Menu(user, currentPage) {
-  // user = { nome, perfil }
   return `
-    <nav>
+    <nav class="navbar">
+      <button id="home-btn" data-page="dashboard" class="home-btn">
+        Telemonteredondo Sistema de Gestão
+      </button>
       ${
-        user && currentPage !== 'login'
-          ? `
-            <button data-page="dashboard">Painel Geral</button>
-            <button data-page="tecnicos">Gestão Técnicos</button>
-            <button data-page="equipamentos">Gestão Equipamentos</button>
-            <button data-page="reparacoes">Gestão Reparações</button>
-            <button data-page="clientes">Gestão Clientes</button>
-            <button data-page="config">Configurações</button>
-            <button id="logout-btn">Sair (${user.nome})</button>
-          `
+        user
+          ? `<button class="user-btn">
+              <i class="fa-solid fa-circle-user" style="margin-right: 0.5rem;"></i>${user.nome}
+            </button>`
           : ``
       }
     </nav>
   `;
 }
+

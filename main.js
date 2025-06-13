@@ -240,5 +240,6 @@ async function render(page) {
   }
 }
 
+
 // Inicialização
 render('login');

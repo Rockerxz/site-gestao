@@ -8,7 +8,7 @@ html, body {
 
 /* Estilo global */
 body {
-  margin: 20px;
+  margin: 0;
 }
 
 /* Estilo para o menu lateral */
@@ -44,8 +44,10 @@ body {
 }
 
 body:not(.pagina-login) #conteudo {
-  margin-left: 220px; /* aplica apenas fora da página de login */
+  margin-left: 200px;
+  margin-top: 10px; /* altura da navbar */
   padding: 20px;
+  box-sizing: border-box;
 }
 
 body.pagina-login #conteudo {
@@ -54,24 +56,66 @@ body.pagina-login #conteudo {
 }
 
 nav {
+  top: 0;
+  left: 200px;
+  right: 0;
+  height: 60px;
   background: #333;
   color: #fff;
-  padding: 10px;
-  margin-left: 220px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  box-sizing: border-box;
+  gap: 0.5rem;
+  z-index: 1000;
 }
 
 nav button {
   background: transparent;
   border: none;
   color: white;
-  margin-right: 15px;
+  margin-right: 10px;
   cursor: pointer;
   font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: box-shadow 0.2s ease;
 }
 
 nav button:hover {
-  text-decoration: underline;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3); /* contorno leve */
 }
+
+/* Estilo para botão principal no topo (nome do sistema) */
+.navbar .home-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.navbar .home-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+/* Estilo para botão de utilizador (não clicável) */
+.navbar .user-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: default;
+  margin-left: 1rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
 
 section {
   margin-top: 20px;
