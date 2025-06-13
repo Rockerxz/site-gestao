@@ -6,6 +6,9 @@ export function MenuLateral(user, currentPage) {
       ${
         user && currentPage !== 'login'
           ? `
+            <button class="user-btn" style="cursor: default; margin-bottom: 20px;">
+              <i class="fa-solid fa-circle-user" style="margin-right: 0.5rem;"></i>${user.nome}
+            </button>
             <button data-page="dashboard">Painel Geral</button>
             <button data-page="tecnicos">Gestão Técnicos</button>
             <button data-page="equipamentos">Gestão Equipamentos</button>

@@ -13,9 +13,10 @@ body {
 
 /* Estilo para o menu lateral */
 .menu-lateral {
-  background: #333;
-  color: #fff;
+  background: #21272d;
+  color: #e0e0e0;
   padding: 10px;
+  padding-top: 60px;
   width: 200px;
   min-height: 100vh;
   box-sizing: border-box;
@@ -29,7 +30,7 @@ body {
 .menu-lateral button {
   background: transparent;
   border: none;
-  color: white;
+  color: #d1d1d1;
   margin-bottom: 15px;
   cursor: pointer;
   font-size: 16px;
@@ -40,7 +41,24 @@ body {
 }
 
 .menu-lateral button:hover {
-  background-color: #555;
+  background-color: #161a1e;
+}
+
+/* Ajuste para o botão do utilizador no menu lateral */
+.menu-lateral .user-btn {
+  background: transparent;
+  border: none;
+  color: #d1d1d1; /* branco mais escuro */
+  font-size: 1rem;
+  cursor: default;
+  padding: 10px 14px;
+  border-radius: 6px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 20px;
 }
 
 body:not(.pagina-login) #conteudo {
@@ -49,6 +67,12 @@ body:not(.pagina-login) #conteudo {
   padding: 20px;
   box-sizing: border-box;
 }
+
+/* cor do background da pagina com branco azulado suave */
+body:not(.pagina-login) {
+  background-color: #e9edf3; /* branco azulado suave */
+}
+
 
 body.pagina-login #conteudo {
   margin: 0; /* sem deslocamento na página de login */
@@ -60,8 +84,8 @@ nav {
   left: 200px;
   right: 0;
   height: 60px;
-  background: #333;
-  color: #fff;
+  background: #ffffff;
+  color: #666666;
   display: flex;
   align-items: center;
   padding: 0 15px;
@@ -73,7 +97,7 @@ nav {
 nav button {
   background: transparent;
   border: none;
-  color: white;
+  color: #4d4d4d;
   margin-right: 10px;
   cursor: pointer;
   font-size: 16px;
@@ -83,6 +107,8 @@ nav button {
 }
 
 nav button:hover {
+  background-color: #d8d8d8;
+  color: #4d4d4d;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3); /* contorno leve */
 }
 
@@ -90,7 +116,7 @@ nav button:hover {
 .navbar .home-btn {
   background: transparent;
   border: none;
-  color: white;
+  color: #4d4d4d;
   font-size: 1.2rem;
   cursor: pointer;
   margin-left: auto;
@@ -100,7 +126,8 @@ nav button:hover {
 }
 
 .navbar .home-btn:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #d8d8d8;
+  color: #4d4d4d;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 
@@ -108,7 +135,7 @@ nav button:hover {
 .navbar .user-btn {
   background: transparent;
   border: none;
-  color: white;
+  color: #666666;
   font-size: 1rem;
   cursor: default;
   margin-left: 1rem;

@@ -81,7 +81,7 @@ export function DashboardPage(user) {
       </header>
 
       <section style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
-        <article style="flex: 1 1 200px; background: #f0f0f0; padding: 1rem; border-radius: 5px;">
+        <article style="flex: 1 1 200px; background:rgb(255, 255, 255); padding: 1rem; border-radius: 5px;">
           <h3>Resumo de Estado (KPIs)</h3>
           <ul>
             <li>Total de reparações em curso: <strong>${kpis.reparacoesEmCurso}</strong></li>
@@ -96,7 +96,7 @@ export function DashboardPage(user) {
           </ul>
         </article>
 
-        <article style="flex: 2 1 400px; background: #f9f9f9; padding: 1rem; border-radius: 5px; overflow-x:auto;">
+        <article style="flex: 2 1 400px; background:rgb(255, 255, 255); padding: 1rem; border-radius: 5px; overflow-x:auto;">
           <h3>Últimas Reparações</h3>
           <table border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
             <thead>
@@ -124,7 +124,7 @@ export function DashboardPage(user) {
           </table>
         </article>
 
-        <article style="flex: 1 1 250px; background: #fff3f3; padding: 1rem; border-radius: 5px;">
+        <article style="flex: 1 1 250px; background:rgb(255, 255, 255); padding: 1rem; border-radius: 5px;">
           <h3>Alertas / Notificações</h3>
           <ul>
             ${alertas.map(a => `<li>${a}</li>`).join('')}
