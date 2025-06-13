@@ -7,12 +7,11 @@ export function Menu(user, currentPage) {
       </button>
       ${
         user
-          ? `<button class="user-btn">
-              <i class="fa-solid fa-circle-user" style="margin-right: 0.5rem;"></i>${user.nome}
+          ? `<button class="user-btn" title="${user.nome}">
+              <i class="fa-solid fa-user"></i> <span class="user-name">${user.nome}</span>
             </button>`
           : ``
       }
     </nav>
   `;
 }
-
