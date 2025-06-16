@@ -103,6 +103,13 @@ async function doLogout() {
 }
 
 async function render(page) {
+  // Cancela renderizações pendentes para evitar múltiplas chamadas simultâneas
+  if (render.currentRender) {
+    render.currentRender.cancelled = true;
+  }
+  const thisRender = { cancelled: false };
+  render.currentRender = thisRender;
+
   // Se currentUser não definido, verifica sessão no backend
   if (currentUser === null) {
     currentUser = await checkSession();
@@ -118,6 +125,9 @@ async function render(page) {
     page = 'dashboard';
   }
 
+// Se esta renderização foi cancelada, aborta
+  if (thisRender.cancelled) return;
+
   document.body.className = `pagina-${page}`;
 
   // Renderiza o menu, passando a página atual para ocultar menu na página login
@@ -129,29 +139,40 @@ async function render(page) {
     lateralMenuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : MenuLateral(currentUser, page);
   }
 
-  // Adiciona eventos de navegação
-  const nav = menuContainer.querySelector('nav');
-  if (nav) {
-    nav.addEventListener('click', e => {
-      if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
-        render(e.target.dataset.page);
+   // Corrigido: usar event delegation para garantir que cliques em ícones e spans também funcionem
+  if (menuContainer) {
+    menuContainer.onclick = e => {
+      let target = e.target;
+      // sobe na árvore até encontrar botão ou sair
+      while (target && target !== menuContainer && target.tagName !== 'BUTTON') {
+        target = target.parentElement;
       }
-      if (e.target.id === 'logout-btn') {
-        doLogout();
+      if (target && target.tagName === 'BUTTON') {
+        e.preventDefault();
+        if (target.dataset.page) {
+          render(target.dataset.page);
+        } else if (target.id === 'logout-btn') {
+          doLogout();
+        }
       }
-    });
+    };
   }
 
-  // Adiciona eventos de navegação e logout no menu lateral
   if (lateralMenuContainer) {
-    lateralMenuContainer.addEventListener('click', e => {
-      if (e.target.tagName === 'BUTTON' && e.target.dataset.page) {
-        render(e.target.dataset.page);
+    lateralMenuContainer.onclick = e => {
+      let target = e.target;
+      while (target && target !== lateralMenuContainer && target.tagName !== 'BUTTON') {
+        target = target.parentElement;
       }
-      if (e.target.id === 'logout-btn') {
-        doLogout();
+      if (target && target.tagName === 'BUTTON') {
+        e.preventDefault();
+        if (target.dataset.page) {
+          render(target.dataset.page);
+        } else if (target.id === 'logout-btn') {
+          doLogout();
+        }
       }
-    });
+    };
   }
 
   // Conteúdo principal
@@ -175,6 +196,9 @@ async function render(page) {
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
+
+// Se esta renderização foi cancelada, aborta
+  if (thisRender.cancelled) return;
 
   // Renderiza o conteúdo
   conteudoContainer.innerHTML = '';

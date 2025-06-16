@@ -27,6 +27,18 @@ body {
   flex-direction: column;
 }
 
+/* Novo estilo para o texto de navegação principal no menu lateral */
+.menu-lateral .nav-section-title {
+  color: #7d7d7d;
+  background-color: #1a1d23; /* cinzento mais escuro */
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  user-select: none;
+}
+
 
 .menu-lateral button {
   background: transparent;
@@ -89,7 +101,6 @@ nav.navbar {
   color: #666666;
   display: flex;
   align-items: center;
-  padding: 0 15px; /* espaço para o botão toggle fixo */
   box-sizing: border-box;
   gap: 0.5rem;
   z-index: 1000;
