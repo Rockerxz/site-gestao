@@ -137,6 +137,11 @@ async function render(page) {
   const lateralMenuContainer = document.getElementById('menu-lateral');
   if (lateralMenuContainer) {
     lateralMenuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : MenuLateral(currentUser, page);
+    // Após inserir o HTML, aplica a classe 'active' ao botão da página atual
+    const activeButton = lateralMenuContainer.querySelector(`button[data-page="${page}"]`);
+    if (activeButton) {
+      activeButton.classList.add('active');
+    }
   }
 
    // Corrigido: usar event delegation para garantir que cliques em ícones e spans também funcionem

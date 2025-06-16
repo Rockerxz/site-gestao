@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 /* Reset básico para html e body para remover margens/paddings */
 html, body {
   height: 100%;
@@ -29,11 +32,12 @@ body {
 
 /* Novo estilo para o texto de navegação principal no menu lateral */
 .menu-lateral .nav-section-title {
+  font-family: 'Inter', sans-serif;
   color: #7d7d7d;
-  background-color: #1a1d23; /* cinzento mais escuro */
-  padding: 8px 12px;
+  background-color: #13171b; /* cinzento mais escuro */
+  padding: 15px 12px;
   font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-bottom: 10px;
   border-radius: 4px;
   user-select: none;
@@ -41,6 +45,7 @@ body {
 
 
 .menu-lateral button {
+  font-family: 'Inter', sans-serif;
   background: transparent;
   border: none;
   color: #d1d1d1;
@@ -55,7 +60,11 @@ body {
 
 
 .menu-lateral button:hover {
-  background-color: #161a1e;
+  background-color: #1a1d23;
+}
+
+.menu-lateral button.active {
+  background-color: #1a1d23;
 }
 
 /* Ajuste para o botão do utilizador no menu lateral */
@@ -68,9 +77,12 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
+.menu-lateral .user-btn:hover {
+  background-color: transparent;
+}
 
 body:not(.pagina-login) #conteudo {
   margin-left: 200px;
@@ -101,12 +113,15 @@ nav.navbar {
   color: #666666;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* separa esquerda e direita */
+  padding: 0 16px 0 216px;;
   box-sizing: border-box;
   gap: 0.5rem;
   z-index: 1000;
 }
 
 nav button {
+  font-family: 'Inter', sans-serif;
   background: transparent;
   border: none;
   color: #4d4d4d;
@@ -132,17 +147,11 @@ nav button:hover {
   color: #4d4d4d;
   font-size: 1.2rem;
   cursor: pointer;
-  margin-left: auto;
+  margin-left: 0;
   padding: 6px 12px;
   border-radius: 6px;
-  transition: background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-.navbar .home-btn:hover {
-  background-color: #d8d8d8;
-  color: #4d4d4d;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
-}
 
 /* Estilo para botão de utilizador (não clicável) */
 .navbar .user-btn {
@@ -152,8 +161,11 @@ nav button:hover {
   font-size: 1rem;
   cursor: default;
   margin-left: 1rem;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 
