@@ -3,6 +3,8 @@ import { MenuLateral } from './components/menu-lateral.js';
 import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
 import { DashboardPage } from './pages/dashboard.js';
+import { ReparacoesPage, setupReparacoesPageListeners } from './pages/reparacoes.js';
+import { ClientesPage, setupClientesPageListeners } from './pages/clientes.js';
 import { login, logout, checkSession } from './utils/auth.js';
 
 const menuContainer = document.getElementById('menu');
@@ -14,9 +16,8 @@ let sessionCheckInterval = null;
 const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
 const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutos
 
-// Função para resetar o temporizador de inatividade
 function resetInactivityTimer() {
-  if (!currentUser) return; // só funciona se autenticado
+  if (!currentUser) return;
   if (inactivityTimeout) clearTimeout(inactivityTimeout);
   inactivityTimeout = setTimeout(() => {
     alert('Sessão expirada por inatividade.');
@@ -24,15 +25,13 @@ function resetInactivityTimer() {
   }, INACTIVITY_LIMIT);
 }
 
-// Função para monitorar atividade do utilizador e renovar sessão
 function setupActivityListeners() {
-  if (!currentUser) return; // só funciona se autenticado
+  if (!currentUser) return;
   ['click', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
     window.addEventListener(evt, activityHandler);
   });
 }
 
-// Remove listeners de atividade
 function removeActivityListeners() {
   ['click', 'keydown', 'mousemove', 'scroll'].forEach(evt => {
     window.removeEventListener(evt, activityHandler);
@@ -44,11 +43,10 @@ function activityHandler() {
   renewSession();
 }
 
-// Renova sessão no backend (chamada para manter sessão viva)
 let renewSessionTimeout = null;
 async function renewSession() {
-  if (!currentUser) return; // só funciona se autenticado
-  if (renewSessionTimeout) return; // evita chamadas muito frequentes
+  if (!currentUser) return;
+  if (renewSessionTimeout) return;
   renewSessionTimeout = setTimeout(async () => {
     renewSessionTimeout = null;
     const user = await checkSession();
@@ -67,6 +65,30 @@ async function fetchTecnicos() {
     if (!res.ok) throw new Error('Erro ao buscar técnicos');
     const data = await res.json();
     return data.tecnicos || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+async function fetchReparacoes() {
+  try {
+    const res = await fetch('/backend/reparacoes.php', { method: 'GET', credentials: 'include' });
+    if (!res.ok) throw new Error('Erro ao buscar reparações');
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+async function fetchClientes() {
+  try {
+    const res = await fetch('/backend/clientes.php', { method: 'GET', credentials: 'include' });
+    if (!res.ok) throw new Error('Erro ao buscar clientes');
+    const data = await res.json();
+    return Array.isArray(data.data) ? data.data : [];
   } catch (error) {
     console.error(error);
     return [];
@@ -103,52 +125,38 @@ async function doLogout() {
 }
 
 async function render(page) {
-  // Cancela renderizações pendentes para evitar múltiplas chamadas simultâneas
   if (render.currentRender) {
     render.currentRender.cancelled = true;
   }
   const thisRender = { cancelled: false };
   render.currentRender = thisRender;
 
-  // Se currentUser não definido, verifica sessão no backend
   if (currentUser === null) {
     currentUser = await checkSession();
   }
 
-  // Se não estiver autenticado e não estiver na página de login, redireciona para login
   if (!currentUser && page !== 'login') {
     page = 'login';
   }
 
-  // Se estiver autenticado e tentar ir para login, redireciona para dashboard
   if (currentUser && page === 'login') {
     page = 'dashboard';
   }
 
-// Se esta renderização foi cancelada, aborta
   if (thisRender.cancelled) return;
 
   document.body.className = `pagina-${page}`;
 
-  // Renderiza o menu, passando a página atual para ocultar menu na página login
   menuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : Menu(currentUser, page);
 
-  // Renderiza o menu lateral
   const lateralMenuContainer = document.getElementById('menu-lateral');
   if (lateralMenuContainer) {
     lateralMenuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : MenuLateral(currentUser, page);
-    // Após inserir o HTML, aplica a classe 'active' ao botão da página atual
-    const activeButton = lateralMenuContainer.querySelector(`button[data-page="${page}"]`);
-    if (activeButton) {
-      activeButton.classList.add('active');
-    }
   }
 
-   // Corrigido: usar event delegation para garantir que cliques em ícones e spans também funcionem
   if (menuContainer) {
     menuContainer.onclick = e => {
       let target = e.target;
-      // sobe na árvore até encontrar botão ou sair
       while (target && target !== menuContainer && target.tagName !== 'BUTTON') {
         target = target.parentElement;
       }
@@ -180,8 +188,10 @@ async function render(page) {
     };
   }
 
-  // Conteúdo principal
   let content = '';
+  let clientesData = null;
+  let reparacoesData = null;
+  let tecnicosData = null;
 
   switch (page) {
     case 'login':
@@ -194,26 +204,37 @@ async function render(page) {
 
     case 'tecnicos':
       if (!currentUser) return render('login');
-      const tecnicosData = await fetchTecnicos();
+      tecnicosData = await fetchTecnicos();
+      if (thisRender.cancelled) return;
       content = TecnicosPage(tecnicosData);
+      break;
+
+    case 'reparacoes':
+      if (!currentUser) return render('login');
+      reparacoesData = await fetchReparacoes();
+      if (thisRender.cancelled) return;
+      content = ReparacoesPage(reparacoesData);
+      break;
+
+    case 'clientes':
+      if (!currentUser) return render('login');
+      clientesData = await fetchClientes();
+      if (thisRender.cancelled) return;
+      content = ClientesPage(clientesData);
       break;
 
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
 
-// Se esta renderização foi cancelada, aborta
   if (thisRender.cancelled) return;
 
-  // Renderiza o conteúdo
   conteudoContainer.innerHTML = '';
   const divContent = document.createElement('div');
   divContent.innerHTML = content;
   conteudoContainer.appendChild(divContent);
 
-  // Eventos pós-render
   if (page === 'login') {
-    // Limpa timers e listeners para login
     removeActivityListeners();
     if (inactivityTimeout) clearTimeout(inactivityTimeout);
     if (sessionCheckInterval) {
@@ -232,7 +253,6 @@ async function render(page) {
         currentUser = u;
         resetInactivityTimer();
         setupActivityListeners();
-        // Inicia verificação periódica da sessão
         if (!sessionCheckInterval) {
           sessionCheckInterval = setInterval(async () => {
             const user = await checkSession();
@@ -267,8 +287,15 @@ async function render(page) {
       }
     };
   }
+
+  if (page === 'reparacoes') {
+    setupReparacoesPageListeners();
+    setupReparacoesPageListeners.setDados(reparacoesData);
+  }
+
+  if (page === 'clientes') {
+    setupClientesPageListeners(clientesData);
+  }
 }
 
-
-// Inicialização
 render('login');
