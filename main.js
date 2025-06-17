@@ -124,7 +124,33 @@ async function doLogout() {
   render('login');
 }
 
+function carregarEstilo(href) {
+  if (!document.querySelector(`link[href="${href}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+  }
+}
+
 async function render(page) {
+  switch (page) {
+    case 'clientes':
+      carregarEstilo('/styles/pagina-clientes.css');
+      break;
+    case 'dashboard':
+      carregarEstilo('/styles/pagina-dashboard.css');
+      break;
+    case 'tecnicos':
+      carregarEstilo('/styles/pagina-tecnicos.css');
+      break;
+    case 'reparacoes':
+      carregarEstilo('/styles/pagina-reparacoes.css');
+      break;
+    default:
+      // Nenhum estilo específico
+  }
+  
   if (render.currentRender) {
     render.currentRender.cancelled = true;
   }

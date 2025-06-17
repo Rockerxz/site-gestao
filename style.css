@@ -286,154 +286,125 @@ body.pagina-login #login-error {
   font-weight: bold;
 }
 
-
-
-
-/* Container branco para a página clientes */
-.clientes-container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pesquisa-clientes {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-/* Botão adicionar cliente */
-#btn-adicionar-cliente {
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'Inter', sans-serif;
-  transition: background-color 0.3s ease;
-}
-
-.btn-adicionar:hover {
-  background-color: #0056b3;
-}
-
-
-/* Barra de pesquisa */
-#barra-pesquisa-clientes {
-  padding: 8px 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 200px;
-  box-sizing: border-box;
-}
-
-.clientes-tabela {
+/* Modal overlay com fundo cinzento-claro translúcido */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-collapse: collapse;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  border-top: 2px solid #ccc;
-  border-bottom: 2px solid #ccc;
-}
-
-.clientes-tabela thead tr {
-  background-color: #f0f0f0;
-}
-
-.clientes-tabela th, .clientes-tabela td {
-  padding: 10px 12px;
-  border-top: 2px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  border-left: 2px solid #ddd;
-  border-right: 2px solid #ddd;
-  text-align: left;
-}
-
-/* Primeira coluna: remove borda esquerda */
-.clientes-tabela th:first-child,
-.clientes-tabela td:first-child {
-  border-left: none;
-}
-
-/* Última coluna: remove borda direita */
-.clientes-tabela th:last-child,
-.clientes-tabela td:last-child {
-  border-right: none;
-}
-
-
-.clientes-tabela tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
-.acoes-coluna {
+  height: 100%;
+  background-color: rgba(220, 220, 220, 0.85); /* cinzento-claro translúcido */
   display: flex;
-  gap: 8px;
-  justify-content: flex-start;
-}
-
-.acoes-coluna button {
-  background-color: #007BFF;
-  border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.3s ease;
-}
-
-.acoes-coluna button:hover {
-  background-color: #0056b3;
-}
-
-/* Rodapé da lista com paginação e feedback */
-.clientes-footer {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* Conteúdo do modal com fundo branco e bordas arredondadas */
+.modal-content {
+  background-color: #f9f9f9; /* fundo neutro claro */
+  padding: 30px 40px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: 'Inter', sans-serif;
+  color: #333333; /* cinzento-escuro para texto */
+}
+
+/* Título do modal */
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: #2c2c2c;
+  text-align: center;
+}
+
+/* Form group para espaçamento vertical */
+.form-group {
+  margin-bottom: 18px;
+}
+
+/* Label com cor cinzento-escuro */
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+}
+
+/* Container para input com ícone */
+.input-icon {
+  position: relative;
+}
+
+/* Ícone dentro do input */
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666666; /* cinzento-escuro */
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* Inputs com padding para não sobrepor o ícone */
+.input-icon input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  color: #333333;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input-icon input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Botões do modal alinhados à direita com espaçamento */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
   margin-top: 10px;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  color: #555;
 }
 
-.clientes-paginacao {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.btn-paginacao {
-  background-color: white;
-  color: #666;
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  border-radius: 4px;
+/* Botão secundário Voltar */
+.btn-secondary {
+  background-color: #e0e0e0;
+  color: #555555;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
   transition: background-color 0.3s ease;
 }
 
+.btn-secondary:hover {
+  background-color: #c7c7c7;
+}
 
-.btn-pagina-atual {
+/* Botão primário Adicionar Cliente */
+.btn-primary {
   background-color: #007BFF;
   color: white;
   border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: default;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
 }
