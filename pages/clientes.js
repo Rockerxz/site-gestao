@@ -1,3 +1,5 @@
+import { AddClienteModal } from '../forms/add-cliente.js';
+
 export function ClientesPage(clientes = []) {
   // clientes = array de objetos com { id, nome, empresa, endereco, email, telefone, totalReparacoes }
 
@@ -85,8 +87,19 @@ export function setupClientesPageListeners(clientes) {
   const btnSeguinte = document.getElementById('btn-seguinte');
   const btnPaginaAtual = document.getElementById('btn-pagina-atual');
   const feedback = document.getElementById('clientes-feedback');
+  const btnAdicionarCliente = document.getElementById('btn-adicionar-cliente');
 
-  if (!inputPesquisa || !tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !feedback) return;
+  // Add this helper function inside pages/clientes.js
+  function carregarEstilo(href) {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+    }
+  }
+
+  if (!inputPesquisa || !tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !feedback || !btnAdicionarCliente) return;
 
   let paginaAtual = 1;
   const itensPorPagina = 10;
@@ -143,7 +156,26 @@ export function setupClientesPageListeners(clientes) {
       atualizarPaginacao();
     }
   });
-  
+   
+  // Evento para abrir modal de adicionar cliente
+  btnAdicionarCliente.addEventListener('click', () => {
+    // Load the modal CSS style before showing modal
+    carregarEstilo('/styles/add-cliente-modal.css');
+    // Cria container do modal e adiciona ao body
+    const modalContainer = document.createElement('div');
+    modalContainer.id = 'modal-add-cliente-container';
+    modalContainer.innerHTML = AddClienteModal();
+    document.body.appendChild(modalContainer);
+
+    // Evento para fechar modal ao clicar no botão Voltar
+    const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
+    if (btnFechar) {
+      btnFechar.addEventListener('click', () => {
+        modalContainer.remove();
+      });
+    }
+  });
+
 
   // Inicializa lista
   atualizarPaginacao();

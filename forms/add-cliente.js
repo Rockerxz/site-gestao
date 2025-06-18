@@ -2,13 +2,18 @@ export function AddClienteModal() {
   return `
     <div class="modal-overlay">
       <div class="modal-content">
-        <h2>Adicionar Cliente</h2>
+        <div class="modal-header">
+          <h2>Adicionar Cliente</h2>
+           <button class="modal-close" id="btn-fechar-modal" title="Fechar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
         <form id="form-adicionar-cliente" autocomplete="off" novalidate>
           <div class="form-group">
             <label for="nome-cliente">Nome</label>
             <div class="input-icon">
               <i class="fa-solid fa-user"></i>
-              <input type="text" id="nome-cliente" name="nome" placeholder="Nome do cliente" required>
+              <input type="text" id="nome-cliente" name="nome">
             </div>
           </div>
 
@@ -16,7 +21,7 @@ export function AddClienteModal() {
             <label for="empresa-cliente">Empresa</label>
             <div class="input-icon">
               <i class="fa-solid fa-building"></i>
-              <input type="text" id="empresa-cliente" name="empresa" placeholder="Empresa" required>
+              <input type="text" id="empresa-cliente" name="empresa">
             </div>
           </div>
 
@@ -24,7 +29,7 @@ export function AddClienteModal() {
             <label for="endereco-cliente">Endereço</label>
             <div class="input-icon">
               <i class="fa-solid fa-house"></i>
-              <input type="text" id="endereco-cliente" name="endereco" placeholder="Endereço" required>
+              <input type="text" id="endereco-cliente" name="endereco">
             </div>
           </div>
 
@@ -32,7 +37,7 @@ export function AddClienteModal() {
             <label for="email-cliente">Email</label>
             <div class="input-icon">
               <i class="fa-solid fa-envelope"></i>
-              <input type="email" id="email-cliente" name="email" placeholder="Email" required>
+              <input type="email" id="email-cliente" name="email">
             </div>
           </div>
 
@@ -40,15 +45,13 @@ export function AddClienteModal() {
             <label for="telefone-cliente">Telefone</label>
             <div class="input-icon">
               <i class="fa-solid fa-phone"></i>
-              <input type="tel" id="telefone-cliente" name="telefone" placeholder="Telefone" required>
+              <input type="tel" id="telefone-cliente" name="telefone">
             </div>
           </div>
-
-          <div class="modal-buttons">
-            <button type="button" id="btn-voltar" class="btn-secondary">Voltar</button>
-            <button type="submit" id="btn-adicionar" class="btn-primary">Adicionar Cliente</button>
-          </div>
         </form>
+        <div class="modal-footer">
+          <button id="btn-adicionar" class="btn-primary">Adicionar Cliente</button>
+        </div>
       </div>
     </div>
   `;
