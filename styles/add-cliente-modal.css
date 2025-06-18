@@ -56,6 +56,17 @@
   text-align:left;
 }
 
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 0; /* prevent overflow */
+}
+
 /* Form group para espaçamento vertical */
 .form-group {
   margin-bottom: 18px;
