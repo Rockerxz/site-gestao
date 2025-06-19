@@ -1,6 +1,6 @@
 export function AddClienteModal() {
   return `
-    <div class="modal-overlay">
+     <div class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
           <h2>Adicionar Cliente</h2>
@@ -55,6 +55,14 @@ export function AddClienteModal() {
             </div>
             <!-- Empty div to keep two columns per row -->
             <div class="form-group"></div>
+          </div>
+
+          <!-- Novo campo Comentários -->
+          <div class="form-row">
+            <div class="form-group comentarios-group">
+              <label for="comentarios-cliente">Comentários</label>
+              <textarea id="comentarios-cliente" name="comentarios" rows="4"></textarea>
+            </div>
           </div>
         </form>
         <div class="modal-footer">
