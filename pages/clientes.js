@@ -1,4 +1,5 @@
 import { AddClienteModal } from '../forms/add-cliente.js';
+import { EditClienteModal } from '../forms/edit-cliente.js';
 
 export function ClientesPage(clientes = []) {
   // clientes = array de objetos com { id, nome, empresa, endereco, email, telefone, totalReparacoes }
@@ -60,8 +61,12 @@ function renderClientes(clientes) {
       <td>${escapeHtml(c.telefone)}</td>
       <td>${c.totalReparacoes ?? 0}</td>
       <td class="acoes-coluna">
-        <button class="btn-editar" type="button" title="Editar">Editar</button>
-        <button class="btn-remover" type="button" title="Remover">Remover</button>
+        <button class="btn-editar" type="button" title="Editar">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <button class="btn-remover" type="button" title="Remover">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
       </td>
     </tr>
   `).join('');
@@ -89,13 +94,12 @@ export function setupClientesPageListeners(clientes) {
   const feedback = document.getElementById('clientes-feedback');
   const btnAdicionarCliente = document.getElementById('btn-adicionar-cliente');
 
-  // Add this helper function inside pages/clientes.js
   function carregarEstilo(href) {
     if (!document.querySelector(`link[href="${href}"]`)) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      document.head.appendChild(link);
     }
   }
 
@@ -156,26 +160,158 @@ export function setupClientesPageListeners(clientes) {
       atualizarPaginacao();
     }
   });
-   
+
   // Evento para abrir modal de adicionar cliente
   btnAdicionarCliente.addEventListener('click', () => {
-    // Load the modal CSS style before showing modal
     carregarEstilo('/styles/add-cliente-modal.css');
-    // Cria container do modal e adiciona ao body
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-add-cliente-container';
     modalContainer.innerHTML = AddClienteModal();
     document.body.appendChild(modalContainer);
 
-    // Evento para fechar modal ao clicar no botão Voltar
+    // Botão fechar modal
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
     if (btnFechar) {
       btnFechar.addEventListener('click', () => {
         modalContainer.remove();
       });
     }
+
+    // Botão adicionar cliente e formulário
+    const btnAdicionar = modalContainer.querySelector('#btn-adicionar');
+    const form = modalContainer.querySelector('#form-adicionar-cliente');
+
+    btnAdicionar.addEventListener('click', async () => {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const novoCliente = {
+        nome: form.nome.value.trim(),
+        empresa: form.empresa.value.trim(),
+        endereco: form.endereco.value.trim(),
+        email: form.email.value.trim(),
+        telefone: form.telefone.value.trim(),
+        comentarios: form.comentarios.value.trim(),
+        totalReparacoes: 0
+      };
+
+      try {
+        const res = await fetch('/backend/clientes.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(novoCliente)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          alert('Erro ao adicionar cliente: ' + (errorData.error || 'Erro desconhecido'));
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          clientes.push(data.item);
+          atualizarLista();
+          modalContainer.remove();
+        } else {
+          alert('Erro ao adicionar cliente.');
+        }
+      } catch (error) {
+        alert('Erro ao adicionar cliente: ' + error.message);
+      }
+    });
   });
 
+  // Função para abrir modal de edição com dados do cliente
+  function abrirModalEditarCliente(cliente) {
+    carregarEstilo('/styles/add-cliente-modal.css'); // carregar estilo modal
+
+    const modalContainer = document.createElement('div');
+    modalContainer.id = 'modal-edit-cliente-container';
+    modalContainer.innerHTML = EditClienteModal();
+    document.body.appendChild(modalContainer);
+
+    const form = modalContainer.querySelector('#form-adicionar-cliente');
+    form.nome.value = cliente.nome || '';
+    form.empresa.value = cliente.empresa || '';
+    form.endereco.value = cliente.endereco || '';
+    form.email.value = cliente.email || '';
+    form.telefone.value = cliente.telefone || '';
+    form.comentarios.value = cliente.comentarios || '';
+
+    const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
+    btnFechar.addEventListener('click', () => modalContainer.remove());
+
+    const btnSalvar = modalContainer.querySelector('#btn-adicionar');
+
+    btnSalvar.addEventListener('click', async () => {
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const clienteAtualizado = {
+        id: cliente.id,
+        nome: form.nome.value.trim(),
+        empresa: form.empresa.value.trim(),
+        endereco: form.endereco.value.trim(),
+        email: form.email.value.trim(),
+        telefone: form.telefone.value.trim(),
+        comentarios: form.comentarios.value.trim(),
+        totalReparacoes: cliente.totalReparacoes || 0
+      };
+
+      try {
+        const res = await fetch('/backend/clientes.php', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(clienteAtualizado)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          alert('Erro ao atualizar cliente: ' + (errorData.error || 'Erro desconhecido'));
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          const index = clientes.findIndex(c => c.id === cliente.id);
+          if (index !== -1) {
+            clientes[index] = clienteAtualizado;
+            atualizarLista();
+          }
+          modalContainer.remove();
+        } else {
+          alert('Erro ao atualizar cliente.');
+        }
+      } catch (error) {
+        alert('Erro ao atualizar cliente: ' + error.message);
+      }
+    });
+  }
+
+  // Listener para botões editar - movido para o escopo principal da função
+  tbody.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-editar');
+    if (!btn) return;
+
+    const tr = btn.closest('tr');
+    if (!tr) return;
+
+    const id = tr.getAttribute('data-id');
+    if (!id) return;
+
+    const cliente = clientes.find(c => c.id == id);
+    if (!cliente) {
+      alert('Cliente não encontrado');
+      return;
+    }
+
+    abrirModalEditarCliente(cliente);
+  });
 
   // Inicializa lista
   atualizarPaginacao();

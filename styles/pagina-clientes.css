@@ -33,7 +33,7 @@
   transition: background-color 0.3s ease;
 }
 
-.btn-adicionar:hover {
+#btn-adicionar-cliente:hover {
   background-color: #0056b3;
 }
 
@@ -69,6 +69,10 @@
   text-align: left;
 }
 
+.clientes-tabela tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
 /* Primeira coluna: remove borda esquerda */
 .clientes-tabela th:first-child,
 .clientes-tabela td:first-child {
@@ -81,9 +85,41 @@
   border-right: none;
 }
 
+/* Ajustes específicos para largura das colunas da tabela clientes */
+.clientes-tabela th:nth-child(1), /* Nome */
+.clientes-tabela td:nth-child(1) {
+  width: 20%; /* maior largura para nome */
+}
 
-.clientes-tabela tbody tr:hover {
-  background-color: #f9f9f9;
+.clientes-tabela th:nth-child(2), /* Empresa */
+.clientes-tabela td:nth-child(2) {
+  width: 20%;
+}
+
+.clientes-tabela th:nth-child(3), /* Endereço */
+.clientes-tabela td:nth-child(3) {
+  width: 20%;
+}
+
+.clientes-tabela th:nth-child(4), /* Email */
+.clientes-tabela td:nth-child(4) {
+  width: 20%;
+}
+
+.clientes-tabela th:nth-child(5), /* Telefone */
+.clientes-tabela td:nth-child(5) {
+  width: 10%;
+}
+
+.clientes-tabela th:nth-child(6), /* Total de Reparações */
+.clientes-tabela td:nth-child(6) {
+  width: 5%;
+}
+
+.clientes-tabela th:nth-child(7), /* Ações */
+.clientes-tabela td:nth-child(7) {
+  width: 5%;
+  text-align: center;
 }
 
 .acoes-coluna {
@@ -92,7 +128,7 @@
   justify-content: flex-start;
 }
 
-.acoes-coluna button {
+.btn-editar {
   background-color: #007BFF;
   border: none;
   color: white;
@@ -103,8 +139,23 @@
   transition: background-color 0.3s ease;
 }
 
-.acoes-coluna button:hover {
+.btn-editar:hover {
   background-color: #0056b3;
+}
+
+.btn-remover {
+  background-color: #ff2a00;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-remover:hover {
+  background-color: #c62100;
 }
 
 /* Rodapé da lista com paginação e feedback */
