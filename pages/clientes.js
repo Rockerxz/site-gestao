@@ -1,5 +1,6 @@
 import { AddClienteModal } from '../forms/add-cliente.js';
 import { EditClienteModal } from '../forms/edit-cliente.js';
+import { RemoveClienteModal } from '../forms/remove-cliente.js';
 
 export function ClientesPage(clientes = []) {
   // clientes = array de objetos com { id, nome, empresa, endereco, email, telefone, totalReparacoes }
