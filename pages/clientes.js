@@ -7,7 +7,7 @@ export function ClientesPage(clientes = []) {
 
   return `
     <section class="clientes-page">
-      <h1>Clientes</h1>
+      <h1 id="title-clientes">Clientes</h1>
       <button id="btn-adicionar-cliente" class="btn-primary" type="button">
        <i class="fa-solid fa-circle-plus"></i>Adicionar Cliente</button>
 
@@ -136,8 +136,11 @@ export function setupClientesPageListeners(clientes) {
 
     tbody.innerHTML = renderClientes(itensPagina);
 
-    btnAnterior.disabled = paginaAtual === 1;
-    btnSeguinte.disabled = paginaAtual === totalPaginas;
+
+    // Atualizar estado dos botões
+    btnAnterior.disabled = paginaAtual <= 1;
+    btnSeguinte.disabled = paginaAtual >= totalPaginas;
+
     btnPaginaAtual.textContent = paginaAtual;
 
     feedback.textContent = `Mostrando ${inicio + 1} a ${Math.min(fim, totalItens)} de ${totalItens} clientes`;
@@ -312,6 +315,74 @@ export function setupClientesPageListeners(clientes) {
     }
 
     abrirModalEditarCliente(cliente);
+  });
+
+  // Função para abrir modal de remoção com dados do cliente
+  function abrirModalRemoverCliente(cliente) {
+    carregarEstilo('/styles/remove-cliente-modal.css'); // Carregue o CSS do modal se existir
+
+    const modalContainer = document.createElement('div');
+    modalContainer.id = 'modal-remove-cliente-container';
+    modalContainer.innerHTML = RemoveClienteModal(cliente.nome);
+    document.body.appendChild(modalContainer);
+
+    const btnCancelar = modalContainer.querySelector('#btn-cancelar');
+    const btnRemover = modalContainer.querySelector('#btn-remover');
+
+    btnCancelar.addEventListener('click', () => {
+      modalContainer.remove();
+    });
+
+    btnRemover.addEventListener('click', async () => {
+      try {
+        const res = await fetch('/backend/clientes.php', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: cliente.id })
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          alert('Erro ao remover cliente: ' + (errorData.error || 'Erro desconhecido'));
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success) {
+          // Remover cliente da lista local
+          const index = clientes.findIndex(c => c.id === cliente.id);
+          if (index !== -1) {
+            clientes.splice(index, 1);
+            atualizarLista();
+          }
+          modalContainer.remove();
+        } else {
+          alert('Erro ao remover cliente.');
+        }
+      } catch (error) {
+        alert('Erro ao remover cliente: ' + error.message);
+      }
+    });
+  }
+
+  // Listener para botões remover - delegação de evento no tbody
+  tbody.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-remover');
+    if (!btn) return;
+
+    const tr = btn.closest('tr');
+    if (!tr) return;
+
+    const id = tr.getAttribute('data-id');
+    if (!id) return;
+
+    const cliente = clientes.find(c => c.id == id);
+    if (!cliente) {
+      alert('Cliente não encontrado');
+      return;
+    }
+
+    abrirModalRemoverCliente(cliente);
   });
 
   // Inicializa lista

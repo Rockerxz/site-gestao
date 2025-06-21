@@ -1,3 +1,13 @@
+
+#title-clientes {
+  margin-bottom: 20px;
+}
+
+#btn-adicionar-cliente {
+  margin-bottom: 30px; /* para dar espaçamento abaixo do botão */
+  margin-top: 0;
+}
+
 /* Container branco para a página clientes */
 .clientes-container {
   background: #fff;
@@ -184,6 +194,10 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: background-color 0.3s ease;
+}
+
+.btn-paginacao:hover {
+  background-color: #f0f0f0;
 }
 
 

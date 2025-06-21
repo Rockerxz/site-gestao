@@ -1,0 +1,80 @@
+.remove-cliente-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6); /* overlay escuro com opacidade */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.remove-cliente-modal {
+  font-family: 'Inter', sans-serif;
+  background: white;
+  width: 650px; /* horizontal longa */
+  max-width: 90vw;
+  height: 200px; /* vertical curta */
+  padding: 20px 30px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.remove-cliente-modal h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: left;
+  color: #222;
+}
+
+.remove-cliente-modal p {
+  margin: 0;
+  font-size: 1rem;
+  color: #444;
+  text-align: left;
+  margin-top: 10px;
+  flex-grow: 1;
+}
+
+.remove-cliente-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end; /* alinhado à esquerda */
+}
+
+.btn-cancelar {
+  background: white;
+  color: #777;
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancelar:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-remover {
+  background: #d93025; /* vermelho */
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-remover:hover {
+  background-color: #b1271b;
+}

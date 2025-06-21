@@ -1,21 +1,25 @@
-export function AddClienteModal() {
+export function RemoveClienteModal(clienteNome = '') {
   return `
-     <div class="modal-overlay" id="modal-remover-cliente">
-       <div class="modal-content small">
-    <div class="modal-header">
-      <h2>Confirmar Remoção</h2>
-      <button class="modal-close" onclick="fecharModal()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+     <div class="remove-cliente-overlay">
+      <div class="remove-cliente-modal" role="dialog" aria-modal="true" aria-labelledby="remove-cliente-title" aria-describedby="remove-cliente-desc">
+        <h2 id="remove-cliente-title">Remover Cliente</h2>
+        <p id="remove-cliente-desc">Tem a certeza que quer remover o cliente <strong>${escapeHtml(clienteNome)}</strong> e os seus dados?</p>
+        <div class="remove-cliente-buttons">
+          <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+          <button type="button" id="btn-remover" class="btn-remover">Remover</button>
+        </div>
+      </div>
     </div>
-    <p>Tem a certeza que pretende remover o cliente <strong>João Silva</strong>?<br>
-    Esta ação irá apagar permanentemente os seus dados.</p>
-    <div class="modal-footer">
-      <button class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
-      <button class="btn btn-danger" onclick="removerClienteConfirmado(clienteId)">Remover</button>
-    </div>
-       </div>
-     </div>
-
   `;
+}
+
+function escapeHtml(text) {
+  if (!text) return '';
+  return text.replace(/[&<>"']/g, m => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[m]);
 }
