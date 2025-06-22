@@ -11,6 +11,7 @@
   justify-content: center;
   padding-top: 10px;
   z-index: 2000;
+  overflow-y: auto;
 }
 
 /* Conteúdo do modal com fundo branco e bordas arredondadas */

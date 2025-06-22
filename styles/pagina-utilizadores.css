@@ -1,0 +1,188 @@
+#title-users {
+  margin-bottom: 20px;
+}
+
+#btn-adicionar-user {
+  margin-bottom: 30px; /* para dar espaçamento abaixo do botão */
+  margin-top: 0;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+#btn-adicionar-user:hover {
+  background-color: #0056b3;
+}
+
+/* Container branco para a página utilizadores */
+.users-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header-users {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+#main-info {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.users-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+}
+
+.users-tabela thead tr {
+  background-color: #f0f0f0;
+}
+
+.users-tabela th, .users-tabela td {
+  padding: 10px 12px;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  text-align: left;
+}
+
+.users-tabela tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Primeira coluna: remove borda esquerda */
+.users-tabela th:first-child,
+.users-tabela td:first-child {
+  border-left: none;
+}
+
+/* Última coluna: remove borda direita */
+.users-tabela th:last-child,
+.users-tabela td:last-child {
+  border-right: none;
+}
+
+/* Ajustes específicos para largura das colunas da tabela utilizadores */
+.users-tabela th:nth-child(1), /* Nome */
+.users-tabela td:nth-child(1) {
+  width: 35%;
+}
+
+.users-tabela th:nth-child(2), /* Email */
+.users-tabela td:nth-child(2) {
+  width: 40%;
+}
+
+.users-tabela th:nth-child(3), /* Password */
+.users-tabela td:nth-child(3) {
+  width: 20%;
+}
+
+.users-tabela th:nth-child(4), /* Ações */
+.users-tabela td:nth-child(4) {
+  width: 5%;
+  text-align: center;
+}
+
+.acoes-coluna {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.btn-editar {
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+.btn-remover {
+  background-color: #ff2a00;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-remover:hover {
+  background-color: #c62100;
+}
+
+/* Rodapé da lista com paginação e feedback */
+.users-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.users-paginacao {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-paginacao {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-paginacao:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-pagina-atual {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: default;
+}

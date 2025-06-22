@@ -101,10 +101,15 @@ body.pagina-login #conteudo {
   background-color: #1a1d23;
 }
 
-/* Ajuste para o botão do utilizador no menu lateral */
+/* Estilo submenu user no menu lateral */
+.menu-lateral .user-menu-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .menu-lateral .user-btn {
   font-size: 1rem;
-  cursor: default;
+  cursor: pointer;
   padding: 10px 14px;
   border-radius: 6px;
   width: 100%;
@@ -112,12 +117,46 @@ body.pagina-login #conteudo {
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  color: #d1d1d1;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
 }
 
 .menu-lateral .user-btn:hover {
-  background-color: transparent;
+  background-color: #1a1d23;
 }
 
+.menu-lateral .user-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #21272d;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  width: 220px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.menu-lateral .user-submenu .submenu-btn {
+  background: transparent;
+  border: none;
+  color: #d1d1d1;
+  padding: 10px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.menu-lateral .user-submenu .submenu-btn:hover {
+  background-color: #1a1d23;
+}
 
 /* Ajuste da navbar para considerar menu colapsado */
 nav.navbar {

@@ -1,9 +1,33 @@
 [
-  { 
-    "id": 1, 
-    "nome": "Admin", 
-    "email": "admin@empresa.com", 
-    "senha": "1234", 
-    "perfil": "admin" 
-  }
+    {
+        "id": 1,
+        "perfil": "Admin",
+        "nome": "admin",
+        "email": "admin@empresa.com",
+        "password": "1234"
+    },
+    {
+        "id": 3,
+        "perfil": "Atendimento",
+        "nome": "a",
+        "email": "a@b",
+        "password": "",
+        "estado": "bloqueado"
+    },
+    {
+        "id": 4,
+        "perfil": "Técnico",
+        "nome": "c",
+        "email": "c@c",
+        "password": "123",
+        "estado": "ativo"
+    },
+    {
+        "id": 5,
+        "perfil": "Técnico",
+        "nome": "gg",
+        "email": "g@g",
+        "password": "123",
+        "estado": "ativo"
+    }
 ]

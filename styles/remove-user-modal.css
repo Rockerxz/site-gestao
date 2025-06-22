@@ -1,4 +1,4 @@
-.remove-cliente-overlay {
+.remove-user-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   z-index: 1000;
 }
 
-.remove-cliente-modal {
+.remove-user-modal {
   font-family: 'Inter', sans-serif;
   background: white;
   width: 650px; /* horizontal longa */
@@ -26,7 +26,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.remove-cliente-modal h2 {
+.remove-user-modal h2 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
   font-weight: 600;
@@ -34,7 +34,7 @@
   color: #222;
 }
 
-.remove-cliente-modal p {
+.remove-user-modal p {
   margin: 0;
   font-size: 1rem;
   color: #444;
@@ -43,7 +43,7 @@
   flex-grow: 1;
 }
 
-.remove-cliente-buttons {
+.remove-user-buttons {
   display: flex;
   gap: 10px;
   justify-content: flex-end; /* alinhado à esquerda */

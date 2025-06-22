@@ -10,7 +10,7 @@ export function LoginPage() {
           <h2 class="login-heading">Inicie sessão</h2>
           
           <input type="text" id="email" name="email" placeholder="Email / Nome de utilizador" required>
-          <input type="password" id="senha" name="senha" placeholder="Palavra-passe" required>
+          <input type="password" id="password" name="password" placeholder="Palavra-passe" required>
           
           <button type="submit">Entrar</button>
           <div id="login-error"></div>

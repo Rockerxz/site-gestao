@@ -5,6 +5,8 @@ import { TecnicosPage } from './pages/tecnicos.js';
 import { DashboardPage } from './pages/dashboard.js';
 import { ReparacoesPage, setupReparacoesPageListeners } from './pages/reparacoes.js';
 import { ClientesPage, setupClientesPageListeners } from './pages/clientes.js';
+import { UsersPage, setupUsersPageListeners } from './pages/utilizadores.js';
+import { DefinicoesUserPage } from './pages/definicoes-user.js';
 import { login, logout, checkSession } from './utils/auth.js';
 
 const menuContainer = document.getElementById('menu');
@@ -95,6 +97,19 @@ async function fetchClientes() {
   }
 }
 
+// Add this function to fetch utilizadores data
+async function fetchUtilizadores() {
+  try {
+    const res = await fetch('/backend/utilizadores.php', { method: 'GET', credentials: 'include' });
+    if (!res.ok) throw new Error('Erro ao buscar utilizadores');
+    const data = await res.json();
+    return Array.isArray(data.data) ? data.data : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 async function addTecnico(nome, email) {
   try {
     const res = await fetch('/backend/tecnicos.php', {
@@ -124,33 +139,8 @@ async function doLogout() {
   render('login');
 }
 
-function carregarEstilo(href) {
-  if (!document.querySelector(`link[href="${href}"]`)) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-  }
-}
-
 async function render(page) {
-  switch (page) {
-    case 'clientes':
-      carregarEstilo('/styles/pagina-clientes.css');
-      break;
-    case 'dashboard':
-      carregarEstilo('/styles/pagina-dashboard.css');
-      break;
-    case 'tecnicos':
-      carregarEstilo('/styles/pagina-tecnicos.css');
-      break;
-    case 'reparacoes':
-      carregarEstilo('/styles/pagina-reparacoes.css');
-      break;
-    default:
-      // Nenhum estilo específico
-  }
-  
+
   if (render.currentRender) {
     render.currentRender.cancelled = true;
   }
@@ -178,6 +168,39 @@ async function render(page) {
   const lateralMenuContainer = document.getElementById('menu-lateral');
   if (lateralMenuContainer) {
     lateralMenuContainer.innerHTML = (page === 'login' && !currentUser) ? '' : MenuLateral(currentUser, page);
+    // Add event listener for user-btn toggle submenu
+    const userBtn = lateralMenuContainer.querySelector('#user-btn');
+    const userSubmenu = lateralMenuContainer.querySelector('#user-submenu');
+
+    if (userBtn && userSubmenu) {
+      userBtn.onclick = e => {
+        e.stopPropagation();
+        const isVisible = userSubmenu.style.display === 'flex' || userSubmenu.style.display === 'block';
+        userSubmenu.style.display = isVisible ? 'none' : 'flex';
+      };
+
+      // Close submenu if click outside
+      document.addEventListener('click', () => {
+        if (userSubmenu.style.display !== 'none') {
+          userSubmenu.style.display = 'none';
+        }
+      });
+    }
+
+    lateralMenuContainer.onclick = e => {
+      let target = e.target;
+      while (target && target !== lateralMenuContainer && target.tagName !== 'BUTTON') {
+        target = target.parentElement;
+      }
+      if (target && target.tagName === 'BUTTON') {
+        e.preventDefault();
+        if (target.dataset.page) {
+          render(target.dataset.page);
+        } else if (target.id === 'logout-btn') {
+          doLogout();
+        }
+      }
+    };
   }
 
   if (menuContainer) {
@@ -197,27 +220,42 @@ async function render(page) {
     };
   }
 
-  if (lateralMenuContainer) {
-    lateralMenuContainer.onclick = e => {
-      let target = e.target;
-      while (target && target !== lateralMenuContainer && target.tagName !== 'BUTTON') {
-        target = target.parentElement;
-      }
-      if (target && target.tagName === 'BUTTON') {
-        e.preventDefault();
-        if (target.dataset.page) {
-          render(target.dataset.page);
-        } else if (target.id === 'logout-btn') {
-          doLogout();
-        }
-      }
-    };
+  // Remove any previously loaded page or modal styles
+  const loadedStyles = document.querySelectorAll('link[data-dynamic-style="true"]');
+  loadedStyles.forEach(link => link.remove());
+
+  // Helper to load a CSS file dynamically with data attribute
+  function loadStyle(href) {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.setAttribute('data-dynamic-style', 'true');
+      document.head.appendChild(link);
+    }
   }
+
+  // Load page-specific style
+  // Map page names to their CSS files in /styles/
+  const pageStyles = {
+    'clientes': '/styles/pagina-clientes.css',
+    'dashboard': '/styles/pagina-dashboard.css',
+    'tecnicos': '/styles/pagina-tecnicos.css',
+    'reparacoes': '/styles/pagina-reparacoes.css',
+    'utilizadores': '/styles/pagina-utilizadores.css',
+    'definicoes-user': '/styles/definicoes-user.css',
+  };
+
+  if (pageStyles[page]) {
+    loadStyle(pageStyles[page]);
+  }
+
 
   let content = '';
   let clientesData = null;
   let reparacoesData = null;
   let tecnicosData = null;
+  let utilizadoresData = null;
 
   switch (page) {
     case 'login':
@@ -249,6 +287,18 @@ async function render(page) {
       content = ClientesPage(clientesData);
       break;
 
+    case 'utilizadores':
+      if (!currentUser) return render('login');
+      utilizadoresData = await fetchUtilizadores();
+      if (thisRender.cancelled) return;
+      content = UsersPage(utilizadoresData);
+      break;
+    
+    case 'definicoes-user':
+      if (!currentUser) return render('login');
+      content = DefinicoesUserPage(currentUser);
+      break;
+
     default:
       content = `<h2>Página não encontrada</h2>`;
   }
@@ -273,8 +323,8 @@ async function render(page) {
     form.onsubmit = async e => {
       e.preventDefault();
       const email = form.email.value;
-      const senha = form.senha.value;
-      const u = await login(email, senha);
+      const password = form.password.value;
+      const u = await login(email, password);
       if (u) {
         currentUser = u;
         resetInactivityTimer();
@@ -321,6 +371,10 @@ async function render(page) {
 
   if (page === 'clientes') {
     setupClientesPageListeners(clientesData);
+  }
+
+  if (page === 'utilizadores') {
+    setupUsersPageListeners(utilizadoresData);
   }
 }
 

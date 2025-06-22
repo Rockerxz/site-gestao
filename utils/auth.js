@@ -18,18 +18,22 @@ export async function checkSession() {
   }
 }
 
-export async function login(emailOrNome, senha) {
+export async function login(emailOrNome, password) {
   try {
     const res = await fetch('/backend/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // para receber cookie de sessão
-      body: JSON.stringify({ email: emailOrNome, senha })
+      body: JSON.stringify({ email: emailOrNome, password })
     });
     if (!res.ok) return null;
     const data = await res.json();
     if (data.success) {
       return data.user;
+    }
+    if (data.error === 'Este perfil está desativado') {
+      alert(data.error);
+      return null;
     }
     return null;
   } catch {

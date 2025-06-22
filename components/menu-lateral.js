@@ -6,9 +6,16 @@ export function MenuLateral(user, currentPage) {
       ${
         user && currentPage !== 'login'
           ? `
-            <button class="user-btn" title="${user.nome}">
-              <i class="fa-solid fa-user"></i><span class="btn-text" style="margin-left: 0.5rem;">${user.nome}</span>
-            </button>
+            <div class="user-menu-wrapper">
+              <button class="user-btn" title="${user.nome}" id="user-btn">
+                <i class="fa-solid fa-user"></i><span class="btn-text" style="margin-left: 0.5rem;">${user.nome}</span>
+                <i class="fa-solid fa-caret-down" style="margin-left: auto;"></i>
+              </button>
+              <div class="user-submenu" id="user-submenu" style="display:none;">
+                <button data-page="definicoes-user" class="submenu-btn">Configurações</button>
+                <button id="logout-btn" class="submenu-btn">Terminar sessão</button>
+              </div>
+            </div>
             <div class="nav-section-title">NAVEGAÇÃO PRINCIPAL</div>
             <button data-page="dashboard" title="Painel Geral" class="nav-btn">
               <i class="fa-solid fa-house"></i><span class="btn-text" style="margin-left: 0.5rem;">Painel Geral</span>
@@ -28,11 +35,8 @@ export function MenuLateral(user, currentPage) {
             <button data-page="config" title="Configurações" class="nav-btn">
               <i class="fa-solid fa-gear"></i><span class="btn-text" style="margin-left: 0.5rem;">Configurações</span>
             </button>
-            <button data-page="users" title="Utilizadores" class="nav-btn">
+            <button data-page="utilizadores" title="Utilizadores" class="nav-btn">
               <i class="fa-solid fa-users-gear"></i><span class="btn-text" style="margin-left: 0.5rem;">Utilizadores</span>
-            </button>
-            <button id="logout-btn" title="Sair (${user.nome})">
-              <i class="fa-solid fa-right-from-bracket"></i><span class="btn-text" style="margin-left: 0.5rem;">Sair (${user.nome})</span>
             </button>
           `
           : ``

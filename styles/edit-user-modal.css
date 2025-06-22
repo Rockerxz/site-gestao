@@ -1,0 +1,184 @@
+/* Modal overlay com fundo cinzento escuro translúcido */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* fundo mais escuro para foco */
+  display: flex;
+  align-items: center; /* centraliza verticalmente */
+  justify-content: center;
+  padding: 20px;
+  z-index: 3000;
+  overflow-y: auto; /* permite scroll se conteúdo for maior que viewport */
+}
+
+/* Conteúdo do modal com fundo branco e bordas arredondadas */
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 14px; /* bordas mais arredondadas para visual moderno */
+  width: 600px;
+  max-width: 90vw;
+  font-family: 'Inter', sans-serif;
+  color: #222222;
+  box-sizing: border-box;
+  position: relative;
+  animation: fadeInScale 0.3s ease forwards;
+}
+
+
+/* Cabeçalho do modal com título à esquerda e botão fechar à direita */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #888888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #000000;
+}
+
+/* Título do modal */
+.modal-content h2 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.9rem;
+  color: #111111;
+  text-align: left;
+}
+
+/* Ajuste para o ícone do estado para ficar alinhado e estilizado */
+#estado-user {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #fff;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 14px 12px 40px;
+  font-size: 1rem;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#estado-user:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Ícone dentro do input-icon para estado */
+.input-icon i.fa-toggle-on {
+  color: #007BFF;
+}
+
+
+/* Form rows */
+.form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.form-row .form-group {
+  flex: 1 1 45%;
+  min-width: 200px;
+}
+
+/* Form group para espaçamento vertical */
+.form-group {
+  margin-bottom: 0;
+}
+
+/* Label com cor cinzento escuro */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444444;
+  font-size: 1rem;
+}
+
+/* Container para input com ícone */
+.input-icon {
+  position: relative;
+}
+
+/* Ícone dentro do input */
+.input-icon i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999999;
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* Inputs e selects com padding para não sobrepor o ícone */
+.input-icon input,
+.input-icon select {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  font-size: 1rem;
+  border: 1.8px solid #ccc;
+  border-radius: 8px;
+  color: #333333;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease
+}
+
+.input-icon input:focus,
+.input-icon select:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.form-group select#perfil-user {
+  width: auto; /* Ajusta para o tamanho do conteúdo */
+  min-width: 200px; /* Mantém um tamanho mínimo consistente com inputs */
+  margin-bottom: 20px; /* Espaçamento inferior igual aos outros campos */
+  display: block; /* Garante que o margin-bottom funcione */
+}
+
+
+/* Footer com botões */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  gap: 15px;
+}
+
+/* Botão principal */
+#btn-adicionar {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btn-adicionar:hover {
+  background-color: #0056b3;
+}

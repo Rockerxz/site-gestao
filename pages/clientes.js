@@ -95,11 +95,22 @@ export function setupClientesPageListeners(clientes) {
   const feedback = document.getElementById('clientes-feedback');
   const btnAdicionarCliente = document.getElementById('btn-adicionar-cliente');
 
-  function carregarEstilo(href) {
+  function loadModalStyle(href) {
+    // Remove previously loaded dynamic modal styles (only modal styles, not page styles)
+    const modalStylePrefix = '/styles/';
+    const previousStyles = document.querySelectorAll('link[data-dynamic-style="true"]');
+    previousStyles.forEach(link => {
+      // Remove only if href is a modal style (e.g. contains 'modal' in filename)
+      if (link.href.includes('modal') && link.href !== location.origin + href) {
+        link.remove();
+      }
+    });
+
     if (!document.querySelector(`link[href="${href}"]`)) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
+      link.setAttribute('data-dynamic-style', 'true');
       document.head.appendChild(link);
     }
   }
@@ -167,7 +178,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Evento para abrir modal de adicionar cliente
   btnAdicionarCliente.addEventListener('click', () => {
-    carregarEstilo('/styles/add-cliente-modal.css');
+    loadModalStyle('/styles/add-cliente-modal.css')
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-add-cliente-container';
     modalContainer.innerHTML = AddClienteModal();
@@ -230,8 +241,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Função para abrir modal de edição com dados do cliente
   function abrirModalEditarCliente(cliente) {
-    carregarEstilo('/styles/add-cliente-modal.css'); // carregar estilo modal
-
+    loadModalStyle('/styles/edit-cliente-modal.css')
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-edit-cliente-container';
     modalContainer.innerHTML = EditClienteModal();
@@ -319,7 +329,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Função para abrir modal de remoção com dados do cliente
   function abrirModalRemoverCliente(cliente) {
-    carregarEstilo('/styles/remove-cliente-modal.css'); // Carregue o CSS do modal se existir
+    loadModalStyle('/styles/remove-cliente-modal.css')
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-remove-cliente-container';

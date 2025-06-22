@@ -5,7 +5,7 @@ header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents('php://input'), true);
 $loginInput = $data['email'] ?? ''; // pode ser email ou nome
-$senha = $data['senha'] ?? '';
+$password = $data['password'] ?? '';
 
 $utilizadoresPath = __DIR__ . '/../data/utilizadores.json';
 if (!file_exists($utilizadoresPath)) {
@@ -16,12 +16,17 @@ if (!file_exists($utilizadoresPath)) {
 $utilizadores = json_decode(file_get_contents($utilizadoresPath), true);
 
 foreach ($utilizadores as $u) {
-    if (($u['email'] === $loginInput || $u['nome'] === $loginInput) && $u['senha'] === $senha) {
+    if (($u['email'] === $loginInput || $u['nome'] === $loginInput) && $u['password'] === $password) {
+        if (isset($u['estado']) && $u['estado'] === 'bloqueado') {
+            echo json_encode(['success' => false, 'error' => 'Este perfil está desativado']);
+            exit;
+        }
         $_SESSION['user'] = [
             'id' => $u['id'],
             'nome' => $u['nome'],
             'email' => $u['email'],
-            'perfil' => $u['perfil']
+            'perfil' => $u['perfil'],
+            'estado' => $u['estado'] ?? 'ativo'
         ];
         $_SESSION['ultimoAcesso'] = time(); // Regista o tempo do login
         echo json_encode(['success' => true, 'user' => $_SESSION['user']]);
