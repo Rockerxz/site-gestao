@@ -1,3 +1,4 @@
+import { showToast } from '../components/toast.js';
 export function DefinicoesUserPage(user = {}) {
   return `
     <section class="definicoes-user-page">
@@ -52,4 +53,62 @@ function escapeHtml(text) {
     '"': '&quot;',
     "'": '&#39;'
   })[m]);
+}
+
+// Nova função para gerir submissão e atualização
+export function setupDefinicoesUserListeners(user) {
+  const form = document.getElementById('form-definicoes-user');
+  const btnAtualizar = document.getElementById('btn-atualizar');
+
+  if (!form || !btnAtualizar) return;
+
+  btnAtualizar.onclick = async () => {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const nome = form.nome.value.trim();
+    const email = form.email.value.trim();
+    const password = form.password.value;
+
+    // Construir objeto para enviar
+    const payload = {
+      id: user.id,
+      perfil: user.perfil, // manter perfil atual
+      nome,
+      email,
+      password: password || '', // se vazio, backend pode decidir manter password atual
+      estado: user.estado || 'ativo' // manter estado atual
+    };
+
+    try {
+      const res = await fetch('/backend/utilizadores.php', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'include'
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        showToast('Erro ao atualizar dados: ' + (errorData.error || 'Erro desconhecido'), 'error');
+        return;
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        showToast('Dados atualizados com sucesso.', 'success');
+        // Atualizar user localmente (opcional)
+        user.nome = nome;
+        user.email = email;
+        // Limpar campo password
+        form.password.value = '';
+      } else {
+        showToast('Erro ao atualizar dados.', 'error');
+      }
+    } catch (error) {
+      showToast('Erro ao atualizar dados: ' + error.message, 'error');
+    }
+  };
 }

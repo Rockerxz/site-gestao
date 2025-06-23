@@ -223,6 +223,52 @@ nav button:hover {
   gap: 0.5rem;
 }
 
+#toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 320px;
+}
+
+/* Toast notifications */
+.toast {
+  cursor: default;
+  user-select: none;
+  min-width: 200px;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+  /* Optional: add a subtle drop shadow or slight elevation */
+}
+
+/* Toast types */
+.toast-success {
+  background-color: #28a745;
+}
+
+.toast-error {
+  background-color: #dc3545;
+}
+
+.toast-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.toast-info {
+  background-color: #17a2b8;
+}
 
 /* Estilo específico para a página de login */
 body.pagina-login {

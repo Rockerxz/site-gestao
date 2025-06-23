@@ -1,3 +1,4 @@
+import { showToast } from '../components/toast.js';
 import { AddClienteModal } from '../forms/add-cliente.js';
 import { EditClienteModal } from '../forms/edit-cliente.js';
 import { RemoveClienteModal } from '../forms/remove-cliente.js';
@@ -221,7 +222,7 @@ export function setupClientesPageListeners(clientes) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao adicionar cliente: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao adicionar cliente: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -231,10 +232,10 @@ export function setupClientesPageListeners(clientes) {
           atualizarLista();
           modalContainer.remove();
         } else {
-          alert('Erro ao adicionar cliente.');
+          showToast('Erro ao adicionar cliente.', 'error');
         }
       } catch (error) {
-        alert('Erro ao adicionar cliente: ' + error.message);
+        showToast('Erro ao adicionar cliente: ' + error.message, 'error');
       }
     });
   });
@@ -286,7 +287,7 @@ export function setupClientesPageListeners(clientes) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao atualizar cliente: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao atualizar cliente: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -299,10 +300,10 @@ export function setupClientesPageListeners(clientes) {
           }
           modalContainer.remove();
         } else {
-          alert('Erro ao atualizar cliente.');
+          showToast('Erro ao atualizar cliente.', 'error');
         }
       } catch (error) {
-        alert('Erro ao atualizar cliente: ' + error.message);
+        showToast('Erro ao atualizar cliente: ' + error.message, 'error');
       }
     });
   }
@@ -320,7 +321,7 @@ export function setupClientesPageListeners(clientes) {
 
     const cliente = clientes.find(c => c.id == id);
     if (!cliente) {
-      alert('Cliente não encontrado');
+      showToast('Cliente não encontrado', 'error');
       return;
     }
 
@@ -353,7 +354,7 @@ export function setupClientesPageListeners(clientes) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao remover cliente: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao remover cliente: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -367,10 +368,10 @@ export function setupClientesPageListeners(clientes) {
           }
           modalContainer.remove();
         } else {
-          alert('Erro ao remover cliente.');
+          showToast('Erro ao remover cliente.', 'error');
         }
       } catch (error) {
-        alert('Erro ao remover cliente: ' + error.message);
+        showToast('Erro ao remover cliente: ' + error.message, 'error');
       }
     });
   }
@@ -388,7 +389,7 @@ export function setupClientesPageListeners(clientes) {
 
     const cliente = clientes.find(c => c.id == id);
     if (!cliente) {
-      alert('Cliente não encontrado');
+      showToast('Cliente não encontrado', 'error');
       return;
     }
 

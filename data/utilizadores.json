@@ -4,30 +4,30 @@
         "perfil": "Admin",
         "nome": "admin",
         "email": "admin@empresa.com",
-        "password": "1234"
-    },
-    {
-        "id": 3,
-        "perfil": "Atendimento",
-        "nome": "a",
-        "email": "a@b",
-        "password": "",
-        "estado": "bloqueado"
+        "password": "$2y$10$Fy4KZAsQ8itHGLCWx4fLOeTqgVMnBxylF7v.Nfrj8afrY9ug.d28."
     },
     {
         "id": 4,
         "perfil": "Técnico",
-        "nome": "c",
-        "email": "c@c",
-        "password": "123",
+        "nome": "a",
+        "email": "a@a",
+        "password": "$2y$10$RWXG5RXJbdVwbbzraVfGQecmwKc8gLJt4x7Ym6GhgUfGzTWHH6W2C",
         "estado": "ativo"
     },
     {
         "id": 5,
         "perfil": "Técnico",
-        "nome": "gg",
-        "email": "g@g",
-        "password": "123",
+        "nome": "b",
+        "email": "b@b",
+        "password": "$2y$10$yHmipnhxQyMgNYuUp6kgk.RCQp5aNkblhv7Nm6xQNPeLK35vEk1n2",
+        "estado": "ativo"
+    },
+    {
+        "id": 6,
+        "perfil": "Atendimento",
+        "nome": "c",
+        "email": "c@c",
+        "password": "$2y$10$T8DqqZoXOkiX4BBJoKnOA.43blUaLpVle962GvkWS3zFeI22DG9Oy",
         "estado": "ativo"
     }
 ]

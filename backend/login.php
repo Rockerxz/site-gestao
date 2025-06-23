@@ -29,7 +29,7 @@ if (!file_exists($utilizadoresPath)) {
 $utilizadores = json_decode(file_get_contents($utilizadoresPath), true);
 
 foreach ($utilizadores as $u) {
-    if (($u['email'] === $loginInput || $u['nome'] === $loginInput) && $u['password'] === $password) {
+    if (($u['email'] === $loginInput || $u['nome'] === $loginInput) && password_verify($password, $u['password'])) {
         if (isset($u['estado']) && $u['estado'] === 'bloqueado') {
             echo json_encode(['success' => false, 'error' => 'Este perfil está desativado']);
             exit;

@@ -1,3 +1,4 @@
+import { showToast } from '../components/toast.js';
 import { AddUtilizadorModal } from '../forms/add-user.js';
 import { EditUtilizadorModal } from '../forms/edit-user.js';
 import { RemoveUtilizadorModal } from '../forms/remove-user.js';
@@ -193,7 +194,7 @@ export function setupUsersPageListeners(users) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao adicionar utilizador: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao adicionar utilizador: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -203,10 +204,10 @@ export function setupUsersPageListeners(users) {
           atualizarPaginacao();
           modalContainer.remove();
         } else {
-          alert('Erro ao adicionar utilizador.');
+          showToast('Erro ao adicionar utilizador.', 'error');
         }
       } catch (error) {
-        alert('Erro ao adicionar utilizador: ' + error.message);
+        showToast('Erro ao adicionar utilizador: ' + error.message, 'error');
       }
     });
   });
@@ -256,7 +257,7 @@ export function setupUsersPageListeners(users) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao atualizar utilizador: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao atualizar utilizador: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -269,10 +270,10 @@ export function setupUsersPageListeners(users) {
           }
           modalContainer.remove();
         } else {
-          alert('Erro ao atualizar utilizador.');
+          showToast('Erro ao atualizar utilizador.', 'error');
         }
       } catch (error) {
-        alert('Erro ao atualizar utilizador: ' + error.message);
+        showToast('Erro ao atualizar utilizador: ' + error.message), 'error';
       }
     });
   }
@@ -290,13 +291,13 @@ export function setupUsersPageListeners(users) {
 
     const utilizador = users.find(u => u.id == id);
     if (!utilizador) {
-      alert('Utilizador não encontrado');
+      showToast('Utilizador não encontrado', 'error');
       return;
     }
 
     // Bloquear edição para admin (redundant but safe)
     if (utilizador.perfil.toLowerCase() === 'admin') {
-      alert('Não é possível editar o utilizador Admin.');
+      showToast('Não é possível editar o utilizador Admin.', 'error');
       return;
     }
 
@@ -329,7 +330,7 @@ export function setupUsersPageListeners(users) {
 
         if (!res.ok) {
           const errorData = await res.json();
-          alert('Erro ao remover utilizador: ' + (errorData.error || 'Erro desconhecido'));
+          showToast('Erro ao remover utilizador: ' + (errorData.error || 'Erro desconhecido'), 'error');
           return;
         }
 
@@ -343,10 +344,10 @@ export function setupUsersPageListeners(users) {
           }
           modalContainer.remove();
         } else {
-          alert('Erro ao remover utilizador.');
+          showToast('Erro ao remover utilizador.', 'error');
         }
       } catch (error) {
-        alert('Erro ao remover utilizador: ' + error.message);
+        showToast('Erro ao remover utilizador: ' + error.message, 'error');
       }
     });
   }
@@ -364,13 +365,13 @@ export function setupUsersPageListeners(users) {
 
     const utilizador = users.find(u => u.id == id);
     if (!utilizador) {
-      alert('Utilizador não encontrado');
+      showToast('Utilizador não encontrado', 'error');
       return;
     }
 
     // Bloquear remoção para admin (redundant but safe)
     if (utilizador.perfil.toLowerCase() === 'admin') {
-      alert('Não é possível remover o utilizador Admin.');
+      showToast('Não é possível remover o utilizador Admin.', 'error');
       return;
     }
 

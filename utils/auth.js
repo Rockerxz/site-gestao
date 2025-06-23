@@ -1,4 +1,5 @@
-// auth.js - sem localStorage, usa sessões PHP com cookies
+// auth.js - usa sessões PHP com cookies
+import { showToast } from '../components/toast.js';
 
 // Verifica se a sessão está ativa no backend
 export async function checkSession() {
@@ -32,7 +33,7 @@ export async function login(emailOrNome, password) {
       return data.user;
     }
     if (data.error === 'Este perfil está desativado') {
-      alert(data.error);
+      showToast(data.error, 'error');
       return null;
     }
     return null;

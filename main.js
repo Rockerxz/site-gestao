@@ -1,12 +1,13 @@
 import { Menu } from './components/menu.js';
 import { MenuLateral } from './components/menu-lateral.js';
+import { showToast } from './components/toast.js';
 import { LoginPage } from './pages/login.js';
 import { TecnicosPage } from './pages/tecnicos.js';
 import { DashboardPage } from './pages/dashboard.js';
 import { ReparacoesPage, setupReparacoesPageListeners } from './pages/reparacoes.js';
 import { ClientesPage, setupClientesPageListeners } from './pages/clientes.js';
 import { UsersPage, setupUsersPageListeners } from './pages/utilizadores.js';
-import { DefinicoesUserPage } from './pages/definicoes-user.js';
+import { DefinicoesUserPage, setupDefinicoesUserListeners} from './pages/definicoes-user.js';
 import { login, logout, checkSession } from './utils/auth.js';
 
 const menuContainer = document.getElementById('menu');
@@ -18,11 +19,17 @@ let sessionCheckInterval = null;
 const SESSION_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutos
 const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutos
 
+// Variáveis para controle de tentativas falhadas
+let failedLoginAttempts = 0;
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCK_TIME_MS = 60 * 1000; // 1 minuto
+let lockTimeout = null;
+
 function resetInactivityTimer() {
   if (!currentUser) return;
   if (inactivityTimeout) clearTimeout(inactivityTimeout);
   inactivityTimeout = setTimeout(() => {
-    alert('Sessão expirada por inatividade.');
+    showToast('Sessão expirada por inatividade.', 'warning');
     doLogout();
   }, INACTIVITY_LIMIT);
 }
@@ -53,7 +60,7 @@ async function renewSession() {
     renewSessionTimeout = null;
     const user = await checkSession();
     if (!user) {
-      alert('Sessão expirada.');
+      showToast('Sessão expirada.', 'warning');
       doLogout();
     } else {
       currentUser = user;
@@ -318,22 +325,47 @@ async function render(page) {
       sessionCheckInterval = null;
     }
 
+    failedLoginAttempts = 0;
+    if (lockTimeout) {
+      clearTimeout(lockTimeout);
+      lockTimeout = null;
+    }
+
     const form = conteudoContainer.querySelector('#login-form');
     const errDiv = conteudoContainer.querySelector('#login-error');
+
+    function lockLoginForm() {
+      form.querySelector('button[type="submit"]').disabled = true;
+      errDiv.textContent = `Muitas tentativas falhadas. Tente novamente em 1 minuto.`;
+      lockTimeout = setTimeout(() => {
+        failedLoginAttempts = 0;
+        errDiv.textContent = '';
+        form.querySelector('button[type="submit"]').disabled = false;
+      }, LOCK_TIME_MS);
+    }
+
     form.onsubmit = async e => {
       e.preventDefault();
+
+      if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS) {
+        lockLoginForm();
+        return;
+      }
+
       const email = form.email.value;
       const password = form.password.value;
       const u = await login(email, password);
       if (u) {
         currentUser = u;
+        failedLoginAttempts = 0; // reset após login bem-sucedido
+
         resetInactivityTimer();
         setupActivityListeners();
         if (!sessionCheckInterval) {
           sessionCheckInterval = setInterval(async () => {
             const user = await checkSession();
             if (!user) {
-              alert('Sessão expirada.');
+              showToast('Sessão expirada.', 'warning');
               doLogout();
             } else {
               currentUser = user;
@@ -342,7 +374,11 @@ async function render(page) {
         }
         render('dashboard');
       } else {
+        failedLoginAttempts++;
         errDiv.textContent = 'Credenciais inválidas';
+        if (failedLoginAttempts >= MAX_FAILED_ATTEMPTS) {
+          lockLoginForm();
+        }
       }
     };
   }
@@ -358,7 +394,7 @@ async function render(page) {
         if (sucesso) {
           render('tecnicos');
         } else {
-          alert('Erro ao adicionar técnico. Tente novamente.');
+          showToast('Erro ao adicionar técnico. Tente novamente.', 'error');
         }
       }
     };
@@ -375,6 +411,10 @@ async function render(page) {
 
   if (page === 'utilizadores') {
     setupUsersPageListeners(utilizadoresData);
+  }
+
+  if (page === 'definicoes-user') {
+    setupDefinicoesUserListeners(currentUser);
   }
 }
 

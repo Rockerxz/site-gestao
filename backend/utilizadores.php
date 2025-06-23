@@ -79,6 +79,9 @@ switch ($method) {
         // Default estado to 'ativo' if not provided
         $estado = $input['estado'] ?? 'ativo';
 
+        // Hash the password before storing
+        $hashedPassword = password_hash($input['password'], PASSWORD_DEFAULT);
+
         // Store password as is or hashed? The JSON example uses "password" field, but frontend uses "password"
         // For simplicity, store password as "password" field (plaintext) - consider hashing in real app
         $novoUtilizador = [
@@ -86,7 +89,7 @@ switch ($method) {
             'perfil' => $input['perfil'], // default profile
             'nome' => $input['nome'],
             'email' => $input['email'],
-            'password' => $input['password'], // store password as "password"
+            'password' => $hashedPassword, // store hashed password
             'estado' => $estado,
         ];
 
@@ -118,7 +121,7 @@ switch ($method) {
                 $u['perfil'] = $input['perfil'];
                 $u['nome'] = $input['nome'];
                 $u['email'] = $input['email'];
-                $u['password'] = $input['password'];
+                $u['password'] = password_hash($input['password'], PASSWORD_DEFAULT);
                 $u['estado'] = $input['estado'];
                 $found = true;
                 break;
