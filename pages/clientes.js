@@ -179,7 +179,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Evento para abrir modal de adicionar cliente
   btnAdicionarCliente.addEventListener('click', () => {
-    loadModalStyle('/styles/add-cliente-modal.css')
+    loadModalStyle('/styles/forms/add-cliente-modal.css')
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-add-cliente-container';
     modalContainer.innerHTML = AddClienteModal();
@@ -242,19 +242,18 @@ export function setupClientesPageListeners(clientes) {
 
   // Função para abrir modal de edição com dados do cliente
   function abrirModalEditarCliente(cliente) {
-    loadModalStyle('/styles/edit-cliente-modal.css')
+    loadModalStyle('/styles/forms/edit-cliente-modal.css')
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-edit-cliente-container';
     modalContainer.innerHTML = EditClienteModal();
     document.body.appendChild(modalContainer);
 
     const form = modalContainer.querySelector('#form-adicionar-cliente');
-    form.nome.value = cliente.nome || '';
-    form.empresa.value = cliente.empresa || '';
-    form.endereco.value = cliente.endereco || '';
-    form.email.value = cliente.email || '';
-    form.telefone.value = cliente.telefone || '';
-    form.comentarios.value = cliente.comentarios || '';
+    form.nome.placeholder = cliente.nome || '';
+    form.empresa.placeholder = cliente.empresa || '';
+    form.endereco.placeholder = cliente.endereco || '';
+    form.email.placeholder = cliente.email || '';
+    form.telefone.placeholder = cliente.telefone || '';
 
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
     btnFechar.addEventListener('click', () => modalContainer.remove());
@@ -267,14 +266,21 @@ export function setupClientesPageListeners(clientes) {
         return;
       }
 
+      const nome = form.nome.value.trim() || cliente.nome;
+      const empresa = form.empresa.value.trim() || cliente.empresa;
+      const endereco = form.endereco.value.trim() || cliente.endereco;
+      const email = form.email.value.trim() || cliente.email;
+      const telefone = form.telefone.value.trim() || cliente.telefone;
+      const comentarios = form.comentarios.value.trim() || cliente.comentarios;
+
       const clienteAtualizado = {
         id: cliente.id,
-        nome: form.nome.value.trim(),
-        empresa: form.empresa.value.trim(),
-        endereco: form.endereco.value.trim(),
-        email: form.email.value.trim(),
-        telefone: form.telefone.value.trim(),
-        comentarios: form.comentarios.value.trim(),
+        nome,
+        empresa,
+        endereco,
+        email,
+        telefone,
+        comentarios,
         totalReparacoes: cliente.totalReparacoes || 0
       };
 
@@ -330,7 +336,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Função para abrir modal de remoção com dados do cliente
   function abrirModalRemoverCliente(cliente) {
-    loadModalStyle('/styles/remove-cliente-modal.css')
+    loadModalStyle('/styles/forms/remove-cliente-modal.css')
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-remove-cliente-container';

@@ -2,7 +2,7 @@ import { Menu } from './components/menu.js';
 import { MenuLateral } from './components/menu-lateral.js';
 import { showToast } from './components/toast.js';
 import { LoginPage } from './pages/login.js';
-import { TecnicosPage } from './pages/tecnicos.js';
+import { ProfissionaisPage, setupProfissionaisPageListeners } from './pages/profissionais.js';
 import { DashboardPage } from './pages/dashboard.js';
 import { ReparacoesPage, setupReparacoesPageListeners } from './pages/reparacoes.js';
 import { ClientesPage, setupClientesPageListeners } from './pages/clientes.js';
@@ -68,17 +68,6 @@ async function renewSession() {
   }, 1000);
 }
 
-async function fetchTecnicos() {
-  try {
-    const res = await fetch('/backend/tecnicos.php', { method: 'GET', credentials: 'include' });
-    if (!res.ok) throw new Error('Erro ao buscar técnicos');
-    const data = await res.json();
-    return data.tecnicos || [];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
 
 async function fetchReparacoes() {
   try {
@@ -86,6 +75,18 @@ async function fetchReparacoes() {
     if (!res.ok) throw new Error('Erro ao buscar reparações');
     const data = await res.json();
     return data.data || [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+async function fetchProfissionais() {
+  try {
+    const res = await fetch('/backend/profissionais.php', { method: 'GET', credentials: 'include' });
+    if (!res.ok) throw new Error('Erro ao buscar técnicos');
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error(error);
     return [];
@@ -119,7 +120,7 @@ async function fetchUtilizadores() {
 
 async function addTecnico(nome, email) {
   try {
-    const res = await fetch('/backend/tecnicos.php', {
+    const res = await fetch('/backend/profissionais.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -245,12 +246,12 @@ async function render(page) {
   // Load page-specific style
   // Map page names to their CSS files in /styles/
   const pageStyles = {
-    'clientes': '/styles/pagina-clientes.css',
-    'dashboard': '/styles/pagina-dashboard.css',
-    'tecnicos': '/styles/pagina-tecnicos.css',
-    'reparacoes': '/styles/pagina-reparacoes.css',
-    'utilizadores': '/styles/pagina-utilizadores.css',
-    'definicoes-user': '/styles/definicoes-user.css',
+    'clientes': '/styles/pages/pagina-clientes.css',
+    'dashboard': '/styles/pages/pagina-dashboard.css',
+    'profissionais': '/styles/pages/pagina-profissionais.css',
+    'reparacoes': '/styles/pages/pagina-reparacoes.css',
+    'utilizadores': '/styles/pages/pagina-utilizadores.css',
+    'definicoes-user': '/styles/pages/definicoes-user.css',
   };
 
   if (pageStyles[page]) {
@@ -261,7 +262,7 @@ async function render(page) {
   let content = '';
   let clientesData = null;
   let reparacoesData = null;
-  let tecnicosData = null;
+  let profissionaisData = null;
   let utilizadoresData = null;
 
   switch (page) {
@@ -273,11 +274,11 @@ async function render(page) {
       content = DashboardPage(currentUser);
       break;
 
-    case 'tecnicos':
+    case 'profissionais':
       if (!currentUser) return render('login');
-      tecnicosData = await fetchTecnicos();
+      profissionaisData = await fetchProfissionais();
       if (thisRender.cancelled) return;
-      content = TecnicosPage(tecnicosData);
+      content = ProfissionaisPage(profissionaisData);
       break;
 
     case 'reparacoes':
@@ -383,21 +384,8 @@ async function render(page) {
     };
   }
 
-  if (page === 'tecnicos') {
-    const form = conteudoContainer.querySelector('#add-tecnico-form');
-    form.onsubmit = async e => {
-      e.preventDefault();
-      const nome = form.nome.value.trim();
-      const email = form.email.value.trim();
-      if (nome && email) {
-        const sucesso = await addTecnico(nome, email);
-        if (sucesso) {
-          render('tecnicos');
-        } else {
-          showToast('Erro ao adicionar técnico. Tente novamente.', 'error');
-        }
-      }
-    };
+  if (page === 'profissionais') {
+    setupProfissionaisPageListeners(profissionaisData);
   }
 
   if (page === 'reparacoes') {

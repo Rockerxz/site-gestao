@@ -1,10 +1,15 @@
 <?php
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *"); // Ajuste para seu domínio se quiser mais segurança
+
+//CORS headers (adjusted to allow credentials and dynamic origin)
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+}
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$file = '../data/tecnicos.json';
+$file = '../data/profissionais.json';
 
 // Para requests OPTIONS (CORS preflight)
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -38,16 +43,20 @@ switch($method) {
 
   case 'POST':
     $input = json_decode(file_get_contents('php://input'), true);
-    if(!isset($input['nome']) || !isset($input['email'])) {
+    if(!isset($input['nome']) || !isset($input['email']) || !isset($input['cargo']) || !isset($input['apelido']) || !isset($input['morada']) || !isset($input['telefone'])) {
       http_response_code(400);
-      echo json_encode(['error'=>'Campos nome e email são obrigatórios']);
+      echo json_encode(['error'=>'Campos cargo, nome, apelido, morada, email e telefone são obrigatórios']);
       exit;
     }
     $data = readData();
     $novo = [
       'id' => time(),
+      'cargo' => $input['cargo'],
       'nome' => $input['nome'],
-      'email' => $input['email']
+      'apelido' => $input['apelido'],
+      'morada' => $input['morada'],
+      'email' => $input['email'],
+      'telefone' => $input['telefone']
     ];
     $data[] = $novo;
     writeData($data);
@@ -65,15 +74,19 @@ switch($method) {
     $found = false;
     foreach($data as &$item) {
       if($item['id'] == $input['id']) {
+        if(isset($input['cargo'])) $item['cargo'] = $input['cargo'];
         if(isset($input['nome'])) $item['nome'] = $input['nome'];
+        if(isset($input['apelido'])) $item['apelido'] = $input['apelido'];
+        if(isset($input['morada'])) $item['morada'] = $input['morada'];
         if(isset($input['email'])) $item['email'] = $input['email'];
+        if(isset($input['telefone'])) $item['telefone'] = $input['telefone'];
         $found = true;
         break;
       }
     }
     if(!$found) {
       http_response_code(404);
-      echo json_encode(['error'=>'Técnico não encontrado']);
+      echo json_encode(['error'=>'Profissional não encontrado']);
       exit;
     }
     writeData($data);
@@ -91,7 +104,7 @@ switch($method) {
     $newData = array_filter($data, fn($item) => $item['id'] != $input['id']);
     if(count($data) == count($newData)) {
       http_response_code(404);
-      echo json_encode(['error'=>'Técnico não encontrado']);
+      echo json_encode(['error'=>'Profissional não encontrado']);
       exit;
     }
     writeData(array_values($newData));

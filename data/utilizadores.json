@@ -11,15 +11,15 @@
         "perfil": "Técnico",
         "nome": "a",
         "email": "a@a",
-        "password": "$2y$10$RWXG5RXJbdVwbbzraVfGQecmwKc8gLJt4x7Ym6GhgUfGzTWHH6W2C",
+        "password": "$2y$10$6TfFIAYpPMlWF33d6lFObu1T8YbCm2ygsgOJo2jGq0MhQNcN\/uahG",
         "estado": "ativo"
     },
     {
         "id": 5,
         "perfil": "Técnico",
         "nome": "b",
-        "email": "b@b",
-        "password": "$2y$10$yHmipnhxQyMgNYuUp6kgk.RCQp5aNkblhv7Nm6xQNPeLK35vEk1n2",
+        "email": "b@c",
+        "password": "$2y$10$7MF.YCVuIBsIcjOi1I\/G8u0ld.K8HFH9boO6Iv\/RjjDBbWXszeTJO",
         "estado": "ativo"
     },
     {
@@ -27,7 +27,7 @@
         "perfil": "Atendimento",
         "nome": "c",
         "email": "c@c",
-        "password": "$2y$10$T8DqqZoXOkiX4BBJoKnOA.43blUaLpVle962GvkWS3zFeI22DG9Oy",
+        "password": "$2y$10$YAjXP3X1VT026eqh.aqsxeGzOY8zKFHO1ce5JdESjLn7vLsJ\/UVmy",
         "estado": "ativo"
     }
 ]

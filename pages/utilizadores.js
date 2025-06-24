@@ -156,7 +156,7 @@ export function setupUsersPageListeners(users) {
 
   // Evento para abrir modal de adicionar utilizador
   btnAdicionarUser.addEventListener('click', () => {
-    loadModalStyle('/styles/add-user-modal.css');
+    loadModalStyle('/styles/forms/add-user-modal.css');
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-add-utilizador-container';
     modalContainer.innerHTML = AddUtilizadorModal();
@@ -214,7 +214,7 @@ export function setupUsersPageListeners(users) {
 
   // Função para abrir modal de edição com dados do utilizador
   function abrirModalEditarUtilizador(utilizador) {
-    loadModalStyle('/styles/edit-user-modal.css');
+    loadModalStyle('/styles/forms/edit-user-modal.css');
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-edit-utilizador-container';
@@ -222,11 +222,10 @@ export function setupUsersPageListeners(users) {
     document.body.appendChild(modalContainer);
 
     const form = modalContainer.querySelector('#form-adicionar-user');
-    form.perfil.value = utilizador.perfil || ''; // set perfil readonly field
-    form.nome.value = utilizador.nome || '';
-    form.email.value = utilizador.email || '';
-    form.password.value = '';
-    form.estado.value = utilizador.estado || 'ativo';  // Set estado select value
+    form.nome.placeholder = utilizador.nome || '';
+    form.email.placeholder = utilizador.email || '';
+    form.password.placeholder = '********';
+    form.estado.value = utilizador.estado || 'ativo';  // select stays as value
 
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
     btnFechar.addEventListener('click', () => modalContainer.remove());
@@ -239,13 +238,17 @@ export function setupUsersPageListeners(users) {
         return;
       }
 
+      const nome = form.nome.value.trim() || utilizador.nome;
+      const email = form.email.value.trim() || utilizador.email;
+      const password = form.password.value.trim(); // senha vazia significa sem alteração
+      const estado = form.estado.value;
+
       const utilizadorAtualizado = {
         id: utilizador.id,
-        perfil: form.perfil.value, // keep perfil unchanged
-        nome: form.nome.value.trim(),
-        email: form.email.value.trim(),
-        password: form.password.value.trim(),
-        estado: form.estado.value
+        nome,
+        email,
+        password,
+        estado
       };
 
       try {
@@ -306,7 +309,7 @@ export function setupUsersPageListeners(users) {
 
   // Função para abrir modal de remoção com dados do utilizador
   function abrirModalRemoverUtilizador(utilizador) {
-    loadModalStyle('/styles/remove-user-modal.css');
+    loadModalStyle('/styles/forms/remove-user-modal.css');
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-remove-utilizador-container';

@@ -9,19 +9,6 @@ export function EditUtilizadorModal() {
           </button>
         </div>
         <form id="form-adicionar-user" autocomplete="off" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="perfil-user">Perfil</label>
-              <div class="input-icon">
-                <i class="fa-solid fa-id-badge"></i>
-                <select id="perfil-user" name="perfil" required>
-                  <option value="" disabled selected>Escolha o perfil</option>
-                  <option value="Técnico">Técnico</option>
-                  <option value="Atendimento">Atendimento</option>
-                </select>
-              </div>
-            </div>
-          </div>
 
           <div class="form-row">
             <div class="form-group">
@@ -43,7 +30,7 @@ export function EditUtilizadorModal() {
 
           <div class="form-row">
             <div class="form-group">
-              <label for="password-user">Password</label>
+              <label for="password-user">Redifinir Password</label>
               <div class="input-icon">
                 <i class="fa-solid fa-key"></i>
                 <input type="password" id="password-user" name="password">

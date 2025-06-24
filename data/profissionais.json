@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1750765800,
+        "cargo": "Técnico",
+        "nome": "A",
+        "apelido": "abc",
+        "morada": "a",
+        "email": "a@a",
+        "telefone": "a"
+    },
+    {
+        "id": 1750766288,
+        "cargo": "Atendimento",
+        "nome": "b",
+        "apelido": "bb",
+        "morada": "",
+        "email": "",
+        "telefone": ""
+    }
+]

@@ -23,17 +23,14 @@ export function MenuLateral(user, currentPage) {
             <button data-page="reparacoes" title="Reparações" class="nav-btn">
               <i class="fa-solid fa-screwdriver-wrench"></i><span class="btn-text" style="margin-left: 0.5rem;">Reparações</span>
             </button>
-            <button data-page="tecnicos" title="Técnicos" class="nav-btn">
-              <i class="fa-solid fa-user-group"></i></i><span class="btn-text" style="margin-left: 0.5rem;">Técnicos</span>
-            </button>
             <button data-page="equipamentos" title="Equipamentos" class="nav-btn">
               <i class="fa-solid fa-computer"></i><span class="btn-text" style="margin-left: 0.5rem;">Equipamentos</span>
             </button>
             <button data-page="clientes" title="Clientes" class="nav-btn">
               <i class="fa-solid fa-user-group"></i><span class="btn-text" style="margin-left: 0.5rem;">Clientes</span>
             </button>
-            <button data-page="config" title="Configurações" class="nav-btn">
-              <i class="fa-solid fa-gear"></i><span class="btn-text" style="margin-left: 0.5rem;">Configurações</span>
+            <button data-page="profissionais" title="Profissionais" class="nav-btn">
+              <i class="fa-solid fa-user-gear"></i></i><span class="btn-text" style="margin-left: 0.5rem;">Profissionais</span>
             </button>
             <button data-page="utilizadores" title="Utilizadores" class="nav-btn">
               <i class="fa-solid fa-users-gear"></i><span class="btn-text" style="margin-left: 0.5rem;">Utilizadores</span>

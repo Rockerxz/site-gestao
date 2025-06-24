@@ -10,7 +10,7 @@ export function DefinicoesUserPage(user = {}) {
               <label for="nome-user">Nome</label>
               <div class="input-icon">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" id="nome-user" name="nome" value="${escapeHtml(user.nome || '')}">
+                <input type="text" id="nome-user" name="nome" placeholder="${escapeHtml(user.nome || '')}">
               </div>
             </div>
 
@@ -18,24 +18,24 @@ export function DefinicoesUserPage(user = {}) {
               <label for="email-user">Email</label>
               <div class="input-icon">
                 <i class="fa-solid fa-envelope"></i>
-                <input type="email" id="email-user" name="email" value="${escapeHtml(user.email || '')}">
+                <input type="email" id="email-user" name="email" placeholder="${escapeHtml(user.email || '')}">
               </div>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="password-user">Password</label>
+              <label for="password-user"> Redefinir Password</label>
               <div class="input-icon">
                 <i class="fa-solid fa-key"></i>
-                <input type="password" id="password-user" name="password" value="">
+                <input type="password" id="password-user" name="password" placeholder="********">
               </div>
             </div>
             <div class="form-group"></div>
           </div>
 
           <div class="modal-footer">
-            <button id="btn-atualizar" class="btn-primary" type="button">Atualizar dados</button>
+            <button id="btn-atualizar" class="btn-primary" type="button">Guardar alterações</button>
           </div>
         </form>
       </div>
