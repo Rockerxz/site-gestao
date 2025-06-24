@@ -11,23 +11,23 @@
         "perfil": "Técnico",
         "nome": "a",
         "email": "a@a",
-        "password": "$2y$10$6TfFIAYpPMlWF33d6lFObu1T8YbCm2ygsgOJo2jGq0MhQNcN\/uahG",
-        "estado": "ativo"
-    },
-    {
-        "id": 5,
-        "perfil": "Técnico",
-        "nome": "b",
-        "email": "b@c",
-        "password": "$2y$10$7MF.YCVuIBsIcjOi1I\/G8u0ld.K8HFH9boO6Iv\/RjjDBbWXszeTJO",
+        "password": "$2y$10$f1zZ5Fu5y\/hTfVItztSHbetBie0DvVTP19jZ69LCEzjnIPwNwTjj.",
         "estado": "ativo"
     },
     {
         "id": 6,
         "perfil": "Atendimento",
         "nome": "c",
-        "email": "c@c",
-        "password": "$2y$10$YAjXP3X1VT026eqh.aqsxeGzOY8zKFHO1ce5JdESjLn7vLsJ\/UVmy",
+        "email": "c@d",
+        "password": "$2y$10$rX7RZaKud1diKNibou30zOmCz1twZza\/JMXRsUX3h8A6v3rCg\/Ir6",
+        "estado": "ativo"
+    },
+    {
+        "id": 7,
+        "perfil": "Atendimento",
+        "nome": "b",
+        "email": "b@b",
+        "password": "$2y$10$Bn8AlPvUuvxI3C8BlzeZA.wRFZsc0mTLdCtzV2ohGRwiztM4u\/.Kq",
         "estado": "ativo"
     }
 ]

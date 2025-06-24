@@ -8,13 +8,12 @@ export function ProfissionaisPage(profissionais = []) {
   return `
     <section class="profissionais-page">
       <h1 id="title-profissionais">Profissionais</h1>
-      <button id="btn-adicionar-profissional" class="btn-primary" type="button">
-       <i class="fa-solid fa-circle-plus"></i>Adicionar Profissional</button>
 
       <div class="profissionais-container">
-        <div class="pesquisa-profissionais">
-          <label for="barra-pesquisa-profissionais">Pesquisar:</label>
-          <input type="search" id="barra-pesquisa-profissionais" aria-label="Pesquisar profissionais">
+        <div class="header-profissionais">
+          <h1 id="main-info">Informações de profissionais</h1>
+          <button id="btn-adicionar-profissional" class="btn-primary" type="button">
+            <i class="fa-solid fa-circle-plus"></i>Adicionar Profissional</button>
         </div>
 
         <table class="profissionais-tabela" aria-label="Lista de profissionais">
@@ -22,7 +21,6 @@ export function ProfissionaisPage(profissionais = []) {
             <tr>
               <th>Cargo</th>
               <th>Nome</th>
-              <th>Apelido</th>
               <th>Morada</th>
               <th>Email</th>
               <th>Telefone</th>
@@ -35,9 +33,6 @@ export function ProfissionaisPage(profissionais = []) {
         </table>
 
         <div class="profissionais-footer">
-          <div id="profissionais-feedback" class="profissionais-feedback">
-            Mostrando 1 a ${Math.min(10, profissionais.length)} de ${profissionais.length} profissionais
-          </div>
           <div class="profissionais-paginacao">
             <button id="btn-anterior" type="button" class="btn-paginacao" disabled>Anterior</button>
             <button id="btn-pagina-atual" type="button" class="btn-pagina-atual" disabled>1</button>
@@ -57,7 +52,6 @@ function renderProfissionais(profissionais) {
     <tr data-id="${p.id}">
       <td>${escapeHtml(p.cargo)}</td>
       <td>${escapeHtml(p.nome)}</td>
-      <td>${escapeHtml(p.apelido)}</td>
       <td>${escapeHtml(p.morada)}</td>
       <td>${escapeHtml(p.email)}</td>
       <td>${escapeHtml(p.telefone)}</td>
@@ -85,14 +79,12 @@ function escapeHtml(text) {
   })[m]);
 }
 
-// Exporta função para ativar a paginação e pesquisa
+// Exporta função para ativar a paginação
 export function setupProfissionaisPageListeners(profissionais) {
-  const inputPesquisa = document.getElementById('barra-pesquisa-profissionais');
   const tbody = document.getElementById('profissionais-lista');
   const btnAnterior = document.getElementById('btn-anterior');
   const btnSeguinte = document.getElementById('btn-seguinte');
   const btnPaginaAtual = document.getElementById('btn-pagina-atual');
-  const feedback = document.getElementById('profissionais-feedback');
   const btnAdicionarProfissional = document.getElementById('btn-adicionar-profissional');
 
   function loadModalStyle(href) {
@@ -113,27 +105,12 @@ export function setupProfissionaisPageListeners(profissionais) {
     }
   }
 
-  if (!inputPesquisa || !tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !feedback || !btnAdicionarProfissional) return;
+  if (!tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !btnAdicionarProfissional) return;
 
   let paginaAtual = 1;
   const itensPorPagina = 10;
   let dadosFiltrados = profissionais;
 
-  function atualizarLista() {
-    const termo = inputPesquisa.value.trim().toLowerCase();
-
-    dadosFiltrados = profissionais.filter(p =>
-      (p.cargo && p.cargo.toLowerCase().includes(termo)) ||
-      (p.nome && p.nome.toLowerCase().includes(termo)) ||
-      (p.apelido && p.apelido.toLowerCase().includes(termo)) ||
-      (p.morada && p.morada.toLowerCase().includes(termo)) ||
-      (p.email && p.email.toLowerCase().includes(termo)) ||
-      (p.telefone && p.telefone.toLowerCase().includes(termo))
-    );
-
-    paginaAtual = 1;
-    atualizarPaginacao();
-  }
 
   function atualizarPaginacao() {
     const totalItens = dadosFiltrados.length;
@@ -151,13 +128,8 @@ export function setupProfissionaisPageListeners(profissionais) {
     btnSeguinte.disabled = paginaAtual >= totalPaginas;
 
     btnPaginaAtual.textContent = paginaAtual;
-
-    feedback.textContent = `Mostrando ${inicio + 1} a ${Math.min(fim, totalItens)} de ${totalItens} profissionais`;
   }
 
-  inputPesquisa.addEventListener('input', () => {
-    atualizarLista();
-  });
 
   btnAnterior.addEventListener('click', () => {
     if (paginaAtual > 1) {
@@ -203,7 +175,6 @@ export function setupProfissionaisPageListeners(profissionais) {
       const novoProfissional = {
         cargo: form.cargo.value.trim(),
         nome: form.nome.value.trim(),
-        apelido: form.apelido.value.trim(),
         morada: form.morada.value.trim(),
         email: form.email.value.trim(),
         telefone: form.telefone.value.trim()
@@ -225,8 +196,8 @@ export function setupProfissionaisPageListeners(profissionais) {
         const data = await res.json();
         if (data.id) {
           profissionais.push(data);
-          atualizarLista();
           modalContainer.remove();
+          atualizarPaginacao();
         } else {
           showToast('Erro ao adicionar profissional.', 'error');
         }
@@ -245,9 +216,7 @@ export function setupProfissionaisPageListeners(profissionais) {
     document.body.appendChild(modalContainer);
 
     const form = modalContainer.querySelector('#form-adicionar-profissional');
-    form.cargo.placeholder = profissional.cargo || '';
     form.nome.placeholder = profissional.nome || '';
-    form.apelido.placeholder = profissional.apelido || '';
     form.morada.placeholder = profissional.morada || '';
     form.email.placeholder = profissional.email || '';
     form.telefone.placeholder = profissional.telefone || '';
@@ -263,18 +232,15 @@ export function setupProfissionaisPageListeners(profissionais) {
         return;
       }
 
-      const cargo = form.cargo.value.trim() || profissional.cargo;
       const nome = form.nome.value.trim() || profissional.nome;
-      const apelido = form.apelido.value.trim() || profissional.apelido;
       const morada = form.morada.value.trim() || profissional.morada;
       const email = form.email.value.trim() || profissional.email;
       const telefone = form.telefone.value.trim() || profissional.telefone;
 
       const profissionalAtualizado = {
         id: profissional.id,
-        cargo,
+        cargo: profissional.cargo,
         nome,
-        apelido,
         morada,
         email,
         telefone
@@ -298,9 +264,9 @@ export function setupProfissionaisPageListeners(profissionais) {
           const index = profissionais.findIndex(p => p.id === profissional.id);
           if (index !== -1) {
             profissionais[index] = profissionalAtualizado;
-            atualizarLista();
           }
           modalContainer.remove();
+          atualizarPaginacao();
         } else {
           showToast('Erro ao atualizar profissional.', 'error');
         }
@@ -336,7 +302,7 @@ export function setupProfissionaisPageListeners(profissionais) {
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-remove-profissional-container';
-    modalContainer.innerHTML = RemoveProfissionalModal(profissional.nome + ' ' + profissional.apelido);
+    modalContainer.innerHTML = RemoveProfissionalModal(profissional.nome);
     document.body.appendChild(modalContainer);
 
     const btnCancelar = modalContainer.querySelector('#btn-cancelar');
@@ -366,9 +332,9 @@ export function setupProfissionaisPageListeners(profissionais) {
           const index = profissionais.findIndex(p => p.id === profissional.id);
           if (index !== -1) {
             profissionais.splice(index, 1);
-            atualizarLista();
           }
           modalContainer.remove();
+          atualizarPaginacao();
         } else {
           showToast('Erro ao remover profissional.', 'error');
         }

@@ -112,38 +112,35 @@
 
 .acoes-coluna {
   display: flex;
-  gap: 8px;
+  gap: 15px;
   justify-content: flex-start;
 }
 
 .btn-editar {
-  background-color: #007BFF;
+  background: none;
   border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
+  color: #007BFF;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  padding: 0;
 }
 
 .btn-editar:hover {
-  background-color: #0056b3;
+  color: #0056b3;
 }
 
-.btn-remover {
-  background-color: #ff2a00;
+.btn-remover-cliente {
+  background: none;
   border: none;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 4px;
+  color: #ff2a00;
   cursor: pointer;
-  font-size: 0.85rem;
-  transition: background-color 0.3s ease;
+  font-size: 1.1rem;
+  padding: 0;
 }
 
-.btn-remover:hover {
-  background-color: #c62100;
+
+.btn-remover-cliente:hover {
+  color: #c62100;
 }
 
 /* Rodapé da lista com paginação e feedback */

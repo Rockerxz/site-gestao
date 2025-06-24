@@ -4,18 +4,8 @@ export function EditProfissionalModal() {
       <div class="modal-content">
         <h2>Editar Profissional</h2>
         <form id="form-adicionar-profissional" novalidate>
-          <label for="cargo">Cargo</label>
-          <select id="cargo" name="cargo" >
-            <option value="">Selecione o cargo</option>
-            <option value="Técnico">Técnico</option>
-            <option value="Atendimento">Atendimento</option>
-          </select>
-
           <label for="nome">Nome</label>
           <input type="text" id="nome" name="nome"  placeholder="Primeiro nome">
-
-          <label for="apelido">Apelido</label>
-          <input type="text" id="apelido" name="apelido"  placeholder="Último nome">
 
           <label for="morada">Morada</label>
           <input type="text" id="morada" name="morada"  placeholder="Morada">

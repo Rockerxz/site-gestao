@@ -13,9 +13,12 @@ export function ClientesPage(clientes = []) {
        <i class="fa-solid fa-circle-plus"></i>Adicionar Cliente</button>
 
       <div class="clientes-container">
-        <div class="pesquisa-clientes">
-          <label for="barra-pesquisa-clientes">Pesquisar:</label>
-          <input type="search" id="barra-pesquisa-clientes" aria-label="Pesquisar clientes">
+        <div class="clientes-header">
+            <h1 id="main-info">Informações de clientes</h1>
+            <div class="pesquisa-clientes">
+              <label for="barra-pesquisa-clientes">Pesquisar:</label>
+              <input type="search" id="barra-pesquisa-clientes" aria-label="Pesquisar clientes">
+            </div>  
         </div>
 
         <table class="clientes-tabela" aria-label="Lista de clientes">
@@ -66,7 +69,7 @@ function renderClientes(clientes) {
         <button class="btn-editar" type="button" title="Editar">
           <i class="fa-solid fa-pen-to-square"></i>
         </button>
-        <button class="btn-remover" type="button" title="Remover">
+        <button class="btn-remover-cliente" type="button" title="Remover">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </td>
@@ -384,7 +387,7 @@ export function setupClientesPageListeners(clientes) {
 
   // Listener para botões remover - delegação de evento no tbody
   tbody.addEventListener('click', e => {
-    const btn = e.target.closest('.btn-remover');
+    const btn = e.target.closest('.btn-remover-cliente');
     if (!btn) return;
 
     const tr = btn.closest('tr');

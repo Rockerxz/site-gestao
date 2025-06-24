@@ -63,7 +63,7 @@ function renderUsers(users) {
           <button class="btn-editar" type="button" title="Editar">
             <i class="fa-solid fa-pen-to-square"></i>
           </button>
-          <button class="btn-remover" type="button" title="Remover">
+          <button class="btn-remover-cliente" type="button" title="Remover">
             <i class="fa-solid fa-trash-can"></i>
           </button>
         `}
@@ -245,6 +245,7 @@ export function setupUsersPageListeners(users) {
 
       const utilizadorAtualizado = {
         id: utilizador.id,
+        perfil: utilizador.perfil,
         nome,
         email,
         password,
@@ -357,7 +358,7 @@ export function setupUsersPageListeners(users) {
 
   // Listener para botões remover - delegação de evento no tbody
   tbody.addEventListener('click', e => {
-    const btn = e.target.closest('.btn-remover');
+    const btn = e.target.closest('.btn-remover-cliente');
     if (!btn) return;
 
     const tr = btn.closest('tr');

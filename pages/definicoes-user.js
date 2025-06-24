@@ -2,7 +2,7 @@ import { showToast } from '../components/toast.js';
 export function DefinicoesUserPage(user = {}) {
   return `
     <section class="definicoes-user-page">
-      <h1 id="title-users">Definições de utilizador</h1>
+      <h1 id="title-users">Credenciais de utilizador</h1>
       <div class="users-container">
         <form id="form-definicoes-user" autocomplete="off" novalidate>
           <div class="form-row">

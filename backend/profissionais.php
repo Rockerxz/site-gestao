@@ -43,9 +43,9 @@ switch($method) {
 
   case 'POST':
     $input = json_decode(file_get_contents('php://input'), true);
-    if(!isset($input['nome']) || !isset($input['email']) || !isset($input['cargo']) || !isset($input['apelido']) || !isset($input['morada']) || !isset($input['telefone'])) {
+    if(!isset($input['nome']) || !isset($input['email']) || !isset($input['cargo']) || !isset($input['morada']) || !isset($input['telefone'])) {
       http_response_code(400);
-      echo json_encode(['error'=>'Campos cargo, nome, apelido, morada, email e telefone são obrigatórios']);
+      echo json_encode(['error'=>'Campos cargo, nome morada, email e telefone são obrigatórios']);
       exit;
     }
     $data = readData();
@@ -53,7 +53,6 @@ switch($method) {
       'id' => time(),
       'cargo' => $input['cargo'],
       'nome' => $input['nome'],
-      'apelido' => $input['apelido'],
       'morada' => $input['morada'],
       'email' => $input['email'],
       'telefone' => $input['telefone']
@@ -76,7 +75,6 @@ switch($method) {
       if($item['id'] == $input['id']) {
         if(isset($input['cargo'])) $item['cargo'] = $input['cargo'];
         if(isset($input['nome'])) $item['nome'] = $input['nome'];
-        if(isset($input['apelido'])) $item['apelido'] = $input['apelido'];
         if(isset($input['morada'])) $item['morada'] = $input['morada'];
         if(isset($input['email'])) $item['email'] = $input['email'];
         if(isset($input['telefone'])) $item['telefone'] = $input['telefone'];

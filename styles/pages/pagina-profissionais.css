@@ -1,127 +1,197 @@
-/* Baseado no estilo pagina-clientes.css */
+/* Atualizado para ficar equivalente ao estilo da pagina-clientes.css */
 
-.profissionais-page {
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-  color: #333;
+#title-profissionais {
+  margin-bottom: 20px;
 }
 
-.profissionais-page h1 {
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  color: #222;
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border: none;
+#btn-adicionar-profissional {
+  margin-bottom: 30px; /* para dar espaçamento abaixo do botão */
+  margin-top: 0;
+  background-color: #007BFF;
   color: white;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border-radius: 4px;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
   cursor: pointer;
-  margin-bottom: 1rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
+#btn-adicionar-profissional:hover {
   background-color: #0056b3;
 }
 
+/* Container branco para a página profissionais */
 .profissionais-container {
-  background-color: #f9f9f9;
-  border-radius: 6px;
-  padding: 1rem;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-}
-
-.pesquisa-profissionais {
-  margin-bottom: 1rem;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header-profissionais {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  margin-bottom: 5px;
 }
 
-.pesquisa-profissionais label {
-  font-weight: bold;
+#main-info {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.pesquisa-profissionais input[type="search"] {
-  flex-grow: 1;
-  padding: 0.4rem 0.6rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
 
 .profissionais-tabela {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
 }
 
-.profissionais-tabela th,
-.profissionais-tabela td {
-  border: 1px solid #ddd;
-  padding: 0.6rem 0.8rem;
+.profissionais-tabela thead tr {
+  background-color: #f0f0f0;
+}
+
+.profissionais-tabela th, .profissionais-tabela td {
+  padding: 10px 12px;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+  border-right: 2px solid #ddd;
   text-align: left;
-  vertical-align: middle;
 }
 
-.profissionais-tabela th {
-  background-color: #007bff;
-  color: white;
-  font-weight: 600;
+.profissionais-tabela tbody tr:hover {
+  background-color: #f9f9f9;
 }
 
-.profissionais-tabela tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
+/* Primeira coluna: remove borda esquerda */
+.profissionais-tabela th:first-child,
+.profissionais-tabela td:first-child {
+  border-left: none;
 }
 
-.acoes-coluna {
-  width: 100px;
+/* Última coluna: remove borda direita */
+.profissionais-tabela th:last-child,
+.profissionais-tabela td:last-child {
+  border-right: none;
+}
+
+/* Ajustes específicos para largura das colunas da tabela profissionais */
+.profissionais-tabela th:nth-child(1), /* Cargo */
+.profissionais-tabela td:nth-child(1) {
+  width: 15%;
+}
+
+.profissionais-tabela th:nth-child(2), 
+.profissionais-tabela td:nth-child(2) {
+  width: 25%;
+}
+
+.profissionais-tabela th:nth-child(3), 
+.profissionais-tabela td:nth-child(3) {
+  width: 25%;
+}
+
+.profissionais-tabela th:nth-child(4), 
+.profissionais-tabela td:nth-child(4) {
+  width: 20%;
+}
+
+.profissionais-tabela th:nth-child(5), 
+.profissionais-tabela td:nth-child(5) {
+  width: 15%;
+}
+
+.profissionais-tabela th:nth-child(6), 
+.profissionais-tabela td:nth-child(6) {
+  width: 5%;
   text-align: center;
 }
 
-.acoes-coluna button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #007bff;
-  font-size: 1.1rem;
-  margin: 0 0.2rem;
+.acoes-coluna {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
 }
 
-.acoes-coluna button:hover {
+.btn-editar {
+  background: none !important;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.btn-editar:hover {
   color: #0056b3;
 }
 
+.btn-remover {
+  background: none !important;
+  border: none;
+  color: #ff2a00;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.btn-remover:hover {
+  color: #c62100;
+}
+
+/* Rodapé da lista com paginação e feedback */
 .profissionais-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   color: #555;
 }
 
-.profissionais-paginacao button {
-  background-color: #007bff;
-  border: none;
-  color: white;
-  padding: 0.3rem 0.7rem;
-  margin-left: 0.3rem;
-  border-radius: 4px;
-  cursor: pointer;
+.profissionais-paginacao {
+  display: flex;
+  gap: 8px;
 }
 
-.profissionais-paginacao button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+.btn-paginacao {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-paginacao:hover {
+  background-color: #f0f0f0;
 }
 
 .btn-pagina-atual {
-  background-color: #0056b3;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
   cursor: default;
 }

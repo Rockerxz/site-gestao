@@ -2,14 +2,6 @@
 // backend/utilizadores.php
 header('Content-Type: application/json');
 
-// CORS headers (adjusted to allow credentials and dynamic origin)
-if (isset($_SERVER['HTTP_ORIGIN'])) {
-    header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
-}
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
 session_start();
 
 // Check if user is authenticated (adjust as needed)
@@ -130,7 +122,9 @@ switch ($method) {
                 $u['perfil'] = $input['perfil'];
                 $u['nome'] = $input['nome'];
                 $u['email'] = $input['email'];
-                $u['password'] = password_hash($input['password'], PASSWORD_DEFAULT);
+                if (!empty($input['password'])) {
+                    $u['password'] = password_hash($input['password'], PASSWORD_DEFAULT);
+                }
                 $u['estado'] = $input['estado'];
                 $found = true;
                 break;

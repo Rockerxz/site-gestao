@@ -14,9 +14,6 @@ export function AddProfissionalModal() {
           <label for="nome">Nome</label>
           <input type="text" id="nome" name="nome" required placeholder="Primeiro nome">
 
-          <label for="apelido">Apelido</label>
-          <input type="text" id="apelido" name="apelido"  placeholder="Último nome">
-
           <label for="morada">Morada</label>
           <input type="text" id="morada" name="morada"  placeholder="Morada">
 
