@@ -1,71 +1,83 @@
-/* Baseado no styles/forms/remove-cliente-modal.css */
-
-.modal-overlay {
+.remove-cliente-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6); /* overlay escuro com opacidade */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.modal-content {
-  background-color: white;
+.remove-cliente-modal {
+  font-family: 'Inter', sans-serif;
+  background: white;
+  width: 650px; /* horizontal longa */
+  max-width: 90vw;
+  height: 200px; /* vertical curta */
+  padding: 20px 30px;
+  box-sizing: border-box;
   border-radius: 8px;
-  padding: 1.5rem;
-  width: 350px;
-  max-width: 90%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.modal-content h2 {
-  margin-top: 0;
-  margin-bottom: 1rem;
+.remove-cliente-modal h2 {
+  margin: 0 0 10px 0;
   font-size: 1.5rem;
+  font-weight: 600;
+  text-align: left;
   color: #222;
 }
 
-.modal-content p {
+.remove-cliente-modal p {
+  margin: 0;
   font-size: 1rem;
-  margin-bottom: 1.5rem;
-  color: #333;
+  color: #444;
+  text-align: left;
+  margin-top: 10px;
+  flex-grow: 1;
 }
 
-.modal-buttons {
+.remove-cliente-buttons {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  gap: 10px;
+  justify-content: flex-end; /* alinhado à direita */
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  border: none;
-  color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 4px;
+.btn-cancelar {
+  font-family: 'Inter', sans-serif;
+  background: white;
+  color: #777;
+  border: 1px solid #ccc;
+  padding: 8px 14px; /* increased padding */
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem; /* increased font size */
+  transition: background-color 0.2s ease;
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
+.btn-cancelar:hover {
+  background-color: #f0f0f0;
 }
 
-.btn-danger {
-  background-color: #dc3545;
-  border: none;
+.btn-remover {
+  font-family: 'Inter', sans-serif;
+  background: #d93025; /* vermelho */
   color: white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 4px;
+  border: none;
+  padding: 8px 14px; /* increased padding */
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem; /* increased font size */
+  transition: background-color 0.2s ease;
 }
 
-.btn-danger:hover {
-  background-color: #b02a37;
+.btn-remover:hover {
+  background-color: #b1271b;
+  color: white;
 }

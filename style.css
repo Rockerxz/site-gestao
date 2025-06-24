@@ -132,7 +132,7 @@ body.pagina-login #conteudo {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #21272d;
+  background-color: #2a323a;
   border-radius: 6px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   width: 220px;
@@ -155,7 +155,7 @@ body.pagina-login #conteudo {
 }
 
 .menu-lateral .user-submenu .submenu-btn:hover {
-  background-color: #1a1d23;
+  background-color: #21242c;
 }
 
 /* Ajuste da navbar para considerar menu colapsado */

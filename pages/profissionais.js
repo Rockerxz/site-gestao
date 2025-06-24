@@ -59,7 +59,7 @@ function renderProfissionais(profissionais) {
         <button class="btn-editar" type="button" title="Editar">
           <i class="fa-solid fa-pen-to-square"></i>
         </button>
-        <button class="btn-remover" type="button" title="Remover">
+        <button class="btn-remover-cliente" type="button" title="Remover">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </td>
@@ -198,6 +198,7 @@ export function setupProfissionaisPageListeners(profissionais) {
           profissionais.push(data);
           modalContainer.remove();
           atualizarPaginacao();
+          showToast('Profissional adicionado com sucesso.', 'success');
         } else {
           showToast('Erro ao adicionar profissional.', 'error');
         }
@@ -267,6 +268,7 @@ export function setupProfissionaisPageListeners(profissionais) {
           }
           modalContainer.remove();
           atualizarPaginacao();
+          showToast('Profissional atualizado com sucesso.', 'success'); 
         } else {
           showToast('Erro ao atualizar profissional.', 'error');
         }
@@ -335,6 +337,7 @@ export function setupProfissionaisPageListeners(profissionais) {
           }
           modalContainer.remove();
           atualizarPaginacao();
+          showToast('Profissional removido com sucesso.', 'success');
         } else {
           showToast('Erro ao remover profissional.', 'error');
         }
@@ -346,7 +349,7 @@ export function setupProfissionaisPageListeners(profissionais) {
 
   // Listener para botões remover - delegação de evento no tbody
   tbody.addEventListener('click', e => {
-    const btn = e.target.closest('.btn-remover');
+    const btn = e.target.closest('.btn-remover-cliente');
     if (!btn) return;
 
     const tr = btn.closest('tr');

@@ -67,9 +67,11 @@ switch ($method) {
         }
 
         // Check if email already exists
-        foreach ($utilizadores as $u) {
-            if (strcasecmp($u['email'], $input['email']) === 0) {
-                respond(['error' => 'Email já existe'], 409);
+        if (!empty($input['email'])) {
+            foreach ($utilizadores as $u) {
+                if (!empty($u['email']) && strcasecmp($u['email'], $input['email']) === 0) {
+                    respond(['error' => 'Email já existe'], 409);
+                }
             }
         }
 
@@ -110,9 +112,11 @@ switch ($method) {
         }
 
         // Check if email is used by another user
-        foreach ($utilizadores as $u) {
-            if ($u['id'] != $input['id'] && strcasecmp($u['email'], $input['email']) === 0) {
-                respond(['error' => 'Email já existe para outro utilizador'], 409);
+        if (!empty($input['email'])) {
+            foreach ($utilizadores as $u) {
+                if ($u['id'] != $input['id'] && !empty($u['email']) && strcasecmp($u['email'], $input['email']) === 0) {
+                    respond(['error' => 'Email já existe para outro utilizador'], 409);
+                }
             }
         }
 

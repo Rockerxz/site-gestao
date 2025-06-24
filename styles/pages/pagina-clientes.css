@@ -133,17 +133,12 @@
 
 .clientes-tabela th:nth-child(5), /* Telefone */
 .clientes-tabela td:nth-child(5) {
-  width: 10%;
+  width: 15%;
 }
 
 .clientes-tabela th:nth-child(6), /* Total de Reparações */
 .clientes-tabela td:nth-child(6) {
-  width: 5%;
-}
-
-.clientes-tabela th:nth-child(7), /* Ações */
-.clientes-tabela td:nth-child(7) {
-  width: 5%;
+  width: 10%;
   text-align: center;
 }
 

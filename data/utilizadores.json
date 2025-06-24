@@ -29,5 +29,21 @@
         "email": "b@b",
         "password": "$2y$10$Bn8AlPvUuvxI3C8BlzeZA.wRFZsc0mTLdCtzV2ohGRwiztM4u\/.Kq",
         "estado": "ativo"
+    },
+    {
+        "id": 8,
+        "perfil": "Técnico",
+        "nome": "z",
+        "email": "",
+        "password": "$2y$10$KaNrcKaybflxnO53qyVfSujSLCl5GHzN6Rmocnro5\/DM.2oKgYGHa",
+        "estado": "ativo"
+    },
+    {
+        "id": 9,
+        "perfil": "Técnico",
+        "nome": "x",
+        "email": "",
+        "password": "$2y$10$8qwKNg3zlT932zi6G.3Fv.oUFxTtDsPQS.LOCLINY5xtTxIf2e53G",
+        "estado": "bloqueado"
     }
 ]

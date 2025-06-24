@@ -1,84 +1,174 @@
-/* Baseado no styles/forms/edit-cliente-modal.css */
-
+/* Modal overlay com fundo cinzento-claro translúcido */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.8); /* cinzento-claro translúcido */
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  padding-top: 10px;
+  z-index: 2000;
+  overflow-y: auto;
 }
 
+/* Conteúdo do modal com fundo branco e bordas arredondadas */
 .modal-content {
-  background-color: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  background-color: #f9f9f9; /* fundo neutro claro */
+  padding: 30px 40px;
+  border-radius: 2px;
+  width: 1400px;
+  height: 600px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-family: 'Inter', sans-serif;
+  color: #333333; /* cinzento-escuro para texto */
 }
 
+/* Cabeçalho do modal com título à esquerda e botão X à direita */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-close {
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #878787e9;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: #000000;
+}
+
+/* Título do modal */
 .modal-content h2 {
   margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  color: #222;
-}
-
-.modal-content form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.modal-content label {
+  margin-bottom: 20px;
   font-weight: 600;
-  margin-bottom: 0.2rem;
+  font-size: 1.6rem;
+  color: #2c2c2c;
+  text-align:left;
 }
 
-.modal-content input,
-.modal-content select {
-  padding: 0.4rem 0.6rem;
+.form-row {
+  display: flex;
+  gap: 40px; /* aumentei o gap horizontal para espaçar mais os campos */
+  margin-bottom: 10px; /* aumentei o espaçamento vertical entre linhas */
+}
+
+.form-row .form-group {
+  flex: 1;
+  min-width: 0; /* prevent overflow */
+}
+
+/* Form group para espaçamento vertical */
+.form-group {
+  margin-bottom: 10px; /* aumentei o espaçamento vertical dentro do grupo */
+}
+
+/* Label com cor cinzento-escuro */
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+}
+
+/* Container para input com ícone */
+.input-icon {
+  position: relative;
+}
+
+/* Ícone dentro do input */
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666666; /* cinzento-escuro */
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  pointer-events: none;
 }
 
-.modal-buttons {
+/* Inputs com padding para não sobrepor o ícone */
+.input-icon input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  color: #333333;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input-icon input:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Para o campo Comentários, que é único e maior */
+.comentarios-group {
+  flex: 1 1 100%; /* ocupa toda a largura */
+}
+
+.comentarios-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  text-align: left;
+}
+
+.comentarios-group textarea {
+  width: 100%;
+  min-height: 140px; /* altura maior */
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  color: #333333;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  resize: none; /* desabilita redimensionamento manual */
+}
+
+.comentarios-group textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 20px;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border: none;
+/* Botão secundário Voltar */
+#btn-adicionar {
+  background-color: #007BFF;
   color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
   font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
+#btn-adicionar:hover {
   background-color: #0056b3;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  border: none;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
 }

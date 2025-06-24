@@ -203,6 +203,7 @@ export function setupUsersPageListeners(users) {
           users.push(data.item);
           atualizarPaginacao();
           modalContainer.remove();
+          showToast('Utilizador adicionado com sucesso.', 'success');
         } else {
           showToast('Erro ao adicionar utilizador.', 'error');
         }
@@ -273,6 +274,7 @@ export function setupUsersPageListeners(users) {
             atualizarPaginacao();
           }
           modalContainer.remove();
+          showToast('Utilizador atualizado com sucesso.', 'success');
         } else {
           showToast('Erro ao atualizar utilizador.', 'error');
         }
@@ -347,6 +349,7 @@ export function setupUsersPageListeners(users) {
             atualizarPaginacao();
           }
           modalContainer.remove();
+          showToast('Utilizador removido com sucesso.', 'success');
         } else {
           showToast('Erro ao remover utilizador.', 'error');
         }

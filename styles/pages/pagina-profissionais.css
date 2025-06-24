@@ -142,7 +142,7 @@
   color: #0056b3;
 }
 
-.btn-remover {
+.btn-remover-cliente {
   background: none !important;
   border: none;
   color: #ff2a00;
@@ -151,7 +151,7 @@
   padding: 0;
 }
 
-.btn-remover:hover {
+.btn-remover-cliente:hover {
   color: #c62100;
 }
 

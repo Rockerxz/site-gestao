@@ -4,7 +4,7 @@ import { EditClienteModal } from '../forms/edit-cliente.js';
 import { RemoveClienteModal } from '../forms/remove-cliente.js';
 
 export function ClientesPage(clientes = []) {
-  // clientes = array de objetos com { id, nome, empresa, endereco, email, telefone, totalReparacoes }
+  // clientes = array de objetos com { id, nome, empresa, endereco, email, telefone }
 
   return `
     <section class="clientes-page">
@@ -29,7 +29,6 @@ export function ClientesPage(clientes = []) {
               <th>Endereço</th>
               <th>Email</th>
               <th>Telefone</th>
-              <th>Total de Reparações</th>
               <th></th>
             </tr>
           </thead>
@@ -64,7 +63,6 @@ function renderClientes(clientes) {
       <td>${escapeHtml(c.endereco)}</td>
       <td>${escapeHtml(c.email)}</td>
       <td>${escapeHtml(c.telefone)}</td>
-      <td>${c.totalReparacoes ?? 0}</td>
       <td class="acoes-coluna">
         <button class="btn-editar" type="button" title="Editar">
           <i class="fa-solid fa-pen-to-square"></i>
@@ -213,7 +211,6 @@ export function setupClientesPageListeners(clientes) {
         email: form.email.value.trim(),
         telefone: form.telefone.value.trim(),
         comentarios: form.comentarios.value.trim(),
-        totalReparacoes: 0
       };
 
       try {
@@ -234,6 +231,7 @@ export function setupClientesPageListeners(clientes) {
           clientes.push(data.item);
           atualizarLista();
           modalContainer.remove();
+          showToast('Cliente adicionado com sucesso.', 'success');
         } else {
           showToast('Erro ao adicionar cliente.', 'error');
         }
@@ -284,7 +282,6 @@ export function setupClientesPageListeners(clientes) {
         email,
         telefone,
         comentarios,
-        totalReparacoes: cliente.totalReparacoes || 0
       };
 
       try {
@@ -308,6 +305,7 @@ export function setupClientesPageListeners(clientes) {
             atualizarLista();
           }
           modalContainer.remove();
+          showToast('Cliente atualizado com sucesso.', 'success');
         } else {
           showToast('Erro ao atualizar cliente.', 'error');
         }
@@ -376,6 +374,7 @@ export function setupClientesPageListeners(clientes) {
             atualizarLista();
           }
           modalContainer.remove();
+          showToast('Cliente removido com sucesso.', 'success');
         } else {
           showToast('Erro ao remover cliente.', 'error');
         }

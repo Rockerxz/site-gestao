@@ -53,12 +53,8 @@ switch($method) {
     }
     $data = readData($file);
     $input['id'] = time();
-    // Optional: add totalReparacoes default 0 if needed
-    if (!isset($input['totalReparacoes'])) {
-      $input['totalReparacoes'] = 0;
-    }
     // Ensure all expected fields exist
-    $fields = ['nome', 'empresa', 'endereco', 'email', 'telefone', 'comentarios', 'totalReparacoes'];
+    $fields = ['nome', 'empresa', 'endereco', 'email', 'telefone', 'comentarios'];
     $newItem = [];
     foreach ($fields as $field) {
       $newItem[$field] = isset($input[$field]) ? $input[$field] : '';
