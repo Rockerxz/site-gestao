@@ -4,6 +4,7 @@ import { showToast } from './components/toast.js';
 import { LoginPage } from './pages/login.js';
 import { ProfissionaisPage, setupProfissionaisPageListeners } from './pages/profissionais.js';
 import { DashboardPage } from './pages/dashboard.js';
+import { EquipamentosPage, setupEquipamentosPageListeners } from './pages/equipamentos.js';
 import { ReparacoesPage, setupReparacoesPageListeners } from './pages/reparacoes.js';
 import { ClientesPage, setupClientesPageListeners } from './pages/clientes.js';
 import { UsersPage, setupUsersPageListeners } from './pages/utilizadores.js';
@@ -81,6 +82,18 @@ async function fetchReparacoes() {
   }
 }
 
+async function fetchEquipamentos() {
+  try {
+    const res = await fetch('/backend/equipamentos.php', { method: 'GET', credentials: 'include' });
+    if (!res.ok) throw new Error('Erro ao buscar equipamentos');
+    const data = await res.json();
+    return Array.isArray(data.data) ? data.data : [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
 async function fetchProfissionais() {
   try {
     const res = await fetch('/backend/profissionais.php', { method: 'GET', credentials: 'include' });
@@ -118,22 +131,6 @@ async function fetchUtilizadores() {
   }
 }
 
-async function addTecnico(nome, email) {
-  try {
-    const res = await fetch('/backend/profissionais.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ nome, email })
-    });
-    if (!res.ok) throw new Error('Erro ao adicionar técnico');
-    const data = await res.json();
-    return data.success;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
-}
 
 async function doLogout() {
   removeActivityListeners();
@@ -250,6 +247,7 @@ async function render(page) {
     'dashboard': '/styles/pages/pagina-dashboard.css',
     'profissionais': '/styles/pages/pagina-profissionais.css',
     'reparacoes': '/styles/pages/pagina-reparacoes.css',
+    'equipamentos': '/styles/pages/pagina-equipamentos.css',
     'utilizadores': '/styles/pages/pagina-utilizadores.css',
     'definicoes-user': '/styles/pages/definicoes-user.css',
   };
@@ -264,6 +262,7 @@ async function render(page) {
   let reparacoesData = null;
   let profissionaisData = null;
   let utilizadoresData = null;
+  let equipamentosData = null;
 
   switch (page) {
     case 'login':
@@ -286,6 +285,14 @@ async function render(page) {
       reparacoesData = await fetchReparacoes();
       if (thisRender.cancelled) return;
       content = ReparacoesPage(reparacoesData);
+      break;
+    
+    case 'equipamentos':
+      if (!currentUser) return render('login');
+      // Fetch equipamentos and clientes in parallel
+      [equipamentosData, clientesData] = await Promise.all([fetchEquipamentos(), fetchClientes()]);
+      if (thisRender.cancelled) return;
+      content = EquipamentosPage(equipamentosData, clientesData);
       break;
 
     case 'clientes':
@@ -391,6 +398,11 @@ async function render(page) {
   if (page === 'reparacoes') {
     setupReparacoesPageListeners();
     setupReparacoesPageListeners.setDados(reparacoesData);
+  }
+
+  if (page === 'equipamentos') {
+    // Setup listeners with equipamentos and clientes data
+    setupEquipamentosPageListeners(equipamentosData, clientesData);
   }
 
   if (page === 'clientes') {

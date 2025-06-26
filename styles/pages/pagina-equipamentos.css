@@ -1,0 +1,217 @@
+#title-equipamentos {
+  margin-bottom: 20px;
+}
+
+#btn-adicionar-equipamento {
+  margin-bottom: 30px; /* para dar espaçamento abaixo do botão */
+  margin-top: 0;
+}
+
+/* Container branco para a página equipamentos */
+.equipamentos-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equipamentos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.pesquisa-equipamentos {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#main-info {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Botão adicionar equipamento */
+#btn-adicionar-equipamento {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+#btn-adicionar-equipamento:hover {
+  background-color: #0056b3;
+}
+
+/* Barra de pesquisa */
+#barra-pesquisa-equipamentos {
+  padding: 8px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.equipamentos-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+}
+
+.equipamentos-tabela thead tr {
+  background-color: #f0f0f0;
+}
+
+.equipamentos-tabela th, .equipamentos-tabela td {
+  padding: 10px 12px;
+  border-top: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+  border-right: 2px solid #ddd;
+  text-align: left;
+}
+
+.equipamentos-tabela tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Primeira coluna: remove borda esquerda */
+.equipamentos-tabela th:first-child,
+.equipamentos-tabela td:first-child {
+  border-left: none;
+}
+
+/* Última coluna: remove borda direita */
+.equipamentos-tabela th:last-child,
+.equipamentos-tabela td:last-child {
+  border-right: none;
+}
+
+/* Ajustes específicos para largura das colunas da tabela equipamentos */
+.equipamentos-tabela th:nth-child(1), /* Tipo de Equipamento */
+.equipamentos-tabela td:nth-child(1) {
+  width: 15%;
+}
+
+.equipamentos-tabela th:nth-child(2), /* Número de Série */
+.equipamentos-tabela td:nth-child(2) {
+  width: 25%;
+}
+
+.equipamentos-tabela th:nth-child(3), /* Modelo */
+.equipamentos-tabela td:nth-child(3) {
+  width: 25%;
+}
+
+.equipamentos-tabela th:nth-child(4), /* Marca */
+.equipamentos-tabela td:nth-child(4) {
+  width: 15%;
+}
+
+.equipamentos-tabela th:nth-child(5), /* Comentários */
+.equipamentos-tabela td:nth-child(5) {
+  width: 20%;
+}
+
+.equipamentos-tabela th:nth-child(6), /* Cliente */
+.equipamentos-tabela td:nth-child(6) {
+  width: 5%;
+  text-align: center;
+}
+
+
+.acoes-coluna {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+.btn-editar {
+  background: none;
+  border: none;
+  color: #007BFF;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.btn-editar:hover {
+  color: #0056b3;
+}
+
+.btn-remover-equipamento {
+  background: none;
+  border: none;
+  color: #ff2a00;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0;
+}
+
+.btn-remover-equipamento:hover {
+  color: #c62100;
+}
+
+/* Rodapé da lista com paginação e feedback */
+.equipamentos-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.equipamentos-paginacao {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-paginacao {
+  background-color: white;
+  color: #666;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-paginacao:hover {
+  background-color: #f0f0f0;
+}
+
+.btn-pagina-atual {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: default;
+}

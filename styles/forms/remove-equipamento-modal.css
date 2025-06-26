@@ -1,17 +1,18 @@
-.remove-user-overlay {
+/* Change selectors to match modal-overlay and modal-content */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* overlay escuro com opacidade */
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.remove-user-modal {
+.modal-content {
   font-family: 'Inter', sans-serif;
   background: white;
   width: 650px; /* horizontal longa */
@@ -26,7 +27,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.remove-user-modal h2 {
+.modal-content h2 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
   font-weight: 600;
@@ -34,7 +35,7 @@
   color: #222;
 }
 
-.remove-user-modal p {
+.modal-content p {
   margin: 0;
   font-size: 1rem;
   color: #444;
@@ -43,10 +44,10 @@
   flex-grow: 1;
 }
 
-.remove-user-buttons {
+.remove-equipamento-buttons {
   display: flex;
   gap: 10px;
-  justify-content: flex-end; /* alinhado à esquerda */
+  justify-content: flex-end;
 }
 
 .btn-cancelar {
@@ -54,10 +55,10 @@
   background: white;
   color: #777;
   border: 1px solid #ccc;
-  padding: 8px 14px; /* increased padding */
+  padding: 8px 14px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem; /* increased font size */
+  font-size: 0.9rem;
   transition: background-color 0.2s ease;
 }
 
@@ -67,13 +68,13 @@
 
 .btn-remover {
   font-family: 'Inter', sans-serif;
-  background: #d93025; /* vermelho */
+  background: #d93025;
   color: white;
   border: none;
-  padding: 8px 14px; /* increased padding */
+  padding: 8px 14px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.9rem; /* increased font size */
+  font-size: 0.9rem;
   transition: background-color 0.2s ease;
 }
 

@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "tipoEquipamento": "PC",
+        "numeroSerie": "4214242",
+        "modelo": "HP A",
+        "marca": "HP",
+        "comentarios": "aa",
+        "clienteId": "1750418345",
+        "id": 1750934066
+    },
+    {
+        "tipoEquipamento": "tele",
+        "numeroSerie": "42525625",
+        "modelo": "iphone",
+        "marca": "",
+        "comentarios": "",
+        "clienteId": "1750418341",
+        "id": 1750938372
+    }
+]

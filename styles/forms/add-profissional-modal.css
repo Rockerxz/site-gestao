@@ -19,8 +19,8 @@
   background-color: #f9f9f9; /* fundo neutro claro */
   padding: 30px 40px;
   border-radius: 2px;
-  width: 1400px;
-  height: 600px;
+  width: 600px;
+  max-width: 90vw;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   font-family: 'Inter', sans-serif;
   color: #333333; /* cinzento-escuro para texto */

@@ -9,16 +9,16 @@ export function ClientesPage(clientes = []) {
   return `
     <section class="clientes-page">
       <h1 id="title-clientes">Clientes</h1>
-      <button id="btn-adicionar-cliente" class="btn-primary" type="button">
-       <i class="fa-solid fa-circle-plus"></i>Adicionar Cliente</button>
-
+      
       <div class="clientes-container">
+        <h1 id="main-info">Informações de clientes</h1>
         <div class="clientes-header">
-            <h1 id="main-info">Informações de clientes</h1>
             <div class="pesquisa-clientes">
               <label for="barra-pesquisa-clientes">Pesquisar:</label>
               <input type="search" id="barra-pesquisa-clientes" aria-label="Pesquisar clientes">
             </div>  
+            <button id="btn-adicionar-cliente" class="btn-primary" type="button">
+                <i class="fa-solid fa-circle-plus"></i>Adicionar Cliente</button>
         </div>
 
         <table class="clientes-tabela" aria-label="Lista de clientes">
