@@ -14,7 +14,7 @@ export function AddProfissionalModal() {
               <div class="input-icon">
                 <i class="fa-solid fa-id-badge"></i>
                 <select id="cargo-profissional" name="cargo" required>
-                  <option value="">Selecione o cargo</option>
+                  <option value="" disabled selected>Escolha o cargo</option>
                   <option value="Técnico">Técnico</option>
                   <option value="Atendimento">Atendimento</option>
                 </select>

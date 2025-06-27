@@ -10,7 +10,7 @@ export function EquipamentosPage(equipamentos = [], clientes = []) {
   // Helper para obter nome do cliente pelo id
   function getClienteNome(clienteId) {
     const cliente = clientes.find(c => c.id == clienteId);
-    return cliente ? cliente.nome : 'Cliente não encontrado';
+    return cliente ? cliente.nome : '';
   }
 
   return `
@@ -34,7 +34,7 @@ export function EquipamentosPage(equipamentos = [], clientes = []) {
               <th>Tipo de Equipamento</th>
               <th>Número de Série</th>
               <th>Modelo</th>
-              <th>Marca</th>
+              <th>IMEI</th>
               <th>Cliente</th>
               <th></th>
             </tr>
@@ -68,7 +68,7 @@ function renderEquipamentos(equipamentos, getClienteNome) {
       <td>${escapeHtml(e.tipoEquipamento)}</td>
       <td>${escapeHtml(e.numeroSerie)}</td>
       <td>${escapeHtml(e.modelo)}</td>
-      <td>${escapeHtml(e.marca)}</td>
+      <td>${escapeHtml(e.imei)}</td>
       <td>${escapeHtml(getClienteNome(e.clienteId))}</td>
       <td class="acoes-coluna">
         <button class="btn-editar" type="button" title="Editar">
@@ -128,7 +128,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
 
   function getClienteNome(clienteId) {
     const cliente = clientes.find(c => c.id == clienteId);
-    return cliente ? cliente.nome : 'Cliente não encontrado';
+    return cliente ? cliente.nome : '';
   }
 
   function atualizarLista() {
@@ -138,7 +138,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
       (e.tipoEquipamento && e.tipoEquipamento.toLowerCase().includes(termo)) ||
       (e.numeroSerie && e.numeroSerie.toLowerCase().includes(termo)) ||
       (e.modelo && e.modelo.toLowerCase().includes(termo)) ||
-      (e.marca && e.marca.toLowerCase().includes(termo)) ||
+      (e.imei && e.imei.toLowerCase().includes(termo)) ||
       (getClienteNome(e.clienteId).toLowerCase().includes(termo))
     );
 
@@ -277,6 +277,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
         numeroSerie: form.numeroSerie.value.trim(),
         modelo: form.modelo.value.trim(),
         marca: form.marca.value.trim(),
+        imei: form.IMEI.value.trim(),
         comentarios: form.comentarios.value.trim(),
         clienteId: form.clienteId.value.trim(),
       };
@@ -344,6 +345,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
         numeroSerie: form.numeroSerie.value.trim() || equipamento.numeroSerie,
         modelo: form.modelo.value.trim() || equipamento.modelo,
         marca: form.marca.value.trim() || equipamento.marca,
+        imei: form.IMEI.value.trim() || equipamento.imei,
         comentarios: form.comentarios.value.trim(),
         clienteId: form.clienteId.value.trim(),
       };

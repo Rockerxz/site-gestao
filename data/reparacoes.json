@@ -1,1 +1,21 @@
-[]
+[
+    {
+        "tipoEquipamento": "",
+        "numeroSerie": "",
+        "modelo": "",
+        "marca": "",
+        "comentarios": "",
+        "clienteId": "1750418341",
+        "id": 1751016887
+    },
+    {
+        "clienteId": "1750418345",
+        "equipamentoId": "iphone",
+        "profissionalId": "",
+        "estado": "",
+        "problema": "",
+        "descricao": "",
+        "dataEntrada": "",
+        "id": 1751017452
+    }
+]

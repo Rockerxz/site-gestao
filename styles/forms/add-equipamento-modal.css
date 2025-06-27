@@ -169,15 +169,27 @@
   background-color: #0056b3;
 }
 
-/* Estilos para o select customizado com pesquisa */
 .custom-select {
   position: relative;
   user-select: none;
   font-family: Arial, sans-serif;
-  width: 100%;
-  max-width: 100%;
+  width: 70%; /* reduced width from 100% to 60% */
+  max-width: 70%;
+  padding-left: 28px; /* space for icon */
 }
 
+.select-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666666;
+  font-size: 1rem;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Adjust select-selected to remove left padding since padding is on container */
 .select-selected {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -187,13 +199,16 @@
   min-height: 38px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  /* Remove left padding here */
+  padding-left: 12px;
 }
 
 .select-selected:focus {
   outline: 2px solid #007bff;
   outline-offset: 2px;
 }
+
 
 .select-items {
   position: absolute;

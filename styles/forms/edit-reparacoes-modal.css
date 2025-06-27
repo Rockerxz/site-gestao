@@ -174,8 +174,8 @@
   position: relative;
   user-select: none;
   font-family: Arial, sans-serif;
-  width: 70%; /* reduced width from 100% to 60% */
-  max-width: 70%;
+  width: 100%;
+  max-width: 100%;
   padding-left: 28px; /* space for icon */
 }
 
@@ -209,7 +209,6 @@
   outline: 2px solid #007bff;
   outline-offset: 2px;
 }
-
 
 .select-items {
   position: absolute;

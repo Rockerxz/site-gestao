@@ -40,16 +40,11 @@ switch($method) {
       echo json_encode(['error' => 'Dados inválidos']);
       exit();
     }
-    // Validate required fields (at least tipoEquipamento and clienteId)
-    if (empty($input['tipoEquipamento']) || empty($input['clienteId'])) {
-      http_response_code(400);
-      echo json_encode(['error' => 'Campos tipoEquipamento e clienteId são obrigatórios']);
-      exit();
-    }
+    
     $data = readData($file);
     $input['id'] = time();
     // Ensure all expected fields exist
-    $fields = ['tipoEquipamento', 'numeroSerie', 'modelo', 'marca', 'comentarios', 'clienteId'];
+    $fields = ['tipoEquipamento', 'numeroSerie', 'modelo', 'marca', 'imei', 'comentarios', 'clienteId'];
     $newItem = [];
     foreach ($fields as $field) {
       $newItem[$field] = isset($input[$field]) ? $input[$field] : '';

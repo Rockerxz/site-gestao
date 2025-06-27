@@ -52,7 +52,9 @@ export function AddEquipamentoModal(clientes = []) {
             <div class="form-group cliente-select-group" style="position: relative;">
               <label for="clienteSelect">Cliente</label>
               <div id="custom-select" class="custom-select" style="width: 100%;">
-                <div class="select-selected" tabindex="0">Selecione um cliente</div>
+                <i class="fa-solid fa-user select-icon"></i>
+                <div class="select-selected" tabindex="0">
+                </div>
                 <div class="select-items select-hide">
                   <input type="text" placeholder="Pesquisar..." class="select-search" />
                   <div class="options-list">
@@ -62,8 +64,14 @@ export function AddEquipamentoModal(clientes = []) {
               </div>
               <input type="hidden" id="clienteId" name="clienteId" value="">
             </div>
-            <!-- Empty div to keep two columns per row -->
-            <div class="form-group"></div>
+
+            <div class="form-group">
+              <label for="imei">IMEI</label>
+              <div class="input-icon">
+                <i class="fa-solid fa-barcode"></i>
+                <input type="text" id="IMEI" name="IMEI">
+              </div>
+            </div>
           </div>
 
           <div class="form-row">

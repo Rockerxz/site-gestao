@@ -73,9 +73,9 @@ async function renewSession() {
 async function fetchReparacoes() {
   try {
     const res = await fetch('/backend/reparacoes.php', { method: 'GET', credentials: 'include' });
-    if (!res.ok) throw new Error('Erro ao buscar reparações');
+    if (!res.ok) throw new Error('Erro ao buscar equipamentos');
     const data = await res.json();
-    return data.data || [];
+    return Array.isArray(data.data) ? data.data : [];
   } catch (error) {
     console.error(error);
     return [];
@@ -244,7 +244,7 @@ async function render(page) {
   // Map page names to their CSS files in /styles/
   const pageStyles = {
     'clientes': '/styles/pages/pagina-clientes.css',
-    'dashboard': '/styles/pages/pagina-dashboard.css',
+    'dashboard': '/styles/pages/dashboard.css',
     'profissionais': '/styles/pages/pagina-profissionais.css',
     'reparacoes': '/styles/pages/pagina-reparacoes.css',
     'equipamentos': '/styles/pages/pagina-equipamentos.css',
@@ -270,7 +270,8 @@ async function render(page) {
       break;
 
     case 'dashboard':
-      content = DashboardPage(currentUser);
+      if (!currentUser) return render('login');
+      content = await DashboardPage(currentUser);
       break;
 
     case 'profissionais':
@@ -282,9 +283,10 @@ async function render(page) {
 
     case 'reparacoes':
       if (!currentUser) return render('login');
-      reparacoesData = await fetchReparacoes();
+      // Fetch equipamentos and clientes in parallel
+      [reparacoesData, profissionaisData, equipamentosData, clientesData] = await Promise.all([fetchReparacoes(), fetchProfissionais(), fetchEquipamentos(), fetchClientes()]);
       if (thisRender.cancelled) return;
-      content = ReparacoesPage(reparacoesData);
+      content = ReparacoesPage(reparacoesData, clientesData, equipamentosData, profissionaisData);
       break;
     
     case 'equipamentos':
@@ -396,12 +398,10 @@ async function render(page) {
   }
 
   if (page === 'reparacoes') {
-    setupReparacoesPageListeners();
-    setupReparacoesPageListeners.setDados(reparacoesData);
+    setupReparacoesPageListeners(reparacoesData, clientesData, equipamentosData, profissionaisData);
   }
 
   if (page === 'equipamentos') {
-    // Setup listeners with equipamentos and clientes data
     setupEquipamentosPageListeners(equipamentosData, clientesData);
   }
 
@@ -416,6 +416,7 @@ async function render(page) {
   if (page === 'definicoes-user') {
     setupDefinicoesUserListeners(currentUser);
   }
+  
 }
 
 render('login');

@@ -6,7 +6,8 @@
         "marca": "HP",
         "comentarios": "aa",
         "clienteId": "1750418345",
-        "id": 1750934066
+        "id": 1750934066,
+        "imei": "1515126"
     },
     {
         "tipoEquipamento": "tele",
@@ -16,5 +17,15 @@
         "comentarios": "",
         "clienteId": "1750418341",
         "id": 1750938372
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "",
+        "modelo": "",
+        "marca": "",
+        "imei": "4151515",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1750971368
     }
 ]
