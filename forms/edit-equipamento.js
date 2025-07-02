@@ -54,17 +54,22 @@ export function EditEquipamentoModal(equipamento = {}, clientes = []) {
           <div class="form-row">
             <div class="form-group cliente-select-group" style="position: relative;">
               <label for="clienteSelect">Cliente</label>
-              <div id="custom-select" class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-user select-icon"></i>
-                <div class="select-selected" tabindex="0">
-                   ${clienteSelecionado ? escapeHtml(clienteSelecionado.nome) : ''}
-                </div>
-                <div class="select-items select-hide">
-                  <input type="text" placeholder="Pesquisar..." class="select-search" />
-                  <div class="options-list">
-                    ${clienteOptions}
+              <div class="cliente-select-row">
+                <div id="custom-select" class="custom-select">
+                  <i class="fa-solid fa-user select-icon"></i>
+                  <div class="select-selected" tabindex="0">
+                     ${clienteSelecionado ? escapeHtml(clienteSelecionado.nome) : ''}
+                  </div>
+                  <div class="select-items select-hide">
+                    <input type="text" placeholder="Pesquisar..." class="select-search" />
+                    <div class="options-list">
+                      ${clienteOptions}
+                    </div>
                   </div>
                 </div>
+                <button type="button" id="btn-add-cliente" class="btn-add-cliente" title="Adicionar Cliente">
+                <i class="fa-solid fa-user-plus"></i>
+                </button>
               </div>
               <input type="hidden" id="clienteId" name="clienteId" value="${clienteSelecionado ? clienteSelecionado.id : ''}">
             </div>
@@ -73,7 +78,7 @@ export function EditEquipamentoModal(equipamento = {}, clientes = []) {
               <label for="imei">IMEI</label>
               <div class="input-icon">
                 <i class="fa-solid fa-barcode"></i>
-                <input type="text" id="IMEI" name="IMEI">
+                <input type="text" id="IMEI" name="IMEI" placeholder="${escapeHtml(equipamento.imei || '')}">
               </div>
             </div>
           </div>

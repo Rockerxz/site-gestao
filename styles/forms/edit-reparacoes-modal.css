@@ -19,7 +19,7 @@
   background-color: #f9f9f9;
   padding: 30px 40px;
   border-radius: 2px;
-  width: 600px;
+  width: 1450px;
   max-width: 90vw;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   font-family: 'Inter', sans-serif;
@@ -82,7 +82,6 @@
   font-size: 0.95rem;
 }
 
-
 /* Input icon styles */
 .input-icon {
   position: relative;
@@ -116,12 +115,11 @@
   border-color: #007BFF;
   outline: none;
 }
-
-.comentarios-group {
+.descricao-group {
   flex: 1 1 100%;
 }
 
-.comentarios-group label {
+.descricao-group label {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
@@ -130,7 +128,7 @@
   text-align: left;
 }
 
-.comentarios-group textarea {
+.descricao-group textarea {
   width: 100%;
   min-height: 140px;
   padding: 12px 16px;
@@ -144,7 +142,7 @@
   resize: none;
 }
 
-.comentarios-group textarea:focus {
+.descricao-group textarea:focus {
   border-color: #007BFF;
   outline: none;
 }
@@ -155,7 +153,7 @@
   margin-top: 20px;
 }
 
-#btn-adicionar {
+#btn-editar {
   background-color: #007BFF;
   color: white;
   border: none;
@@ -166,7 +164,7 @@
   transition: background-color 0.3s ease;
 }
 
-#btn-adicionar:hover {
+#btn-editar:hover {
   background-color: #0056b3;
 }
 

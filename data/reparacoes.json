@@ -1,14 +1,5 @@
 [
     {
-        "tipoEquipamento": "",
-        "numeroSerie": "",
-        "modelo": "",
-        "marca": "",
-        "comentarios": "",
-        "clienteId": "1750418341",
-        "id": 1751016887
-    },
-    {
         "clienteId": "1750418345",
         "equipamentoId": "iphone",
         "profissionalId": "",
@@ -17,5 +8,35 @@
         "descricao": "",
         "dataEntrada": "",
         "id": 1751017452
+    },
+    {
+        "clienteId": "1750418341",
+        "equipamentoId": "iphone",
+        "profissionalId": "",
+        "estado": "",
+        "problema": "",
+        "descricao": "",
+        "dataEntrada": "",
+        "id": 1751192386
+    },
+    {
+        "clienteId": "1750418350",
+        "equipamentoId": "HP A",
+        "profissionalId": "",
+        "estado": "",
+        "problema": "daqgaga",
+        "descricao": "wgwgwgw",
+        "dataEntrada": "",
+        "id": 1751195654
+    },
+    {
+        "clienteId": "1750418358",
+        "equipamentoId": "HP A",
+        "profissionalId": "",
+        "estado": "",
+        "problema": "fqeqwg",
+        "descricao": "gqwgq2gq",
+        "dataEntrada": "",
+        "id": 1751196742
     }
 ]

@@ -49,18 +49,22 @@ export function AddEquipamentoModal(clientes = []) {
           </div>
 
           <div class="form-row">
-            <div class="form-group cliente-select-group" style="position: relative;">
+            <div class="form-group cliente-select-group">
               <label for="clienteSelect">Cliente</label>
-              <div id="custom-select" class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-user select-icon"></i>
-                <div class="select-selected" tabindex="0">
-                </div>
-                <div class="select-items select-hide">
-                  <input type="text" placeholder="Pesquisar..." class="select-search" />
-                  <div class="options-list">
-                    ${clienteOptions}
+              <div class="cliente-select-row">
+                <div id="custom-select" class="custom-select">
+                  <i class="fa-solid fa-user select-icon"></i>
+                  <div class="select-selected" tabindex="0"> </div>
+                  <div class="select-items select-hide">
+                    <input type="text" placeholder="Pesquisar..." class="select-search" />
+                    <div class="options-list">
+                      ${clienteOptions}
+                    </div>
                   </div>
                 </div>
+                <button type="button" id="btn-add-cliente" class="btn-add-cliente" title="Adicionar Cliente">
+                <i class="fa-solid fa-user-plus"></i>
+                </button>
               </div>
               <input type="hidden" id="clienteId" name="clienteId" value="">
             </div>

@@ -33,18 +33,18 @@ export function ClientesPage(clientes = []) {
             </tr>
           </thead>
           <tbody id="clientes-lista">
-            ${renderClientes(clientes.slice(0, 10))}
+            ${renderClientes(clientes.slice(0, 5))}
           </tbody>
         </table>
 
         <div class="clientes-footer">
           <div id="clientes-feedback" class="clientes-feedback">
-            Mostrando 1 a ${Math.min(10, clientes.length)} de ${clientes.length} clientes
+            Mostrando 1 a ${Math.min(5, clientes.length)} de ${clientes.length} clientes
           </div>
           <div class="clientes-paginacao">
             <button id="btn-anterior" type="button" class="btn-paginacao" disabled>Anterior</button>
             <button id="btn-pagina-atual" type="button" class="btn-pagina-atual" disabled>1</button>
-            <button id="btn-seguinte" type="button" class="btn-paginacao" ${clientes.length > 10 ? '' : 'disabled'}>Seguinte</button>
+            <button id="btn-seguinte" type="button" class="btn-paginacao" ${clientes.length > 5 ? '' : 'disabled'}>Seguinte</button>
           </div>
         </div>
       </div>
@@ -120,7 +120,7 @@ export function setupClientesPageListeners(clientes) {
   if (!inputPesquisa || !tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !feedback || !btnAdicionarCliente) return;
 
   let paginaAtual = 1;
-  const itensPorPagina = 10;
+  const itensPorPagina = 5;
   let dadosFiltrados = clientes;
 
   function atualizarLista() {
@@ -240,6 +240,7 @@ export function setupClientesPageListeners(clientes) {
       }
     });
   });
+
 
   // Função para abrir modal de edição com dados do cliente
   function abrirModalEditarCliente(cliente) {
@@ -406,4 +407,74 @@ export function setupClientesPageListeners(clientes) {
 
   // Inicializa lista
   atualizarPaginacao();
+}
+
+export function openAddClienteModal(clientes, onClienteAdded, onModalClosed) {
+  // Load modal style
+  const linkHref = '/styles/forms/add-cliente-modal.css';
+  if (!document.querySelector(`link[href="${linkHref}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = linkHref;
+    link.setAttribute('data-dynamic-style', 'true');
+    document.head.appendChild(link);
+  }
+
+  const modalClienteContainer = document.createElement('div');
+  modalClienteContainer.id = 'modal-add-cliente-container';
+  modalClienteContainer.innerHTML = AddClienteModal();
+  document.body.appendChild(modalClienteContainer);
+
+  const btnFecharCliente = modalClienteContainer.querySelector('#btn-fechar-modal');
+  if (btnFecharCliente) {
+    btnFecharCliente.addEventListener('click', () => {
+      modalClienteContainer.remove();
+      if (typeof onModalClosed === 'function') {
+        onModalClosed(); // Chama callback quando o modal é fechado
+      }
+    });
+  }
+
+  const btnAdicionarCliente = modalClienteContainer.querySelector('#btn-adicionar');
+  const formCliente = modalClienteContainer.querySelector('#form-adicionar-cliente');
+
+  btnAdicionarCliente.addEventListener('click', async () => {
+    if (!formCliente.checkValidity()) {
+      formCliente.reportValidity();
+      return;
+    }
+
+    const novoCliente = {
+      nome: formCliente.nome.value.trim(),
+      // add other client fields if any
+    };
+
+    try {
+      const res = await fetch('/backend/clientes.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novoCliente)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        showToast('Erro ao adicionar cliente: ' + (errorData.error || 'Erro desconhecido'), 'error');
+        return;
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        clientes.push(data.item);
+        modalClienteContainer.remove();
+        showToast('Cliente adicionado com sucesso.', 'success');
+        if (typeof onClienteAdded === 'function') {
+          onClienteAdded(data.item);
+        }
+      } else {
+        showToast('Erro ao adicionar cliente.', 'error');
+      }
+    } catch (error) {
+      showToast('Erro ao adicionar cliente: ' + error.message, 'error');
+    }
+  });
 }

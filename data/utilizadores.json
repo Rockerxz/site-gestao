@@ -7,14 +7,6 @@
         "password": "$2y$10$Fy4KZAsQ8itHGLCWx4fLOeTqgVMnBxylF7v.Nfrj8afrY9ug.d28."
     },
     {
-        "id": 4,
-        "perfil": "Técnico",
-        "nome": "a",
-        "email": "a@a",
-        "password": "$2y$10$f1zZ5Fu5y\/hTfVItztSHbetBie0DvVTP19jZ69LCEzjnIPwNwTjj.",
-        "estado": "ativo"
-    },
-    {
         "id": 6,
         "perfil": "Atendimento",
         "nome": "c",
@@ -45,5 +37,21 @@
         "email": "",
         "password": "$2y$10$8qwKNg3zlT932zi6G.3Fv.oUFxTtDsPQS.LOCLINY5xtTxIf2e53G",
         "estado": "bloqueado"
+    },
+    {
+        "id": 10,
+        "perfil": "Atendimento",
+        "nome": "treze",
+        "email": "13treze13@13",
+        "password": "$2y$10$o7hr2X9WmnHmg0l8IxxgVOwuX5amqyHYKVjuZitXM3mD9u5.nyBkK",
+        "estado": "ativo"
+    },
+    {
+        "id": 11,
+        "perfil": "Técnico",
+        "nome": "134141",
+        "email": "",
+        "password": "$2y$10$FwOPEjbK3VTU0nuXZwQGp.j4QgcH0YjOzUNJ85TJM0ssMJ1ESeWQ6",
+        "estado": "ativo"
     }
 ]

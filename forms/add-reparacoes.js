@@ -43,7 +43,7 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
             <div class="form-group modelo-select-group" style="position: relative;">
               <label for="modeloSelect">Modelo</label>
               <div class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-user select-icon"></i>
+                <i class="fa-solid fa-tag"></i>
                 <div class="select-selected" tabindex="0">
                 </div>
                 <div class="select-items select-hide">
@@ -59,7 +59,7 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
             <div class="form-group numeroserie-select-group" style="position: relative;">
               <label for="numeroserieSelect">Número de Série</label>
               <div  class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-user select-icon"></i>
+                <i class="fa-solid fa-barcode"></i>
                 <div class="select-selected" tabindex="0">
                 </div>
                 <div class="select-items select-hide">
@@ -77,7 +77,7 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
             <div class="form-group tipoequipamento-select-group" style="position: relative;">
               <label for="tipoequipamentoSelect">Tipo de Equipamento</label>
               <div class="input-icon">
-                <i class="fa-solid fa-id-badge"></i>
+                <i class="fa-solid fa-cogs"></i>
                 <select id="tipoequipamento" name="tipoequipamento" required>
                   <option value="" disabled selected>Escolha a categoria</option>
                   <option value="PC">PC</option>
@@ -89,7 +89,7 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
             <div class="form-group imei-select-group" style="position: relative;">
               <label for="imeiSelect">IMEI</label>
               <div  class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-user select-icon"></i>
+                <i class="fa-solid fa-barcode"></i>
                 <div class="select-selected" tabindex="0">
                 </div>
                 <div class="select-items select-hide">
@@ -113,7 +113,6 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
             <div class="form-group">
               <label for="problema">Problema reportado:</label>
               <div class="input-icon">
-                <i class="fa-solid fa-industry"></i>
                 <input type="text" id="problema" name="problema">
               </div>
             </div>

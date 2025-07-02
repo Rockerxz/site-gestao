@@ -33,7 +33,7 @@ export function AddProfissionalModal() {
             <div class="form-group">
               <label for="morada">Morada</label>
               <div class="input-icon">
-                <i class="fa-solid fa-map-marker-alt"></i>
+                <i class="fa-solid fa-house"></i>
                 <input type="text" id="morada" name="morada"  placeholder="Morada">
               </div>
             </div>
@@ -43,7 +43,7 @@ export function AddProfissionalModal() {
             <div class="form-group">
               <label for="email">Email</label>
               <div class="input-icon">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-envelope"></i>
                 <input type="email" id="email" name="email" placeholder="Email">
               </div>
             </div>
@@ -51,7 +51,7 @@ export function AddProfissionalModal() {
             <div class="form-group">
               <label for="telefone">Telefone</label>
               <div class="input-icon">
-                <i class="fa-solid fa-map-marker-alt"></i>
+                <i class="fa-solid fa-phone"></i>
                 <input type="tel" id="telefone" name="telefone"  placeholder="Telefone">
               </div>
             </div>

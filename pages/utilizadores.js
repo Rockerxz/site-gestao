@@ -28,7 +28,7 @@ export function UsersPage(users = []) {
             </tr>
           </thead>
           <tbody id="utilizadores-lista">
-            ${renderUsers(users.slice(0, 10))}
+            ${renderUsers(users.slice(0, 5))}
           </tbody>
         </table>
 
@@ -36,7 +36,7 @@ export function UsersPage(users = []) {
           <div class="users-paginacao">
             <button id="btn-anterior" type="button" class="btn-paginacao" disabled>Anterior</button>
             <button id="btn-pagina-atual" type="button" class="btn-pagina-atual" disabled>1</button>
-            <button id="btn-seguinte" type="button" class="btn-paginacao" ${users.length > 10 ? '' : 'disabled'}>Seguinte</button>
+            <button id="btn-seguinte" type="button" class="btn-paginacao" ${users.length > 5 ? '' : 'disabled'}>Seguinte</button>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ export function setupUsersPageListeners(users) {
   if (!tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !btnAdicionarUser) return;
 
   let paginaAtual = 1;
-  const itensPorPagina = 10;
+  const itensPorPagina = 5;
   let dadosFiltrados = users;
 
   function atualizarPaginacao() {

@@ -9,7 +9,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin-top: 8px;      /* Aproxima do topo */
-  margin-bottom: 15px;  /* Menos espaço abaixo */
+  margin-bottom: 20px;  /* Menos espaço abaixo */
   color: #222;
   letter-spacing: -1px;
 }
@@ -60,7 +60,7 @@
 }
 .dashboard-kpi-box:nth-child(3) {
   background: #ffc107;    /* amarelo */
-  color: #222;
+  color: #fff;
 }
 
 .dashboard-kpi-num {
@@ -74,28 +74,4 @@
   font-size: 1.1rem;
   text-align: center;
   font-weight: 500;
-}
-
-.dashboard-kpi-row-white {
-  display: flex;
-  gap: 24px;
-  justify-content: flex-start;
-  margin-bottom: 36px;
-  margin-left: 0;
-  margin-right: 24px; /* margem à direita igual ao resto do conteúdo */
-}
-
-.dashboard-kpi-white {
-  background: #fff !important;
-  border: 1px solid #e0e0e0;
-  color: #222;
-  width: calc((100% - 20px - 24px) / 2); /* 2 quadrados, gap de 24px, margem direita de 32px */
-  min-width: 180px;
-  height: 300px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }

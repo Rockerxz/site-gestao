@@ -152,12 +152,12 @@ export function setupReparacoesPageListeners(reparacoes, clientes, equipamentos,
 
   function getEquipamentoNome(equipamentoId) {
     const equipamento = equipamentos.find(eq => eq.id == equipamentoId);
-    return equipamento ? equipamento.nome : 'Cliente não encontrado';
+    return equipamento ? equipamento.nome : '';
   }
 
   function getProfissionalNome(profissionalId) {
     const profissional = profissionais.find(p => p.id == profissionalId);
-    return profissional ? profissional.nome : 'Profissional não encontrado';
+    return profissional ? profissional.nome : '';
   }
 
   function atualizarLista() {
@@ -326,7 +326,7 @@ export function setupReparacoesPageListeners(reparacoes, clientes, equipamentos,
         equipamentoId: form.modeloId.value.trim(),
         profissionalId: form.profissionalId ? form.profissionalId.value.trim() : null,
         estado: form.estado ? form.estado.value.trim() : '',
-        problema: form.problema.value.trim(),
+        problema: form.problema ? form.problema.value.trim() : '',
         descricao: form.descricao ? form.descricao.value.trim() : '',
         dataEntrada: form['data-entrada'].value,
       };
@@ -359,28 +359,28 @@ export function setupReparacoesPageListeners(reparacoes, clientes, equipamentos,
     });
   });
 
-  function abrirModalEditarEquipamento(equipamento) {
+  function abrirModalEditarReparacao(reparacao) {
     loadModalStyle('/styles/forms/edit-reparacoes-modal.css');
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-edit-reparacao-container';
 
 
-    modalContainer.innerHTML = EditReparacoesModal(equipamento, clientes);
+    modalContainer.innerHTML = EditReparacoesModal(clientes, equipamentos);
     document.body.appendChild(modalContainer);
 
     // Inicializa select customizado
     initCustomSelect(modalContainer);
 
-    const form = modalContainer.querySelector('#form-adicionar-equipamento');
+    const form = modalContainer.querySelector('#form-editar-reparacao');
     
     form.problema.value = reparacao.problema || '';
-    form.descricao ? form.descricao.value = reparacao.descricao || '' : '';
+    form.descricao.value = reparacao.descricao || '';
     form['data-entrada'].value = reparacao.dataEntrada || '';
 
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
     btnFechar.addEventListener('click', () => modalContainer.remove());
 
-    const btnSalvar = modalContainer.querySelector('#btn-adicionar');
+    const btnSalvar = modalContainer.querySelector('#btn-editar');
 
     
 
@@ -393,9 +393,9 @@ export function setupReparacoesPageListeners(reparacoes, clientes, equipamentos,
       const reparacaoAtualizada = {
         id: reparacao.id,
         equipamentoId: form.modeloId.value.trim() || reparacao.equipamentoId,
-        profissionalId: form.profissionalId ? form.profissionalId.value.trim() : reparacao.profissionalId,
+        profissionalId: form.profissionalId ? form.profissionalId.value.trim() : reparacoes.profissionalId,
         estado: form.estado ? form.estado.value.trim() : reparacao.estado,
-        problema: form.problema.value.trim(),
+        problema: form.problema ? form.problema.value.trim() : reparacao.problema,
         descricao: form.descricao ? form.descricao.value.trim() : reparacao.descricao,
         dataEntrada: form['data-entrada'].value,
       };

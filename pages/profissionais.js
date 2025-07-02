@@ -28,7 +28,7 @@ export function ProfissionaisPage(profissionais = []) {
             </tr>
           </thead>
           <tbody id="profissionais-lista">
-            ${renderProfissionais(profissionais.slice(0, 10))}
+            ${renderProfissionais(profissionais.slice(0, 5))}
           </tbody>
         </table>
 
@@ -36,7 +36,7 @@ export function ProfissionaisPage(profissionais = []) {
           <div class="profissionais-paginacao">
             <button id="btn-anterior" type="button" class="btn-paginacao" disabled>Anterior</button>
             <button id="btn-pagina-atual" type="button" class="btn-pagina-atual" disabled>1</button>
-            <button id="btn-seguinte" type="button" class="btn-paginacao" ${profissionais.length > 10 ? '' : 'disabled'}>Seguinte</button>
+            <button id="btn-seguinte" type="button" class="btn-paginacao" ${profissionais.length > 5 ? '' : 'disabled'}>Seguinte</button>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@ export function setupProfissionaisPageListeners(profissionais) {
   if (!tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !btnAdicionarProfissional) return;
 
   let paginaAtual = 1;
-  const itensPorPagina = 10;
+  const itensPorPagina = 5;
   let dadosFiltrados = profissionais;
 
 

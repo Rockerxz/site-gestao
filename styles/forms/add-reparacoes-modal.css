@@ -116,11 +116,11 @@
   outline: none;
 }
 
-.comentarios-group {
+.descricao-group {
   flex: 1 1 100%;
 }
 
-.comentarios-group label {
+.descricao-group label {
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
@@ -129,7 +129,7 @@
   text-align: left;
 }
 
-.comentarios-group textarea {
+.descricao-group textarea {
   width: 100%;
   min-height: 140px;
   padding: 12px 16px;
@@ -143,7 +143,7 @@
   resize: none;
 }
 
-.comentarios-group textarea:focus {
+.descricao-group textarea:focus {
   border-color: #007BFF;
   outline: none;
 }

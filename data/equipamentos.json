@@ -3,9 +3,9 @@
         "tipoEquipamento": "PC",
         "numeroSerie": "4214242",
         "modelo": "HP A",
-        "marca": "HP",
+        "marca": "ASUS",
         "comentarios": "aa",
-        "clienteId": "1750418345",
+        "clienteId": "1751460776",
         "id": 1750934066,
         "imei": "1515126"
     },
@@ -20,12 +20,92 @@
     },
     {
         "tipoEquipamento": "pc",
+        "numeroSerie": "3115151",
+        "modelo": "hp",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "1750418358",
+        "id": 1751196211
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "41515",
+        "modelo": "toshi",
+        "marca": "a",
+        "imei": "154141",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751299545
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "",
+        "modelo": "toshiba",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751307104
+    },
+    {
+        "tipoEquipamento": "",
+        "numeroSerie": "",
+        "modelo": "d",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751307354
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "",
+        "modelo": "a",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751307467
+    },
+    {
+        "tipoEquipamento": "telemovel",
+        "numeroSerie": "",
+        "modelo": "sans",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751307493
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "311515",
+        "modelo": "ff",
+        "marca": "",
+        "imei": "141515",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751308123
+    },
+    {
+        "tipoEquipamento": "pc",
+        "numeroSerie": "",
+        "modelo": "bbbb",
+        "marca": "",
+        "imei": "",
+        "comentarios": "",
+        "clienteId": "",
+        "id": 1751365344
+    },
+    {
+        "tipoEquipamento": "kapa",
         "numeroSerie": "",
         "modelo": "",
         "marca": "",
-        "imei": "4151515",
+        "imei": "",
         "comentarios": "",
-        "clienteId": "",
-        "id": 1750971368
+        "clienteId": "1751284947",
+        "id": 1751464362
     }
 ]

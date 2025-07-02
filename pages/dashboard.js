@@ -35,10 +35,6 @@ export async function DashboardPage(user) {
           <div class="dashboard-kpi-label">Equipamentos</div>
         </div>
       </div>
-      <div class="dashboard-kpi-row dashboard-kpi-row-white">
-        <div class="dashboard-kpi-box dashboard-kpi-white"></div>
-        <div class="dashboard-kpi-box dashboard-kpi-white"></div>
-      </div>
     </section>
   `;
 }

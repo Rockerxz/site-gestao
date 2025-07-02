@@ -1,4 +1,5 @@
 import { showToast } from '../components/toast.js';
+import { openAddClienteModal } from './clientes.js';
 import { AddEquipamentoModal } from '../forms/add-equipamento.js';
 import { EditEquipamentoModal } from '../forms/edit-equipamento.js';
 import { RemoveEquipamentoModal } from '../forms/remove-equipamento.js';
@@ -40,18 +41,18 @@ export function EquipamentosPage(equipamentos = [], clientes = []) {
             </tr>
           </thead>
           <tbody id="equipamentos-lista">
-            ${renderEquipamentos(equipamentos.slice(0, 10), getClienteNome)}
+            ${renderEquipamentos(equipamentos.slice(0, 5), getClienteNome)}
           </tbody>
         </table>
 
         <div class="equipamentos-footer">
           <div id="equipamentos-feedback" class="equipamentos-feedback">
-            Mostrando 1 a ${Math.min(10, equipamentos.length)} de ${equipamentos.length} equipamentos
+            Mostrando 1 a ${Math.min(5, equipamentos.length)} de ${equipamentos.length} equipamentos
           </div>
           <div class="equipamentos-paginacao">
             <button id="btn-anterior" type="button" class="btn-paginacao" disabled>Anterior</button>
             <button id="btn-pagina-atual" type="button" class="btn-pagina-atual" disabled>1</button>
-            <button id="btn-seguinte" type="button" class="btn-paginacao" ${equipamentos.length > 10 ? '' : 'disabled'}>Seguinte</button>
+            <button id="btn-seguinte" type="button" class="btn-paginacao" ${equipamentos.length > 5 ? '' : 'disabled'}>Seguinte</button>
           </div>
         </div>
       </div>
@@ -123,7 +124,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
   if (!inputPesquisa || !tbody || !btnAnterior || !btnSeguinte || !btnPaginaAtual || !feedback || !btnAdicionarEquipamento) return;
 
   let paginaAtual = 1;
-  const itensPorPagina = 10;
+  const itensPorPagina = 5;
   let dadosFiltrados = equipamentos;
 
   function getClienteNome(clienteId) {
@@ -188,6 +189,92 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
     const select = modalContainer.querySelector('#custom-select');
     if (!select) return;
 
+    // Apenas adiciona o event listener ao botão já existente
+    const addClienteBtn = modalContainer.querySelector('#btn-add-cliente');
+    if (addClienteBtn && !addClienteBtn.dataset.listener) {
+      addClienteBtn.addEventListener('click', () => {
+        loadModalStyle('/styles/forms/add-cliente-modal.css');
+
+        import('./clientes.js').then(({ openAddClienteModal }) => {
+          // Save current modal content and id
+          const previousModalContent = modalContainer.innerHTML;
+          const previousModalId = modalContainer.id;
+          const isEdit = !!modalContainer.equipamento;
+          const equipamento = modalContainer.equipamento;
+
+          // Replace current modal content with add-cliente modal
+          modalContainer.id = 'modal-add-cliente-container';
+          modalContainer.innerHTML = '';
+
+          // Open add cliente modal inside the same container
+          openAddClienteModal(
+            clientes,
+            // Callback when client is added successfully
+            (newCliente) => {
+
+              loadModalStyle(isEdit
+                ? '/styles/forms/edit-equipamento-modal.css'
+                : '/styles/forms/add-equipamento-modal.css'
+              );
+              // Restore previous modal content using the helper
+              restaurarModalEquipamento(
+                modalContainer,
+                previousModalId,
+                previousModalContent,
+                isEdit ? 'edit' : 'add',
+                equipamento
+              );
+
+              // Update clientes array with new client
+              clientes.push(newCliente);
+
+
+              // Select the new client in the restored modal's select
+              const selectRestored = modalContainer.querySelector('#custom-select');
+              const selectedRestored = selectRestored.querySelector('.select-selected');
+              const optionsListRestored = selectRestored.querySelector('.options-list');
+              const hiddenInputRestored = modalContainer.querySelector('#clienteId');
+
+              // Add new option to options list
+              const newOption = document.createElement('div');
+              newOption.className = 'option';
+              newOption.dataset.id = newCliente.id;
+              newOption.textContent = newCliente.nome;
+              optionsListRestored.appendChild(newOption);
+
+              // Add click event to new option
+              newOption.addEventListener('click', () => {
+                selectedRestored.textContent = newOption.textContent;
+                hiddenInputRestored.value = newOption.dataset.id;
+                selectRestored.querySelector('.select-items').classList.add('select-hide');
+              });
+
+              // Select new client automatically
+              selectedRestored.textContent = newCliente.nome;
+              hiddenInputRestored.value = newCliente.id;
+            },
+            // Callback when modal is closed without adding client
+            () => {
+              // Restore previous modal content
+              loadModalStyle(isEdit
+                ? '/styles/forms/edit-equipamento-modal.css'
+                : '/styles/forms/add-equipamento-modal.css'
+              );
+              // Restore previous modal content using the helper
+              restaurarModalEquipamento(
+                modalContainer,
+                previousModalId,
+                previousModalContent,
+                isEdit ? 'edit' : 'add',
+                equipamento
+              );
+            }
+          );
+        });
+      });
+      addClienteBtn.dataset.listener = "true";
+    }
+
     const selected = select.querySelector('.select-selected');
     const itemsContainer = select.querySelector('.select-items');
     const searchInput = select.querySelector('.select-search');
@@ -240,20 +327,37 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
         itemsContainer.classList.add('select-hide');
       }
     });
-
+     
   }
 
-  btnAdicionarEquipamento.addEventListener('click', () => {
+  function restaurarModalEquipamento(modalContainer, previousModalId, previousModalContent, tipo, equipamento = null) {
+    modalContainer.id = previousModalId;
+    modalContainer.innerHTML = previousModalContent;
+
+    if (tipo === 'add') {
+      inicializarListenersEquipamentoModal(modalContainer);
+    } else if (tipo === 'edit') {
+      inicializarListenersEditarEquipamentoModal(modalContainer, equipamento);
+    }
+  }
+
+  // Use esta função no botão
+  btnAdicionarEquipamento.addEventListener('click', abrirModalAdicionarEquipamento);
+
+  function abrirModalAdicionarEquipamento() {
     loadModalStyle('/styles/forms/add-equipamento-modal.css');
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-add-equipamento-container';
     modalContainer.innerHTML = AddEquipamentoModal(clientes);
     document.body.appendChild(modalContainer);
-  
-    // Inicializa select customizado
+
+    inicializarListenersEquipamentoModal(modalContainer);
+
+  }
+
+  function inicializarListenersEquipamentoModal(modalContainer) {
     initCustomSelect(modalContainer);
 
-    // Botão fechar modal
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
     if (btnFechar) {
       btnFechar.addEventListener('click', () => {
@@ -261,124 +365,143 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
       });
     }
 
-    const btnAdicionar = modalContainer.querySelector('#btn-adicionar');
+    let btnAdicionar = modalContainer.querySelector('#btn-adicionar');
     const form = modalContainer.querySelector('#form-adicionar-equipamento');
 
+  // Remove listeners antigos do botão
+    if (btnAdicionar) {
+      const newBtn = btnAdicionar.cloneNode(true);
+      btnAdicionar.parentNode.replaceChild(newBtn, btnAdicionar);
+      btnAdicionar = newBtn;
+    }
 
-    btnAdicionar.addEventListener('click', async () => {
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-    
-
-      const novoEquipamento = {
-        tipoEquipamento: form.tipoEquipamento.value.trim(),
-        numeroSerie: form.numeroSerie.value.trim(),
-        modelo: form.modelo.value.trim(),
-        marca: form.marca.value.trim(),
-        imei: form.IMEI.value.trim(),
-        comentarios: form.comentarios.value.trim(),
-        clienteId: form.clienteId.value.trim(),
-      };
-
-      try {
-        const res = await fetch('/backend/equipamentos.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(novoEquipamento)
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          showToast('Erro ao adicionar equipamento: ' + (errorData.error || 'Erro desconhecido'), 'error');
+    if (btnAdicionar && form) {
+      btnAdicionar.addEventListener('click', async () => {
+        if (!form.checkValidity()) {
+          form.reportValidity();
           return;
         }
 
-        const data = await res.json();
-        if (data.success) {
-          equipamentos.push(data.item);
-          atualizarLista();
-          modalContainer.remove();
-          showToast('Equipamento adicionado com sucesso.', 'success');
-        } else {
-          showToast('Erro ao adicionar equipamento.', 'error');
+        const novoEquipamento = {
+          tipoEquipamento: form.tipoEquipamento.value.trim(),
+          numeroSerie: form.numeroSerie.value.trim(),
+          modelo: form.modelo.value.trim(),
+          marca: form.marca.value.trim(),
+          imei: form.IMEI.value.trim(),
+          comentarios: form.comentarios.value.trim(),
+          clienteId: form.clienteId.value.trim(),
+        };
+
+        try {
+          const res = await fetch('/backend/equipamentos.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(novoEquipamento)
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            showToast('Erro ao adicionar equipamento: ' + (errorData.error || 'Erro desconhecido'), 'error');
+            return;
+          }
+
+          const data = await res.json();
+          if (data.success) {
+            equipamentos.push(data.item);
+            atualizarLista();
+            modalContainer.remove();
+            showToast('Equipamento adicionado com sucesso.', 'success');
+          } else {
+            showToast('Erro ao adicionar equipamento.', 'error');
+          }
+        } catch (error) {
+          showToast('Erro ao adicionar equipamento: ' + error.message, 'error');
         }
-      } catch (error) {
-        showToast('Erro ao adicionar equipamento: ' + error.message, 'error');
-      }
-    });
-  });
+      });
+    }
+  }
+
 
   function abrirModalEditarEquipamento(equipamento) {
     loadModalStyle('/styles/forms/edit-equipamento-modal.css');
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-edit-equipamento-container';
+    modalContainer.innerHTML = EditEquipamentoModal(equipamento, clientes);
 
+    // Salva o equipamento no container para referência futura
+    modalContainer.equipamento = equipamento;
 
-    modalContainer.innerHTML = EditEquipamentoModal (equipamento, clientes);
     document.body.appendChild(modalContainer);
 
-    // Inicializa select customizado
+    inicializarListenersEditarEquipamentoModal(modalContainer, equipamento);
+  }
+
+  function inicializarListenersEditarEquipamentoModal(modalContainer, equipamento) {
     initCustomSelect(modalContainer);
 
-    const form = modalContainer.querySelector('#form-adicionar-equipamento');
-    
-    
-
     const btnFechar = modalContainer.querySelector('#btn-fechar-modal');
-    btnFechar.addEventListener('click', () => modalContainer.remove());
+    if (btnFechar) {
+      btnFechar.onclick = () => modalContainer.remove();
+    }
 
-    const btnSalvar = modalContainer.querySelector('#btn-adicionar');
+    let btnSalvar = modalContainer.querySelector('#btn-adicionar');
+    const form = modalContainer.querySelector('#form-adicionar-equipamento');
 
-    
+    // Remove listeners antigos do botão
+    if (btnSalvar) {
+      const newBtn = btnSalvar.cloneNode(true);
+      btnSalvar.parentNode.replaceChild(newBtn, btnSalvar);
+      btnSalvar = newBtn;
+    }
 
-    btnSalvar.addEventListener('click', async () => {
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      const equipamentoAtualizado = {
-        id: equipamento.id,
-        tipoEquipamento: form.tipoEquipamento.value.trim() || equipamento.tipoEquipamento,
-        numeroSerie: form.numeroSerie.value.trim() || equipamento.numeroSerie,
-        modelo: form.modelo.value.trim() || equipamento.modelo,
-        marca: form.marca.value.trim() || equipamento.marca,
-        imei: form.IMEI.value.trim() || equipamento.imei,
-        comentarios: form.comentarios.value.trim(),
-        clienteId: form.clienteId.value.trim(),
-      };
-
-      try {
-        const res = await fetch('/backend/equipamentos.php', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(equipamentoAtualizado)
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          showToast('Erro ao atualizar equipamento: ' + (errorData.error || 'Erro desconhecido'), 'error');
+    if (btnSalvar && form) {
+      btnSalvar.addEventListener('click', async () => {
+        if (!form.checkValidity()) {
+          form.reportValidity();
           return;
         }
 
-        const data = await res.json();
-        if (data.success) {
-          const index = equipamentos.findIndex(e => e.id === equipamento.id);
-          if (index !== -1) {
-            equipamentos[index] = equipamentoAtualizado;
-            atualizarLista();
+        const equipamentoAtualizado = {
+          id: equipamento.id,
+          tipoEquipamento: form.tipoEquipamento.value ? form.tipoEquipamento.value.trim() : equipamento.tipoEquipamento,
+          numeroSerie: form.numeroSerie.value ? form.numeroSerie.value.trim() : equipamento.numeroSerie,
+          modelo: form.modelo.value ? form.modelo.value.trim() : equipamento.modelo,
+          marca: form.marca.value ? form.marca.value.trim() : equipamento.marca,
+          imei: form.IMEI.value ? form.IMEI.value.trim() : equipamento.imei,
+          comentarios: form.comentarios.value ? form.comentarios.value.trim() : equipamento.comentarios,
+          clienteId: form.clienteId.value ? form.clienteId.value.trim() : equipamento.clienteId,
+        };
+
+        try {
+          const res = await fetch('/backend/equipamentos.php', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(equipamentoAtualizado)
+          });
+
+          if (!res.ok) {
+            const errorData = await res.json();
+            showToast('Erro ao atualizar equipamento: ' + (errorData.error || 'Erro desconhecido'), 'error');
+            return;
           }
-          modalContainer.remove();
-          showToast('Equipamento atualizado com sucesso.', 'success');
-        } else {
-          showToast('Erro ao atualizar equipamento.', 'error');
+
+          const data = await res.json();
+          if (data.success) {
+            const index = equipamentos.findIndex(e => e.id === equipamento.id);
+            if (index !== -1) {
+              equipamentos[index] = { ...equipamento, ...equipamentoAtualizado };
+              atualizarLista();
+            }
+            modalContainer.remove();
+            showToast('Equipamento atualizado com sucesso.', 'success');
+          } else {
+            showToast('Erro ao atualizar equipamento.', 'error');
+          }
+        } catch (error) {
+          showToast('Erro ao atualizar equipamento: ' + error.message, 'error');
         }
-      } catch (error) {
-        showToast('Erro ao atualizar equipamento: ' + error.message, 'error');
-      }
-    });
+      });
+    }
   }
 
   tbody.addEventListener('click', e => {
@@ -468,3 +591,4 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
 
   atualizarPaginacao();
 }
+
