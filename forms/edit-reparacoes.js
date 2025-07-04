@@ -54,8 +54,8 @@ export function EditReparacoesModal(clientes = [], equipamentos = [], reparacao 
 
             <div class="form-group modelo-select-group" style="position: relative;">
               <label for="modeloSelect">Modelo</label>
-              <div class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-tag"></i>
+              <div class="custom-select" id="custom-select-modelo" style="width: 100%;">
+                <i class="fa-solid fa-tag select-icon"></i>
                 <div class="select-selected" tabindex="0">
                   ${modeloSelecionado ? escapeHtml(modeloSelecionado.modelo) : ''}
                 </div>
@@ -66,13 +66,16 @@ export function EditReparacoesModal(clientes = [], equipamentos = [], reparacao 
                   </div>
                 </div>
               </div>
+              <button type="button" id="btn-add-equipamento" class="btn-add-equipamento" title="Adicionar Equipamento">
+              <i class="fa-solid fa-plus"></i>
+              </button>
               <input type="hidden" id="modeloId" name="modeloId" value="${modeloSelecionado ? modeloSelecionado.id : ''}">
             </div>
 
             <div class="form-group numeroserie-select-group" style="position: relative;">
               <label for="numeroserieSelect">Número de Série</label>
-              <div  class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-barcode"></i>
+              <div  class="custom-select" id="custom-select-numeroserie" style="width: 100%;">
+                <i class="fa-solid fa-barcode select-icon"></i>
                 <div class="select-selected" tabindex="0">
                   ${numeroserieSelecionado ? escapeHtml(numeroserieSelecionado.numeroSerie) : ''}
                 </div>
@@ -90,8 +93,8 @@ export function EditReparacoesModal(clientes = [], equipamentos = [], reparacao 
           <div class="form-row">
             <div class="form-group tipoequipamento-select-group" style="position: relative;">
               <label for="tipoequipamentoSelect">Tipo de Equipamento</label>
-              <div  class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-barcode"></i>
+              <div class="custom-select" id="custom-select-tipoequipamento" style="width: 100%;">
+                <i class="fa-solid fa-barcode select-icon"></i>
                 <div class="select-selected" tabindex="0">
                   ${tipoequipamentoSelecionado ? escapeHtml(tipoequipamentoSelecionado.tipoEquipamento) : ''}
                 </div>
@@ -107,8 +110,8 @@ export function EditReparacoesModal(clientes = [], equipamentos = [], reparacao 
 
             <div class="form-group imei-select-group" style="position: relative;">
               <label for="imeiSelect">IMEI</label>
-              <div  class="custom-select" style="width: 100%;">
-                <i class="fa-solid fa-barcode"></i>
+              <div class="custom-select" id="custom-select-imei" style="width: 100%;">
+                <i class="fa-solid fa-barcode select-icon"></i>
                 <div class="select-selected" tabindex="0">
                   ${imeiSelecionado ? escapeHtml(imeiSelecionado.imei) : ''}
                 </div>

@@ -442,7 +442,84 @@ export function setupReparacoesPageListeners(reparacoes, clientes, equipamentos,
       addClienteBtn.dataset.listener = "true";
     }
 
+    const selectEquipamento = modalContainer.querySelector('#custom-select-modelo' || '#custom-select-numeroserie' || '#custom-select-tipoequipamento' || '#custom-select-imei');
+    if (!selectEquipamento) return;
 
+    const addEquipamentoBtn = modalContainer.querySelector('#btn-add-equipamento');
+    if (addEquipamentoBtn && !addEquipamentoBtn.dataset.listener) {
+      addEquipamentoBtn.addEventListener('click', () => {
+        loadModalStyle('/styles/forms/add-equipamento-modal.css');
+        import('./equipamentos.js').then(({ openAddEquipamentoModal }) => {
+          const previousModalContent = modalContainer.innerHTML;
+          const previousModalId = modalContainer.id;
+          const isEdit = !!modalContainer.reparacao;
+          const reparacao = modalContainer.reparacao;
+
+          modalContainer.id = 'modal-add-equipamento-container';
+          modalContainer.innerHTML = '';
+
+          openAddEquipamentoModal(
+            clientes,
+            (newCliente) => {
+              loadModalStyle(isEdit
+                ? '/styles/forms/edit-reparacoes-modal.css'
+                : '/styles/forms/add-reparacoes-modal.css'
+              );
+              restaurarModalReparacao(
+                modalContainer,
+                previousModalId,
+                previousModalContent,
+                isEdit ? 'edit' : 'add',
+                reparacao
+              );
+              clientes.push(newCliente);
+
+
+              // Atualiza o select de clientes no modal restaurado
+              const selectRestored = modalContainer.querySelector('#custom-select-cliente');
+              const selectedRestored = selectRestored.querySelector('.select-selected');
+              const optionsListRestored = selectRestored.querySelector('.options-list');
+              const hiddenInputRestored = modalContainer.querySelector('#clienteId');
+
+
+              // Cria nova opção
+              const newOption = document.createElement('div');
+              newOption.className = 'option';
+              newOption.dataset.value = newCliente.id;
+              newOption.textContent = newCliente.nome;
+              optionsListRestored.appendChild(newOption);
+
+
+              // Evento para selecionar o novo cliente
+              newOption.addEventListener('click', () => {
+                selectedRestored.textContent = newOption.textContent;
+                hiddenInputRestored.value = newOption.dataset.value;
+                selectRestored.querySelector('.select-items').classList.add('select-hide');
+              });
+
+
+              // Seleciona automaticamente o novo cliente
+              selectedRestored.textContent = newCliente.nome;
+              hiddenInputRestored.value = newCliente.id;
+            },
+            () => {
+              loadModalStyle(isEdit
+                ? '/styles/forms/edit-reparacoes-modal.css'
+                : '/styles/forms/add-reparacoes-modal.css'
+              );
+              restaurarModalReparacao(
+                modalContainer,
+                previousModalId,
+                previousModalContent,
+                isEdit ? 'edit' : 'add',
+                reparacao
+              );
+            }
+          );
+        });
+      });
+      addEquipamentoBtn.dataset.listener = "true";
+    }
 
     // Fecha dropdown ao clicar fora
     document.addEventListener('click', (e) => {
