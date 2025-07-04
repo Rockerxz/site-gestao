@@ -42,6 +42,21 @@ switch($method) {
     }
     
     $data = readData($file);
+
+    // Verificar duplicação de numeroSerie e imei
+    foreach ($data as $item) {
+      if (isset($input['numeroSerie']) && $input['numeroSerie'] !== '' && $item['numeroSerie'] === $input['numeroSerie']) {
+        http_response_code(409);
+        echo json_encode(['error' => 'Número de série já existe']);
+        exit();
+      }
+      if (isset($input['imei']) && $input['imei'] !== '' && $item['imei'] === $input['imei']) {
+        http_response_code(409);
+        echo json_encode(['error' => 'IMEI já existe']);
+        exit();
+      }
+    }
+
     $input['id'] = time();
     // Ensure all expected fields exist
     $fields = ['tipoEquipamento', 'numeroSerie', 'modelo', 'marca', 'imei', 'comentarios', 'clienteId'];
@@ -64,6 +79,23 @@ switch($method) {
     }
     $data = readData($file);
     $found = false;
+
+    // Verificar duplicação de numeroSerie e imei em outros equipamentos
+    foreach ($data as $item) {
+      if ($item['id'] != $input['id']) {
+        if (isset($input['numeroSerie']) && $input['numeroSerie'] !== '' && $item['numeroSerie'] === $input['numeroSerie']) {
+          http_response_code(409);
+          echo json_encode(['error' => 'Número de série já existe']);
+          exit();
+        }
+        if (isset($input['imei']) && $input['imei'] !== '' && $item['imei'] === $input['imei']) {
+          http_response_code(409);
+          echo json_encode(['error' => 'IMEI já existe']);
+          exit();
+        }
+      }
+    }
+
     foreach($data as &$item) {
       if($item['id'] == $input['id']) {
         $item = array_merge($item, $input);

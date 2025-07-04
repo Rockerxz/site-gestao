@@ -45,12 +45,14 @@ switch($method) {
     // Ensure all expected fields exist
     $fields = [
       'clienteId',
-      'equipamentoId',
-      'profissionalId',
+      'modeloId',
+      'numeroserieId',
+      'tipoequipamentoId',
+      'imeiId',
+      'profissional',
       'estado',
       'problema',
       'descricao',
-      'dataEntrada'
     ];
     $newItem = [];
     foreach ($fields as $field) {

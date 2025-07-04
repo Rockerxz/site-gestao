@@ -19,7 +19,7 @@
   background-color: #f9f9f9;
   padding: 30px 40px;
   border-radius: 2px;
-  width: 1450px;
+  width: 900px;
   max-width: 90vw;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   font-family: 'Inter', sans-serif;
@@ -149,7 +149,7 @@
 
 .modal-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -158,6 +158,8 @@
   color: white;
   border: none;
   padding: 10px 18px;
+  margin-top: 30px;
+  height: 80%;
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
@@ -268,4 +270,43 @@
 
 .options-list::-webkit-scrollbar-track {
   background-color: #f1f1f1;
+}
+
+form-group.cliente-select-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+}
+
+.form-group.cliente-select-group .cliente-select-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+#btn-add-cliente, .btn-add-cliente {
+  flex: 0 0 40px;
+  height: 40px;
+  min-width: 40px;
+  max-width: 40px;
+  margin: 0;
+  align-self: center;
+  background: #ffffff;
+  color: #666666;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+#btn-add-cliente:hover, .btn-add-cliente:hover {
+  background: #ccc;
 }

@@ -3,15 +3,15 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
   if (!Array.isArray(clientes)) clientes = [];
   if (!Array.isArray(equipamentos)) equipamentos = [];
 
-  // Criar listas únicas para cada campo do equipamento para os selects
-  const modelos = [...new Set(equipamentos.map(eq => eq.modelo).filter(Boolean))];
-  const numerosSerie = [...new Set(equipamentos.map(eq => eq.numeroSerie).filter(Boolean))];
-  const imeis = [...new Set(equipamentos.map(eq => eq.imei).filter(Boolean))];
-
   const clienteOptions = clientes.map(c => `<div class="option" data-value="${c.id}">${escapeHtml(c.nome)}</div>`).join('');
-  const modeloOptions = modelos.map(m => `<div class="option" data-value="${escapeHtml(m)}">${escapeHtml(m)}</div>`).join('');
-  const numeroSerieOptions = numerosSerie.map(n => `<div class="option" data-value="${escapeHtml(n)}">${escapeHtml(n)}</div>`).join('');
-  const imeiOptions = imeis.map(i => `<div class="option" data-value="${escapeHtml(i)}">${escapeHtml(i)}</div>`).join('');
+  const modeloOptions = equipamentos.map(eq => 
+  `<div class="option" data-value="${eq.id}">${escapeHtml(eq.modelo)}</div>`).join('');
+  const numeroSerieOptions = equipamentos.map(eq => 
+  `<div class="option" data-value="${eq.id}">${escapeHtml(eq.numeroSerie)}</div>`).join('');
+  const imeiOptions = equipamentos.map(eq => 
+  `<div class="option" data-value="${eq.id}">${escapeHtml(eq.imei)}</div>`).join('');
+  const tipoequipamentoOptions = equipamentos.map(eq => 
+  `<div class="option" data-value="${eq.id}">${escapeHtml(eq.tipoEquipamento)}</div>`).join('');
 
   return `
     <div class="modal-overlay">
@@ -26,7 +26,7 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
           <div class="form-row">
             <div class="form-group cliente-select-group" style="position: relative;">
               <label for="clienteSelect">Cliente</label>
-              <div class="custom-select" style="width: 100%;">
+              <div class="custom-select" id="custom-select-cliente" style="width: 100%;">
                 <i class="fa-solid fa-user select-icon"></i>
                 <div class="select-selected" tabindex="0">
                 </div>
@@ -37,6 +37,9 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
                   </div>
                 </div>
               </div>
+              <button type="button" id="btn-add-cliente" class="btn-add-equipamento" title="Adicionar Equipamento">
+              <i class="fa-solid fa-user-plus"></i>
+              </button>
               <input type="hidden" id="clienteId" name="clienteId" value="">
             </div>
 
@@ -76,14 +79,18 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
           <div class="form-row">
             <div class="form-group tipoequipamento-select-group" style="position: relative;">
               <label for="tipoequipamentoSelect">Tipo de Equipamento</label>
-              <div class="input-icon">
-                <i class="fa-solid fa-cogs"></i>
-                <select id="tipoequipamento" name="tipoequipamento" required>
-                  <option value="" disabled selected>Escolha a categoria</option>
-                  <option value="PC">PC</option>
-                  <option value="Telemóvel">Telemóvel</option>
-                </select>
+              <div  class="custom-select" style="width: 100%;">
+                <i class="fa-solid fa-barcode"></i>
+                <div class="select-selected" tabindex="0">
+                </div>
+                <div class="select-items select-hide">
+                  <input type="text" placeholder="Pesquisar..." class="select-search" />
+                  <div class="options-list">
+                    ${tipoequipamentoOptions}
+                  </div>
+                </div>
               </div>
+              <input type="hidden" id="tipoequipamentoId" name="tipoequipamentoId" value="">
             </div>
 
             <div class="form-group imei-select-group" style="position: relative;">
@@ -102,9 +109,11 @@ export function AddReparacoesModal(clientes = [], equipamentos = []) {
               <input type="hidden" id="imeiId" name="imeiId" value="">
             </div>
 
-            <div class="form-group dataentrada-select-group" style="position: relative;">
-              <label for="dadatentradaSelect">Data de Entrada</label>
-              <input type="date" id="data-entrada" name="data-entrada">
+            <div class="form-group">
+              <label for="profissional-reparacao">Profissional</label>
+              <div class="input-icon">
+                <input type="text" id="profissional-reparacao" name="profissional"></button>
+              </div>
             </div>
           </div>
 

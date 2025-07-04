@@ -528,7 +528,7 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
 
     const modalContainer = document.createElement('div');
     modalContainer.id = 'modal-remove-equipamento-container';
-    modalContainer.innerHTML = RemoveEquipamentoModal(equipamento.tipoEquipamento);
+    modalContainer.innerHTML = RemoveEquipamentoModal(equipamento.modelo);
     document.body.appendChild(modalContainer);
 
     const btnCancelar = modalContainer.querySelector('#btn-cancelar');
@@ -592,3 +592,74 @@ export function setupEquipamentosPageListeners(equipamentos, clientes) {
   atualizarPaginacao();
 }
 
+export function openAddEquipamentoModal(equipamentos, onEquipamentoAdded, onModalClosed) {
+  // Load modal style
+  const linkHref = '/styles/forms/add-equipamento-modal.css';
+  if (!document.querySelector(`link[href="${linkHref}"]`)) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = linkHref;
+    link.setAttribute('data-dynamic-style', 'true');
+    document.head.appendChild(link);
+  }
+
+  const modalEquipamentoContainer = document.createElement('div');
+  modalEquipamentoContainer.id = 'modal-add-equipamento-container';
+  modalEquipamentoContainer.innerHTML = AddEquipamentoModal();
+  document.body.appendChild(modalEquipamentoContainer);
+
+  const btnFecharEquipamento = modalEquipamentoContainer.querySelector('#btn-fechar-modal');
+  if (btnFecharEquipamento) {
+    btnFecharEquipamento.addEventListener('click', () => {
+      modalEquipamentoContainer.remove();
+      if (typeof onModalClosed === 'function') {
+        onModalClosed(); // Chama callback quando o modal é fechado
+      }
+    });
+  }
+
+  const btnAdicionarEquipamento = modalEquipamentoContainer.querySelector('#btn-adicionar');
+  const formEquipamento = modalEquipamentoContainer.querySelector('#form-adicionar-equipamento');
+
+  btnAdicionarEquipamento.addEventListener('click', async () => {
+    if (!formEquipamento.checkValidity()) {
+      formEquipamento.reportValidity();
+      return;
+    }
+
+    const novoEquipamento = {
+      tipoEquipamento: formEquipamento.tipoEquipamento.value.trim(),
+      numeroSerie: formEquipamento.numeroSerie.value.trim(),
+      modelo: formEquipamento.modelo.value.trim(),
+      imei: form.IMEI.value.trim(),
+    };
+
+    try {
+      const res = await fetch('/backend/clientes.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(novoEquipamento)
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        showToast('Erro ao adicionar equipamento: ' + (errorData.error || 'Erro desconhecido'), 'error');
+        return;
+      }
+
+      const data = await res.json();
+      if (data.success) {
+        equipamentos.push(data.item);
+        modalEquipamentoContainer.remove();
+        showToast('Equipamento adicionado com sucesso.', 'success');
+        if (typeof onEquipamentoAdded === 'function') {
+          onEquipamentoAdded(data.item);
+        }
+      } else {
+        showToast('Erro ao adicionar equipamento.', 'error');
+      }
+    } catch (error) {
+      showToast('Erro ao adicionar equipamento: ' + error.message, 'error');
+    }
+  });
+}

@@ -1,42 +1,36 @@
 [
     {
         "clienteId": "1750418345",
-        "equipamentoId": "iphone",
-        "profissionalId": "",
-        "estado": "",
+        "modeloId": "1750934066",
+        "numeroserieId": "1750934066",
+        "tipoequipamentoId": "1750934066",
+        "imeiId": "1750934066",
+        "estado": "Em progresso",
         "problema": "",
         "descricao": "",
-        "dataEntrada": "",
-        "id": 1751017452
+        "id": 1751624730
     },
     {
-        "clienteId": "1750418341",
-        "equipamentoId": "iphone",
-        "profissionalId": "",
-        "estado": "",
+        "clienteId": "1750418345",
+        "modeloId": "1750934066",
+        "numeroserieId": "1750934066",
+        "tipoequipamentoId": "1751299545",
+        "imeiId": "1751299545",
+        "estado": "Em progresso",
         "problema": "",
         "descricao": "",
-        "dataEntrada": "",
-        "id": 1751192386
+        "id": 1751632481
     },
     {
-        "clienteId": "1750418350",
-        "equipamentoId": "HP A",
-        "profissionalId": "",
-        "estado": "",
-        "problema": "daqgaga",
-        "descricao": "wgwgwgw",
-        "dataEntrada": "",
-        "id": 1751195654
-    },
-    {
-        "clienteId": "1750418358",
-        "equipamentoId": "HP A",
-        "profissionalId": "",
-        "estado": "",
-        "problema": "fqeqwg",
-        "descricao": "gqwgq2gq",
-        "dataEntrada": "",
-        "id": 1751196742
+        "clienteId": "",
+        "modeloId": "1751635679",
+        "numeroserieId": "",
+        "tipoequipamentoId": "",
+        "imeiId": "",
+        "estado": "Concluido",
+        "problema": "",
+        "descricao": "",
+        "id": 1751640824,
+        "profissional": "ze"
     }
 ]
